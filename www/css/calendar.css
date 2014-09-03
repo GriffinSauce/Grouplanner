@@ -1,0 +1,35 @@
+.clndr-controls
+{
+	display:flex;
+	justify-content:space-between;
+	text-align: center;
+	
+	border-bottom:0.5em solid #CDBDFF;
+}
+	.clndr-controls .clndr-control-button,
+	.clndr-controls .month
+	{
+		color:#333;
+		padding: 1em 0em 1em 0em;
+	}
+	.clndr-controls .month
+	{
+		width:50%;
+		background-color: #F9F9F9;
+	}
+	.clndr-controls .clndr-control-button
+	{
+		width:25%;
+		background-color:#F0F0F0;
+	}
+
+.clndr-table
+{
+	width:100%;
+	text-align: center;
+	background-color:#FFF;
+}
+	.clndr-table td
+	{
+		padding: 1em 0em 1em 0em;
+	}

@@ -1,2 +1,4 @@
 
-$('#calendar').clndr();
+$('#calendar').clndr({
+  template: $('#clndr-template').html()
+});

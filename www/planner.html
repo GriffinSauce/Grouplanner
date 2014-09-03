@@ -9,28 +9,40 @@
 		<link rel="icon" type="image/vnd.microsoft.icon" href="favicon.png" />
 		<link href="https://fonts.googleapis.com/css?family=Roboto:100,200,300,400,500,600,700" rel="stylesheet" type="text/css">
 		<link href="css/style.css" rel="stylesheet" type="text/css">
+		<link href="css/calendar.css" rel="stylesheet" type="text/css">
 	</head>
 	<body>
 		<script type="text/template" id="clndr-template">
-			<div class="clndr-controls">
-				<div class="clndr-previous-button">&lsaquo;</div>
-				<div class="month"><%= month %></div>
-				<div class="clndr-next-button">&rsaquo;</div>
+			<div class='clndr-controls'>
+				<div class='clndr-control-button'><span class='clndr-previous-button'>&lsaquo;</span></div>
+				<div class='month'><%= month %> <%= year %></div>
+				<div class='clndr-control-button rightalign'><span class='clndr-next-button'>&rsaquo;</span></div>
 			</div>
-			<div class="clndr-grid">
-				<div class="days-of-the-week">
-					<% _.each(daysOfTheWeek, function(day) { %>
-						<div class="header-day"><%= day %></div>
-					<% }); %>
-					<div class="days">
-						<% _.each(days, function(day) { %>
-							<div class="<%= day.classes %>"><%= day.day %></div>
-						<% }); %>
-					</div>
-				</div>
-			</div>
-			<div class="clndr-today-button">Today</div>
-	  	</script>
+			<table class='clndr-table' border='0' cellspacing='0' cellpadding='0'>
+				<thead>
+					<tr class='header-days'>
+						<% for(var i = 0; i < daysOfTheWeek.length; i++) { %>
+							<td class='header-day'><%= daysOfTheWeek[i] %></td>
+						<% } %>
+					</tr>
+				</thead>
+
+				<tbody>
+					<% for(var i = 0; i < numberOfRows; i++){ %>
+						<tr>
+							<% for(var j = 0; j < 7; j++){ %>
+								<% var d = j + i * 7; %>
+								<td class='<%= days[d].classes %>'>
+									<div class='day-contents'>
+										<%= days[d].day %>
+									</div>
+								</td>
+							<% } %>
+						</tr>
+					<% } %>
+				</tbody>
+			</table>
+		</script>
 		<div id="calendar"></div>
 	</body>
 	<script src="lib/jquery-2.1.1.min.js"></script>
