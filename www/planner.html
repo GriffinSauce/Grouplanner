@@ -11,9 +11,31 @@
 		<link href="css/style.css" rel="stylesheet" type="text/css">
 	</head>
 	<body>
-		
+		<script type="text/template" id="clndr-template">
+			<div class="clndr-controls">
+				<div class="clndr-previous-button">&lsaquo;</div>
+				<div class="month"><%= month %></div>
+				<div class="clndr-next-button">&rsaquo;</div>
+			</div>
+			<div class="clndr-grid">
+				<div class="days-of-the-week">
+					<% _.each(daysOfTheWeek, function(day) { %>
+						<div class="header-day"><%= day %></div>
+					<% }); %>
+					<div class="days">
+						<% _.each(days, function(day) { %>
+							<div class="<%= day.classes %>"><%= day.day %></div>
+						<% }); %>
+					</div>
+				</div>
+			</div>
+			<div class="clndr-today-button">Today</div>
+	  	</script>
+		<div id="calendar"></div>
 	</body>
-	<script src="lib/zepto.min.js"></script>
+	<script src="lib/jquery-2.1.1.min.js"></script>
 	<script src="lib/moment-with-locales.js"></script>
+	<script src="lib/underscore-min.js"></script>
+	<script src="lib/clndr.min.js"></script>
 	<script src="js/planner.js"></script>
 </html>
