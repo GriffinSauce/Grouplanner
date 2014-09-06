@@ -1,0 +1,22 @@
+{
+  "name": "Grouplanner",
+  "version": "0.0.1",
+  "description": "Group Planning Application",
+  "keywords": [
+    "Grouplanner",
+    "Node.js",
+    "application",
+    "planning"
+  ],
+  "author": {
+    "name": "Joris Griffioen",
+    "email": "joris.griffioen@live.nl",
+    "url": ""
+  },
+  "engines": {
+    "node": ">= 0.6.0",
+    "npm": ">= 1.0.0"
+  },
+  "private": true,
+  "main": "server.js"
+}
