@@ -30,7 +30,7 @@ var SampleApp = function() {
             //  allows us to run/test the app locally.
             console.warn('No OPENSHIFT_NODEJS_IP var, using 127.0.0.1');
             self.ipaddress = "127.0.0.1";
-        };
+        }
     };
 
 
@@ -95,16 +95,14 @@ var SampleApp = function() {
     self.createRoutes = function() {
         self.routes = { };
 
-        self.routes['/asciimo'] = function(req, res) {
-            var link = "http://i.imgur.com/kmbjB.png";
-            res.send("<html><body><img src='" + link + "'></body></html>");
-        };
-
-        self.routes['/'] = function(req, res) {
+        /*
+		self.routes['/'] = function(req, res) {
             res.setHeader('Content-Type', 'text/html');
             res.send(self.cache_get('index.html') );
         };
+		*/
     };
+
 
 
     /**
@@ -113,12 +111,15 @@ var SampleApp = function() {
      */
     self.initializeServer = function() {
         self.createRoutes();
-        self.app = express.createServer();
-
+        self.app = express();
+		self.app.set('title', 'Grouplanner');
         //  Add handlers for the app (from the routes).
-        for (var r in self.routes) {
+        /*
+		for (var r in self.routes) {
             self.app.get(r, self.routes[r]);
         }
+		*/
+		self.app.use("/", express.static(__dirname + '/www'));
     };
 
 
