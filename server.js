@@ -3,15 +3,13 @@
 var express = require('express');
 var fs      = require('fs');
 
-
 /**
  *  Define the sample application.
  */
-var SampleApp = function() {
+var GrouplannerApp = function() {
 
     //  Scope.
     var self = this;
-
 
     /*  ================================================================  */
     /*  Helper functions.                                                 */
@@ -33,27 +31,6 @@ var SampleApp = function() {
         }
     };
 
-
-    /**
-     *  Populate the cache.
-     */
-    self.populateCache = function() {
-        if (typeof self.zcache === "undefined") {
-            self.zcache = { 'index.html': '' };
-        }
-
-        //  Local cache for static content.
-        self.zcache['index.html'] = fs.readFileSync('./www/index.html');
-    };
-
-
-    /**
-     *  Retrieve entry (content) from cache.
-     *  @param {string} key  Key identifying content to retrieve from cache.
-     */
-    self.cache_get = function(key) { return self.zcache[key]; };
-
-
     /**
      *  terminator === the termination handler
      *  Terminate server on receipt of the specified signal.
@@ -61,8 +38,7 @@ var SampleApp = function() {
      */
     self.terminator = function(sig){
         if (typeof sig === "string") {
-           console.log('%s: Received %s - terminating sample app ...',
-                       Date(Date.now()), sig);
+           console.log('%s: Received %s - terminating sample app ...', Date(Date.now()), sig);
            process.exit(1);
         }
         console.log('%s: Node server stopped.', Date(Date.now()) );
@@ -90,45 +66,20 @@ var SampleApp = function() {
     /*  ================================================================  */
 
     /**
-     *  Create the routing table entries + handlers for the application.
-     */
-    self.createRoutes = function() {
-        self.routes = { };
-
-        /*
-		self.routes['/'] = function(req, res) {
-            res.setHeader('Content-Type', 'text/html');
-            res.send(self.cache_get('index.html') );
-        };
-		*/
-    };
-
-
-
-    /**
      *  Initialize the server (express) and create the routes and register
      *  the handlers.
      */
     self.initializeServer = function() {
-        self.createRoutes();
         self.app = express();
 		self.app.set('title', 'Grouplanner');
-        //  Add handlers for the app (from the routes).
-        /*
-		for (var r in self.routes) {
-            self.app.get(r, self.routes[r]);
-        }
-		*/
 		self.app.use("/", express.static(__dirname + '/www'));
     };
-
 
     /**
      *  Initializes the sample application.
      */
     self.initialize = function() {
         self.setupVariables();
-        self.populateCache();
         self.setupTerminationHandlers();
 
         // Create the express server and routes.
@@ -142,8 +93,7 @@ var SampleApp = function() {
     self.start = function() {
         //  Start the app on the specific interface (and port).
         self.app.listen(self.port, self.ipaddress, function() {
-            console.log('%s: Node server started on %s:%d ...',
-                        Date(Date.now() ), self.ipaddress, self.port);
+            console.log('%s: Node server started on %s:%d ...', Date(Date.now() ), self.ipaddress, self.port);
         });
     };
 
@@ -154,7 +104,7 @@ var SampleApp = function() {
 /**
  *  main():  Main code.
  */
-var zapp = new SampleApp();
-zapp.initialize();
-zapp.start();
+var grouplanner = new GrouplannerApp();
+grouplanner.initialize();
+grouplanner.start();
 
