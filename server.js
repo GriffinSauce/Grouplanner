@@ -2,6 +2,8 @@
 //  OpenShift sample Node application
 var express = require('express');
 var fs      = require('fs');
+var User = require(__dirname + '/db/user.js');
+var mongoose = require('mongoose');
 
 /**
  *  Define the sample application.
@@ -60,6 +62,15 @@ var GrouplannerApp = function() {
         });
     };
 
+	self.setupDatabaseConnection = function()
+	{
+		mongoose.connect('mongodb://' + self.ipaddress);
+		var db = mongoose.connection;
+		db.once('open', function callback () {
+		  console.log('Connected to the database');
+		});
+	}
+
 
     /*  ================================================================  */
     /*  App server functions (main app logic here).                       */
@@ -73,7 +84,14 @@ var GrouplannerApp = function() {
         self.app = express();
 		self.app.set('title', 'Grouplanner');
 		self.app.use("/", express.static(__dirname + '/www'));
+		self.app.use(express.bodyParser());
+		self.app.post('/user', self.addUser);
     };
+
+	self.addUser = function(req, res)
+	{
+		var user = new User(req.body);
+	}
 
     /**
      *  Initializes the sample application.
@@ -81,7 +99,7 @@ var GrouplannerApp = function() {
     self.initialize = function() {
         self.setupVariables();
         self.setupTerminationHandlers();
-
+		self.setupDatabaseConnection();
         // Create the express server and routes.
         self.initializeServer();
     };
