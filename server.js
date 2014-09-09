@@ -91,6 +91,12 @@ var GrouplannerApp = function() {
 	self.addUser = function(req, res)
 	{
 		var user = new User(req.body);
+		user.save(function(err)
+		{
+			if(err) { console.log('Error saving user %s %s to the database', user.name.first, user.name.last); }
+			else { console.log('User %s %s saved to the database', user.name.first, user.name.last); }
+			res.send('saved');
+		});
 	}
 
     /**
