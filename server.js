@@ -1,7 +1,6 @@
 #!/bin/env node
 //  OpenShift sample Node application
 var express = require('express');
-var fs      = require('fs');
 var User = require(__dirname + '/db/user.js');
 var mongoose = require('mongoose');
 
@@ -57,7 +56,7 @@ var GrouplannerApp = function() {
         // Removed 'SIGPIPE' from the list - bugz 852598.
         ['SIGHUP', 'SIGINT', 'SIGQUIT', 'SIGILL', 'SIGTRAP', 'SIGABRT',
          'SIGBUS', 'SIGFPE', 'SIGUSR1', 'SIGSEGV', 'SIGUSR2', 'SIGTERM'
-        ].forEach(function(element, index, array) {
+        ].forEach(function(element) {
             process.on(element, function() { self.terminator(element); });
         });
     };
@@ -69,7 +68,7 @@ var GrouplannerApp = function() {
 		db.once('open', function callback () {
 		  console.log('Connected to the database');
 		});
-	}
+	};
 
 
     /*  ================================================================  */
@@ -97,7 +96,7 @@ var GrouplannerApp = function() {
 			else { console.log('User %s %s saved to the database', user.name.first, user.name.last); }
 			res.send('saved');
 		});
-	}
+	};
 
     /**
      *  Initializes the sample application.
