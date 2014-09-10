@@ -84,7 +84,8 @@ var GrouplannerApp = function() {
 		self.app.set('title', 'Grouplanner');
 		self.app.use("/", express.static(__dirname + '/www'));
 		self.app.use(express.bodyParser());
-		self.app.post('/user', self.addUser);
+		self.app.put('/user', self.addUser);
+		self.app.get('/user/:userid', self.getUser);
     };
 
 	self.addUser = function(req, res)
@@ -94,7 +95,15 @@ var GrouplannerApp = function() {
 		{
 			if(err) { console.log('Error saving user %s %s to the database', user.name.first, user.name.last); }
 			else { console.log('User %s %s saved to the database', user.name.first, user.name.last); }
-			res.send('saved');
+			res.send('saved as: ' + user._id + '\n');
+		});
+	};
+
+	self.getUser = function(req, res)
+	{
+		User.findOne({_id: req.params.userid}, function(err, user)
+		{
+			res.send(JSON.stringify(user));
 		});
 	};
 
