@@ -4,6 +4,9 @@ var express = require('express');
 var User = require(__dirname + '/db/user.js');
 var mongoose = require('mongoose');
 
+var passport = require('passport');
+var GoogleStrategy = require('passport-google').Strategy;
+
 /**
  *  Define the sample application.
  */
@@ -84,6 +87,11 @@ var GrouplannerApp = function() {
 		self.app.set('title', 'Grouplanner');
 		self.app.use("/", express.static(__dirname + '/www'));
 		self.app.use(express.bodyParser());
+		self.app.use(express.session({secret: 'fg783#$%f'}));
+  		self.app.use(passport.initialize());
+  		self.app.use(passport.session());
+		self.app.get('/auth/google', passport.authenticate('google'));
+		self.app.get('/auth/google/return', passport.authenticate('google', {successRedirect: '/', failureRedirect: '/login.html'}));
 		self.app.put('/user', self.addUser);
 		self.app.get('/user/:userid', self.getUser);
     };
@@ -107,6 +115,30 @@ var GrouplannerApp = function() {
 		});
 	};
 
+	self.setupAuthentication = function()
+	{
+		passport.use(new GoogleStrategy(
+			{
+				returnURL: 'http://www.example.com/auth/google/return',
+				realm: 'http://localhost:8085/'
+			},
+			function(identifier, profile, done)
+			{
+				console.log(profile);
+				User.findOrCreate({ openId: identifier }, function(err, user)
+				{
+					done(err, user);
+				});
+			}
+		));
+		passport.serializeUser(function(user, done) { done(null, user.id); });
+		passport.deserializeUser(function(id, done) {
+			User.findById(id, function(err, user) {
+				done(err, user);
+			});
+		});
+	}
+
     /**
      *  Initializes the sample application.
      */
@@ -114,6 +146,7 @@ var GrouplannerApp = function() {
         self.setupVariables();
         self.setupTerminationHandlers();
 		self.setupDatabaseConnection();
+		self.setupAuthentication();
         // Create the express server and routes.
         self.initializeServer();
     };

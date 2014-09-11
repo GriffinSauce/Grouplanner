@@ -14,6 +14,7 @@ var userSchema = new Schema(
 		created: { type: Date, default: Date.now },
 		loggedin: { type: Date, default: Date.now },
 	},
+	openId: {type: String},
 	meta:
 	{
 
