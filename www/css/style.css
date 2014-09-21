@@ -102,13 +102,10 @@ body{
 
 		#avail-plan
 		{
-			display: flex;
-			justify-content: space-between;
 			width:100%;
-			padding-top: 0.5em;
 			text-align: center;
 			overflow: hidden;
-			background-image: url(../img/trianglify-background.svg);
+			/*background-image: url(../img/trianglify-background.svg);*/
 
 			/* TODO: remove below, crop SVG and set background cover */
 			background-position: 100% 100%;
@@ -116,44 +113,59 @@ body{
 		}
 			#avail-plan .day
 			{
+				position: relative;
+				display:flex;
+				flex-direction: row;
+				align-items: stretch;
 				width:100%;
+				height: 4.5em;
 				padding: 0;
+				background-color:#FFF;
+				border-bottom: 0.1em solid #EEE;
 			}
-			#avail-plan .day .bar
-			{
-				height:15em;
-				width: 100%;
-				display: flex;
-				justify-content: flex-end;
-				flex-direction: column;
-				align-items: center;
-			}
-				#avail-plan .day .bar .bar-content
+				#avail-plan .day .label
 				{
-					position: relative;
-					background-color: #C9DACA;
-					height:0;
-					width:80%;
-					border-top-left-radius: 0.2em;
-					border-top-right-radius: 0.2em;
+					height:100%;
+					padding:0.5em;
+					width:3em;
+					flex-basis: 3em;
+					flex-shrink: 0;
+					border-right: 0.1em solid #EEE;
 				}
-				#avail-plan .day .bar .bar-content.go
+				#avail-plan .day .bar
 				{
+					height:1em;
+					width: 100%;
+					margin:0.5em;
+					background-color:#EEE;
+				}
+					#avail-plan .day .bar .bar-content
+					{
+						position: relative;
+						background-color: #C9DACA;
+						height:1em;
+						width:0%;
+						border-top-left-radius: 0.2em;
+						border-top-right-radius: 0.2em;
+					}
+					#avail-plan .day.go .bar .bar-content
+					{
+						background-color:#5ed963;
+					}
+				#avail-plan .day .go-btn
+				{
+					position:absolute;
+					bottom:0.5em;
+					right:0.5em;
+					padding: 0.2em 0.7em 0.3em 0.7em;
+					color:#888;
+					background-color:#F0F0F0;
+				}
+				#avail-plan .day.go .go-btn
+				{
+					color:#FFF;
 					background-color:#5ed963;
 				}
-					#avail-plan .day .go-btn
-					{
-						position:absolute;
-						top:0;
-						opacity:0;
-						width: 100%;
-						padding-top: 0.5em;
-					}
-					#avail-plan .day .go .go-btn
-					{
-						opacity:1;
-						color:#FFF;
-					}
 
 
 
