@@ -5,7 +5,8 @@
 
 function App()
 {
-
+	var scope = this;
+	
 	this.init = function()
 	{
 		
@@ -59,7 +60,7 @@ function App()
 			el.addClass('available');
 		}
 		// TODO: Update day to db
-		this.updatePlanner();
+		scope.updatePlanner();
 	};
 	
 	this.updatePlanner = function()
