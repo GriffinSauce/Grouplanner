@@ -1,16 +1,19 @@
-
-/*$('#calendar').clndr({
-  template: $('#clndr-template').html()
-});*/
+// default period object for dev purposes
+// one week
+var p = new Period();
 
 function App()
 {
 	var scope = this;
 	
+	/*	
+	 *	Initialise the app
+	 *
+	 */
 	this.init = function()
 	{
 		
-		var days = this.getDays();
+		var days = this.getDays(p);
 		$('#avail-days').append(days);
 		$('#avail-days .day').bind('click tap', this.dayClicked);
 	
@@ -26,20 +29,16 @@ function App()
 		// No period given, write this week
 		if(!period)
 		{
-			var period = new Array(7);
-			for(var i=0; i<7; i++)
-			{
-				period[i] = moment().day(i+1);
-			}
+			period = new Period();
 		}
 		
 		// Build period HTML
 		var periodHMTL = [];
-		for(var i=0; i<period.length; i++)
+		for(var i=0; i<period.days.length; i++)
 		{
 			var day = $('<div class="day"></div>');
-			day.append('<div class="day-name">'+period[i].format('dd')+'</div>')
-			day.append('<div class="day-date">'+period[i].format('DD')+'</div>')
+			day.append('<div class="day-name">'+period.days[i].format('dd')+'</div>')
+			day.append('<div class="day-date">'+period.days[i].format('DD')+'</div>')
 			periodHMTL.push(day)
 		}
 		
@@ -63,6 +62,10 @@ function App()
 		scope.updatePlanner();
 	};
 	
+	/*	
+	 *	Update date picking UI
+	 *
+	 */
 	this.updatePlanner = function()
 	{
 		// TODO: Update availability bars
@@ -70,6 +73,43 @@ function App()
 	};
 	
 	
+}
+
+function Period(startDate,length)
+{
+	var scope = this;
+	
+	// Default to this week
+	this.startDate 	= typeof this.startDate !== 'undefined' ? this.startDate : moment().weekday(1);
+   	this.length 	= typeof this.length 	!== 'undefined' ? this.length 	 : 7;
+	
+	// Days in the period, array of moments
+	this.days = [];
+	
+	this.nextPeriod = function()
+	{
+		this.startDate.add(this.length,'d');
+		this.generateDays();
+	}
+	
+	this.prevPeriod = function()
+	{
+		this.startDate.subtract(this.length,'d');
+		this.generateDays();
+	}
+	
+	this.generateDays = function()
+	{
+		this.days = [];
+		var dateTemp = this.startDate.clone();
+		for(var i=0; i<this.length; i++)
+		{
+			this.days.push(dateTemp.clone());
+			dateTemp.add(1, 'd');
+		}
+	}
+	
+	this.generateDays();
 }
 
 var app = new App();
