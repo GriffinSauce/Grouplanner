@@ -121,7 +121,11 @@ body{
 				height: 4.5em;
 				padding: 0;
 				background-color:#FFF;
-				border-bottom: 0.1em solid #EEE;
+				border-bottom: 0.2em solid #F5F5f5;
+			}
+			#avail-plan .day:last-child
+			{
+				border-bottom: none;
 			}
 				#avail-plan .day .label
 				{
@@ -130,23 +134,33 @@ body{
 					width:3em;
 					flex-basis: 3em;
 					flex-shrink: 0;
-					border-right: 0.1em solid #EEE;
+					flex-grow: 0;
+					font-size: 110%;
 				}
+					#avail-plan .day .label .day-name
+					{
+						font-weight: 400;
+						color:#555;
+					}
+					#avail-plan .day .label .day-date
+					{
+						font-weight: 300;
+						color:#AAA;
+					}
 				#avail-plan .day .bar
 				{
 					height:1em;
 					width: 100%;
-					margin:0.5em;
+					margin:0.5em 0.5em 0.5em 0;
 					background-color:#EEE;
 				}
 					#avail-plan .day .bar .bar-content
 					{
 						position: relative;
-						background-color: #C9DACA;
+						background-color: #a0e6a4;
 						height:1em;
 						width:0%;
-						border-top-left-radius: 0.2em;
-						border-top-right-radius: 0.2em;
+						border-radius: 0.2em;
 					}
 					#avail-plan .day.go .bar .bar-content
 					{
