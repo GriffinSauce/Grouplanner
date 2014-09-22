@@ -14,9 +14,12 @@ function App()
 	{
 		
 		var days = this.getDays(p);
-		$('#avail-days').append(days);
+		$('#avail-days').html(days);
 		$('#avail-days .day').bind('click tap', this.dayClicked);
 	
+		$('.avail-control-button.next').bind('click tap', this.nextPeriod);
+		$('.avail-control-button.prev').bind('click tap', this.prevPeriod);
+		
 		console.log('APP INITIALISED');
 	};
 	
@@ -59,7 +62,7 @@ function App()
 			el.addClass('available');
 		}
 		// TODO: Update day to db
-		scope.updatePlanner();
+		scope.updatePicker();
 	};
 	
 	/*	
@@ -68,10 +71,33 @@ function App()
 	 */
 	this.updatePlanner = function()
 	{
-		// TODO: Update availability bars
-		// TODO: Add Plan buttons on 100% days
+		var days = scope.getDays(p);
+		$('#avail-days').html(days);
+		$('#avail-days .day').bind('click tap', scope.dayClicked);
+		
+		var periodName = p.days[0].format('D MMM')+' - '+p.days[p.days.length-1].format('D MMM');
+		$('#avail-controls .period span').text(periodName);
+		
+		scope.updatePicker();
 	};
 	
+	this.updatePicker = function()
+	{
+		// TODO: Update availability bars
+		// TODO: Add Plan buttons on 100% days
+	}
+	
+	this.nextPeriod = function()
+	{
+		p.nextPeriod();
+		scope.updatePlanner();
+	}
+	
+	this.prevPeriod = function()
+	{
+		p.prevPeriod();
+		scope.updatePlanner();
+	}
 	
 }
 
