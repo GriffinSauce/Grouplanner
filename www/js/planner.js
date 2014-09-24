@@ -53,8 +53,8 @@ function App()
 		for(var i=0; i<period.days.length; i++)
 		{
 			var day = $('<div class="day"></div>');
-			day.append('<div class="day-name">'+period.days[i].format('dd')+'</div>')
-			day.append('<div class="day-date">'+period.days[i].format('DD')+'</div>')
+			day.append('<div class="day-name">'+period.days[i].date.format('dd')+'</div>')
+			day.append('<div class="day-date">'+period.days[i].date.format('DD')+'</div>')
 			periodHMTL.push(day)
 		}
 		
@@ -89,7 +89,7 @@ function App()
 		$('#avail-days').html(days);
 		$('#avail-days .day').bind('click tap', scope.dayClicked);
 		
-		var periodName = p.days[0].format('D MMM')+' - '+p.days[p.days.length-1].format('D MMM');
+		var periodName = p.days[0].date.format('D MMM')+' - '+p.days[p.days.length-1].date.format('D MMM');
 		$('#avail-controls .period span').text(periodName);
 		
 		scope.updatePicker();
@@ -145,7 +145,7 @@ function App()
 
 /*
  *	Period class
- *	options.startDate: 	The starting date in DDMMYYYY format 	default: Monday of this week, will be converted to moment
+ *	options.startDate: 	The starting date in DDMMYYYY format 	default: Monday of this week, will be converted to Moment
  *	options.length:		The length of the period				default: 7 days
  */
 function Period(options)
@@ -159,16 +159,32 @@ function Period(options)
 	// Convert startDate to moment
 	this.startDate = moment(this.startDate,'DDMMYYYY');
 	
-	// Days in the period, array of moments
+	/* 	
+	*	Days in the period, contains array of objects:
+	* 	{
+	* 		date:Moment,
+	* 		availability:
+	* 		[
+	* 			userID:boolean,
+	* 			userID:boolean
+	* 		],
+	*		planned:boolean
+	* 	}
+	*/
 	this.days = [];
 	
+	// Generate days
 	this.generateDays = function()
 	{
-		this.days = [];
+		this.days = []; // reset
 		var dateTemp = this.startDate.clone();
 		for(var i=0; i<this.length; i++)
 		{
-			this.days.push(dateTemp.clone());
+			this.days.push({
+				date:dateTemp.clone(),
+				availability:[],
+				planned:false
+			});
 			dateTemp.add(1, 'd');
 		}
 	}
