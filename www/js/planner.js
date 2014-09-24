@@ -1,3 +1,5 @@
+/* global $,moment */
+
 /*
  *	App class
  *
@@ -17,7 +19,7 @@ function App()
 	// Data contains locally loaded periods, by startDate in DDMMYYYY format
 	// Contains only this week by default
 	this.data = {};
-	this.data[this.activePeriod] = new Period({length:this.periodLength})
+	this.data[this.activePeriod] = new Period({length:this.periodLength});
 	
 	/*	
 	 *	Initialise the app
@@ -53,13 +55,13 @@ function App()
 		for(var i=0; i<period.days.length; i++)
 		{
 			var day = $('<div class="day"></div>');
-			day.append('<div class="day-name">'+period.days[i].date.format('dd')+'</div>')
-			day.append('<div class="day-date">'+period.days[i].date.format('DD')+'</div>')
-			periodHMTL.push(day)
+			day.append('<div class="day-name">'+period.days[i].date.format('dd')+'</div>');
+			day.append('<div class="day-date">'+period.days[i].date.format('DD')+'</div>');
+			periodHMTL.push(day);
 		}
 		
 		return periodHMTL;
-	}
+	};
 	
 	/*	
 	 *	Clickhandler for days
@@ -103,7 +105,7 @@ function App()
 	{
 		// TODO: Update availability bars
 		// TODO: Add Plan buttons on 100% days
-	}
+	};
 	
 	/*	
 	 *	Switch to next period
@@ -121,7 +123,7 @@ function App()
 		}
 		
 		scope.updatePlanner();
-	}
+	};
 	
 	/*	
 	 *	Switch to previous period
@@ -139,7 +141,7 @@ function App()
 		}
 		
 		scope.updatePlanner();
-	}
+	};
 	
 }
 
@@ -187,7 +189,7 @@ function Period(options)
 			});
 			dateTemp.add(1, 'd');
 		}
-	}
+	};
 	
 	this.generateDays();
 	// TODO: Load actual data from db
