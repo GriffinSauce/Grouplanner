@@ -6,6 +6,15 @@ function App()
 {
 	var scope = this;
 	
+	// Currently active period
+	// Default to this week
+	this.activePeriod = moment().format('DDMMYYYY');
+	
+	// Data contains locally loaded periods, by startDate in DDMMYYYY format
+	// Contains only this week by default
+	this.data = {};
+	this.data[this.activePeriod] = new Period()
+	
 	/*	
 	 *	Initialise the app
 	 *
@@ -13,7 +22,7 @@ function App()
 	this.init = function()
 	{
 		
-		var days = this.getDays(p);
+		var days = this.getDays(this.data[this.activePeriod]);
 		$('#avail-days').html(days);
 		$('#avail-days .day').bind('click tap', this.dayClicked);
 	
@@ -106,8 +115,11 @@ function Period(startDate,length)
 	var scope = this;
 	
 	// Default to this week
-	this.startDate 	= typeof this.startDate !== 'undefined' ? this.startDate : moment().weekday(1);
+	this.startDate 	= typeof this.startDate !== 'undefined' ? this.startDate : moment().weekday(1).format('DDMMYYYY');
    	this.length 	= typeof this.length 	!== 'undefined' ? this.length 	 : 7;
+	
+	// Convert startDate to moment
+	this.startDate = moment(this.startDate,'DDMMYYYY');
 	
 	// Days in the period, array of moments
 	this.days = [];
