@@ -1,7 +1,7 @@
-// default period object for dev purposes
-// one week
-var p = new Period();
-
+/*
+ *	App class
+ *
+ */
 function App()
 {
 	var scope = this;
@@ -10,10 +10,14 @@ function App()
 	// Default to this week
 	this.activePeriod = moment().format('DDMMYYYY');
 	
+	// Period length
+	// Default 7
+	this.periodLength = 7;
+	
 	// Data contains locally loaded periods, by startDate in DDMMYYYY format
 	// Contains only this week by default
 	this.data = {};
-	this.data[this.activePeriod] = new Period()
+	this.data[this.activePeriod] = new Period({length:this.periodLength})
 	
 	/*	
 	 *	Initialise the app
@@ -75,11 +79,12 @@ function App()
 	};
 	
 	/*	
-	 *	Update date picking UI
+	 *	Update date availability UI
 	 *
 	 */
 	this.updatePlanner = function()
 	{
+		var p = this.data[this.activePeriod];
 		var days = scope.getDays(p);
 		$('#avail-days').html(days);
 		$('#avail-days .day').bind('click tap', scope.dayClicked);
@@ -90,51 +95,72 @@ function App()
 		scope.updatePicker();
 	};
 	
+	/*	
+	 *	Update date picking/planning UI
+	 *
+	 */
 	this.updatePicker = function()
 	{
 		// TODO: Update availability bars
 		// TODO: Add Plan buttons on 100% days
 	}
 	
+	/*	
+	 *	Switch to next period
+	 *
+	 */
 	this.nextPeriod = function()
 	{
-		p.nextPeriod();
+		// Get next period in DDMMYYYY string
+		scope.activePeriod = moment(scope.activePeriod, 'DDMMYYYY').add(scope.periodLength, 'd');
+		
+		// If Period doesn't exist, create new
+		if(typeof scope.data[scope.activePeriod] === 'undefined')
+		{
+			scope.data[scope.activePeriod] = new Period({startDate:scope.activePeriod, length:scope.periodLength});
+		}
+		
 		scope.updatePlanner();
 	}
 	
+	/*	
+	 *	Switch to previous period
+	 *
+	 */
 	this.prevPeriod = function()
 	{
-		p.prevPeriod();
+		// Get next period in DDMMYYYY string
+		scope.activePeriod = moment(scope.activePeriod, 'DDMMYYYY').subtract(scope.periodLength, 'd');
+		
+		// If Period doesn't exist, create new
+		if(typeof scope.data[scope.activePeriod] === 'undefined')
+		{
+			scope.data[scope.activePeriod] = new Period({startDate:scope.activePeriod, length:scope.periodLength});
+		}
+		
 		scope.updatePlanner();
 	}
 	
 }
 
-function Period(startDate,length)
+/*
+ *	Period class
+ *	options.startDate: 	The starting date in DDMMYYYY format 	default: Monday of this week, will be converted to moment
+ *	options.length:		The length of the period				default: 7 days
+ */
+function Period(options)
 {
 	var scope = this;
 	
 	// Default to this week
-	this.startDate 	= typeof this.startDate !== 'undefined' ? this.startDate : moment().weekday(1).format('DDMMYYYY');
-   	this.length 	= typeof this.length 	!== 'undefined' ? this.length 	 : 7;
+	this.startDate 	= typeof options.startDate !== 'undefined' ? options.startDate : moment().weekday(1).format('DDMMYYYY');
+   	this.length 	= typeof options.length 	!== 'undefined' ? options.length 	 : 7;
 	
 	// Convert startDate to moment
 	this.startDate = moment(this.startDate,'DDMMYYYY');
 	
 	// Days in the period, array of moments
 	this.days = [];
-	
-	this.nextPeriod = function()
-	{
-		this.startDate.add(this.length,'d');
-		this.generateDays();
-	}
-	
-	this.prevPeriod = function()
-	{
-		this.startDate.subtract(this.length,'d');
-		this.generateDays();
-	}
 	
 	this.generateDays = function()
 	{
@@ -148,6 +174,7 @@ function Period(startDate,length)
 	}
 	
 	this.generateDays();
+	// TODO: Load actual data from db
 }
 
 var app = new App();
