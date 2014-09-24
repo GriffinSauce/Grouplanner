@@ -1,5 +1,9 @@
 /* global $,moment */
 
+// UserID
+// TODO: Replace with the real deal after login
+var userID = "ITSAMEMARIO";
+
 /*
  *	App class
  *
@@ -52,11 +56,18 @@ function App()
 		
 		// Build period HTML
 		var periodHMTL = [];
-		for(var i=0; i<period.days.length; i++)
+		for(var date in period.days)
 		{
 			var day = $('<div class="day"></div>');
-			day.append('<div class="day-name">'+period.days[i].date.format('dd')+'</div>');
-			day.append('<div class="day-date">'+period.days[i].date.format('DD')+'</div>');
+			day.append('<div class="day-name">'+period.days[date].date.format('dd')+'</div>');
+			day.append('<div class="day-date">'+period.days[date].date.format('DD')+'</div>');
+			day.data('date',period.days[date].date.format('DDMMYYYY'));
+			
+			if(period.days[date].availability[userID] !== undefined && period.days[date].availability[userID] === true)
+			{
+				day.addClass('available');
+			}
+			
 			periodHMTL.push(day);
 		}
 		
@@ -70,13 +81,20 @@ function App()
 	this.dayClicked = function()
 	{
 		var el = $(this);
+		var date = el.data('date');
+		
+		// Update UI and data
 		if(el.hasClass('available'))
 		{
 			el.removeClass('available');
+			scope.data[scope.activePeriod].days[date].availability[userID] = false;
 		}else{
 			el.addClass('available');
+			scope.data[scope.activePeriod].days[date].availability[userID] = true;
 		}
+		
 		// TODO: Update day to db
+		
 		scope.updatePicker();
 	};
 	
@@ -86,12 +104,14 @@ function App()
 	 */
 	this.updatePlanner = function()
 	{
-		var p = this.data[this.activePeriod];
+		var p = scope.data[this.activePeriod];
 		var days = scope.getDays(p);
 		$('#avail-days').html(days);
 		$('#avail-days .day').bind('click tap', scope.dayClicked);
 		
-		var periodName = p.days[0].date.format('D MMM')+' - '+p.days[p.days.length-1].date.format('D MMM');
+		var startDay = p.startDate.format('D MMM');
+		var endDay = p.endDate.format('D MMM');
+		var periodName = startDay+' - '+endDay;
 		$('#avail-controls .period span').text(periodName);
 		
 		scope.updatePicker();
@@ -161,15 +181,18 @@ function Period(options)
 	// Convert startDate to moment
 	this.startDate = moment(this.startDate,'DDMMYYYY');
 	
+	// Set endDate
+	this.endDate = this.startDate.clone().add(this.length,'d');
+	
 	/* 	
 	*	Days in the period, contains array of objects:
 	* 	{
 	* 		date:Moment,
 	* 		availability:
-	* 		[
+	* 		{
 	* 			userID:boolean,
 	* 			userID:boolean
-	* 		],
+	* 		},
 	*		planned:boolean
 	* 	}
 	*/
@@ -182,11 +205,11 @@ function Period(options)
 		var dateTemp = this.startDate.clone();
 		for(var i=0; i<this.length; i++)
 		{
-			this.days.push({
+			this.days[dateTemp.format('DDMMYYYY')] = {
 				date:dateTemp.clone(),
-				availability:[],
+				availability:{},
 				planned:false
-			});
+			};
 			dateTemp.add(1, 'd');
 		}
 	};
