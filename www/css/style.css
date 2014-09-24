@@ -4,8 +4,242 @@ html
 	height:100%;
 	font-family:Roboto, "sans-serif";
 	background-color:#E0E0E0;
+	
 }
 body{
 	padding: 0.5em;
 	margin: 0;
 }
+
+
+
+
+#availability
+{
+	width:100%;
+}
+
+	#avail-controls
+	{	
+		display:flex;
+		justify-content:space-between;
+		text-align: center;
+		height:4em;
+		margin-bottom:1em;
+	}
+		#avail-controls .avail-control-button
+		{	
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			width:20%;
+			font-size: 180%;
+			font-weight: 700;
+			color:#333;
+		}
+		#avail-controls .period
+		{	
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			width:60%;
+			font-size: 140%;
+			font-weight: 300;
+			color:#333;
+		}
+	
+	.wrapper
+	{
+		border-radius: 0.15em;
+		overflow:hidden;
+		margin-bottom:1em;
+		box-shadow: 0 0.1em 0.2em 0 rgba(0, 0, 0, 0.08);
+	}
+		.header
+		{
+			width:100%;
+			padding: 0.2em 0 0.3em 0;
+			background-color:#F9F9F9;
+			font-size:85%;
+			font-style: italic;
+			text-align:center;
+			color: #9E9E9E;
+		}
+
+		#avail-days
+		{
+			display: flex;
+			justify-content: space-between;
+			width:100%;
+			text-align: center;
+			overflow: hidden;
+		}
+			#avail-days .day
+			{
+				width:100%;
+				padding: 0.6em 0em 0.6em 0em;
+				background-color:#FFF;
+			}
+			#avail-days .day.available
+			{
+				color:#FFF;
+				background-color:#5ED963;	
+			}
+			#avail-days .day .day-name
+			{
+				
+			}
+			#avail-days .day .day-date
+			{
+				font-size: 70%;
+				color: #9d9d9d;
+			}
+			#avail-days .day.available .day-date
+			{
+				color: #FFF !important;
+			}
+
+
+		#avail-plan
+		{
+			width:100%;
+			text-align: center;
+			overflow: hidden;
+			/*background-image: url(../img/trianglify-background.svg);*/
+
+			/* TODO: remove below, crop SVG and set background cover */
+			background-position: 100% 100%;
+			background-size: 190%;
+		}
+			#avail-plan .day
+			{
+				position: relative;
+				display:flex;
+				flex-direction: row;
+				align-items: stretch;
+				width:100%;
+				height: 4.5em;
+				padding: 0;
+				background-color:#FFF;
+				border-bottom: 0.2em solid #F5F5f5;
+			}
+			#avail-plan .day:last-child
+			{
+				border-bottom: none;
+			}
+				#avail-plan .day .label
+				{
+					height:100%;
+					padding:0.5em;
+					width:3em;
+					flex-basis: 3em;
+					flex-shrink: 0;
+					flex-grow: 0;
+					font-size: 110%;
+				}
+					#avail-plan .day .label .day-name
+					{
+						font-weight: 400;
+						color:#555;
+					}
+					#avail-plan .day .label .day-date
+					{
+						font-weight: 300;
+						color:#AAA;
+					}
+				#avail-plan .day .bar
+				{
+					height:1em;
+					width: 100%;
+					margin:0.5em 0.5em 0.5em 0;
+					background-color:#EEE;
+				}
+					#avail-plan .day .bar .bar-content
+					{
+						position: relative;
+						background-color: #a0e6a4;
+						height:1em;
+						width:0%;
+						border-radius: 0.2em;
+					}
+					#avail-plan .day.go .bar .bar-content
+					{
+						background-color:#5ed963;
+					}
+				#avail-plan .day .go-btn
+				{
+					position:absolute;
+					bottom:0.5em;
+					right:0.5em;
+					padding: 0.2em 0.7em 0.3em 0.7em;
+					color:#888;
+					background-color:#F0F0F0;
+				}
+				#avail-plan .day.go .go-btn
+				{
+					color:#FFF;
+					background-color:#5ed963;
+				}
+
+
+
+	.btn#view-calendar
+	{
+		margin: 1em 0 1em 0;
+		padding: 0.6em 0.5em 0.7em 0.5em;
+		font-size: 120%;
+		color: #FFF;
+		background-color: #EB5A5A;
+		border-radius: 0.15em;
+		text-align: center;
+	}
+
+	#group-info
+	{
+		
+	}
+
+		#group-info h1
+		{	
+			width:100%;
+			font-weight:300;
+			font-size:140%;
+			font-style:italic;
+		}
+		
+		#group-info #users
+		{
+			display:flex;
+			justify-content: flex-start;
+			flex-wrap: wrap;
+			width:100%;
+		}
+			
+
+			#group-info #users .user
+			{
+				width: 33%;
+				text-align: center;
+				margin: 0em 0 1em 0;
+			}
+
+				#group-info #users .user .img
+				{
+					width: 5em;
+					height: 5em;
+					margin: 0em auto 0.5em auto;
+					background-color: #FFF;
+					border-radius: 100%;
+					overflow:hidden;
+				}
+					#group-info #users .user .img img
+					{
+						width:100%;
+						height:100%;
+					}
+
+				#group-info #users .user .name
+				{
+					font-size: 80%;
+					padding: 0 1em;
+				}
