@@ -16,9 +16,14 @@ function App()
 	// Default to this week
 	this.activePeriod = moment().format('DDMMYYYY');
 	
+	// Currently active group
+	// TODO: Load this from DB (on init?)
+	// TODO: Remove dummy
+	this.group = new Group({members:[userID]});
+	
 	// Period length
 	// Default 7
-	this.periodLength = 7;
+	this.periodLength = this.group.length;
 	
 	// Data contains locally loaded periods, by startDate in DDMMYYYY format
 	// Contains only this week by default
@@ -233,12 +238,12 @@ function Period(options)
  *
  *
  */
-function Group(members, options)
+function Group(options)
 {
 	var scope = this;
 	
 	// Defaults
-	var defaultOptions =
+	this.defaultOptions =
 	{
 		members:[],
 		length:7
