@@ -174,9 +174,19 @@ function Period(options)
 {
 	var scope = this;
 	
-	// Default to this week
-	this.startDate 	= typeof options.startDate !== 'undefined' ? options.startDate : moment().weekday(1).format('DDMMYYYY');
-   	this.length 	= typeof options.length 	!== 'undefined' ? options.length 	 : 7;
+	// Defaults
+	this.defaultOptions =
+	{
+		startDate:moment().weekday(1).format('DDMMYYYY'),
+		length:7
+	}
+	// Prevent options undefined error
+	options = typeof options !== 'undefined' ? options : scope.defaultOptions;
+	// Set props based on options or defaults
+	for(var prop in scope.defaultOptions)
+	{
+		scope[prop] = typeof options[prop]	!== 'undefined' ? options[prop]	: scope.defaultOptions[prop];
+	}
 	
 	// Convert startDate to moment
 	this.startDate = moment(this.startDate,'DDMMYYYY');
@@ -228,8 +238,18 @@ function Group(members, options)
 	var scope = this;
 	
 	// Defaults
-	this.length = typeof options.length !== 'undefined' ? options.length  : 7;
-	this.members = typeof members !== 'undefined' ? members  : [];
+	var defaultOptions =
+	{
+		members:[],
+		length:7
+	}
+	// Prevent options undefined error
+	options = typeof options !== 'undefined' ? options : scope.defaultOptions;
+	// Set props based on options or defaults
+	for(var prop in scope.defaultOptions)
+	{
+		scope[prop] = typeof options[prop]	!== 'undefined' ? options[prop]	: scope.defaultOptions[prop];
+	}
 	
 	// TODO: Build Add member function
 	this.addMember = function()
