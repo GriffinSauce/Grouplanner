@@ -228,9 +228,8 @@ function Group(members, options)
 	var scope = this;
 	
 	// Defaults
-	this.length = typeof options.length 	!== 'undefined' ? options.length 	 : 7;
-	
-	this.members = members;
+	this.length = typeof options.length !== 'undefined' ? options.length  : 7;
+	this.members = typeof members !== 'undefined' ? members  : [];
 	
 	// TODO: Build Add member function
 	this.addMember = function()
