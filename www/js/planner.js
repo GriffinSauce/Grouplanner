@@ -218,5 +218,36 @@ function Period(options)
 	// TODO: Load actual data from db
 }
 
+/*
+ *
+ *
+ *
+ */
+function Group(members, options)
+{
+	var scope = this;
+	
+	// Defaults
+	this.length = typeof options.length 	!== 'undefined' ? options.length 	 : 7;
+	
+	this.members = members;
+	
+	// TODO: Build Add member function
+	this.addMember = function()
+	{
+		
+	}
+	// TODO: Build Remove member function
+	this.removeMember = function()
+	{
+		
+	}
+	// TODO: Build Delete group function
+	this.delete = function()
+	{
+		
+	}
+}
+
 var app = new App();
 app.init();
