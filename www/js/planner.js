@@ -2,7 +2,7 @@
 
 // UserID
 // TODO: Replace with the real deal after login
-var userID = "ITSAMEMARIO";
+var userID = "Vla";
 
 /*
  *	App class
@@ -17,9 +17,9 @@ function App()
 	this.activePeriod = moment().format('DDMMYYYY');
 	
 	// Currently active group
-	// TODO: Load this from DB (on init?)
+	// TODO: Supply Group ID (from select, localstorage or default for the user)
 	// TODO: Remove dummy
-	this.group = new Group({members:[userID]});
+	this.group = new Group();
 	
 	// Period length
 	// Default 7
@@ -43,6 +43,17 @@ function App()
 	
 		$('.avail-control-button.next').bind('click tap', this.nextPeriod);
 		$('.avail-control-button.prev').bind('click tap', this.prevPeriod);
+		
+		// Dummy data
+		this.data[this.activePeriod].days[moment().weekday(1).format('DDMMYYYY')].availability = ["Frits","Joey","John","Klaas"];
+		this.data[this.activePeriod].days[moment().weekday(2).format('DDMMYYYY')].availability = ["Joey","John","Klaas"];
+		this.data[this.activePeriod].days[moment().weekday(3).format('DDMMYYYY')].availability = ["Frits","Joey"];
+		this.data[this.activePeriod].days[moment().weekday(4).format('DDMMYYYY')].availability = ["Frits","Joey","John","Klaas"];
+		this.data[this.activePeriod].days[moment().weekday(5).format('DDMMYYYY')].availability = ["Frits"];
+		this.data[this.activePeriod].days[moment().weekday(6).format('DDMMYYYY')].availability = [];
+		this.data[this.activePeriod].days[moment().weekday(7).format('DDMMYYYY')].availability = ["John","Klaas"];
+		
+		scope.updatePicker();
 		
 		console.log('APP INITIALISED');
 	};
@@ -92,10 +103,13 @@ function App()
 		if(el.hasClass('available'))
 		{
 			el.removeClass('available');
-			scope.data[scope.activePeriod].days[date].availability[userID] = false;
+			var i = scope.data[scope.activePeriod].days[date].availability.indexOf(userID);
+			if(i != -1) {
+				scope.data[scope.activePeriod].days[date].availability.splice(i, 1);	
+			}
 		}else{
 			el.addClass('available');
-			scope.data[scope.activePeriod].days[date].availability[userID] = true;
+			scope.data[scope.activePeriod].days[date].availability.push(userID);
 		}
 		
 		// TODO: Update day to db
@@ -128,8 +142,30 @@ function App()
 	 */
 	this.updatePicker = function()
 	{
-		// TODO: Update availability bars
-		// TODO: Add Plan buttons on 100% days
+		var days = scope.data[scope.activePeriod].days;
+		for(var key in days)
+		{
+			days[key].percent = (days[key].availability.length / scope.group.members.length) * 100;
+		}
+		// TODO: Order according to percent
+		var container = $('#avail-plan').empty();
+		for(var key in days)
+		{
+			// TODO: Use Group's allowed-absense setting
+			if(days[key].percent > 50)
+			{
+				// TODO: Use templates for crying out loud
+				var day = $('<div class="day"></div>');
+				day.append('<div class="label"><div class="day-name">'+days[key].date.format('dd')+'</div><div class="day-date">'+days[key].date.format('D')+'</div></div>');
+				day.append('<div class="bar"><div class="bar-content" style="width:'+days[key].percent+'%;"></div></div>');
+				day.append('<div class="go-btn">Go!</div>');
+				if(days[key].percent === 100)
+				{
+					day.addClass('go');
+				}
+				container.append(day);
+			}
+		}
 	};
 	
 	/*	
@@ -222,7 +258,7 @@ function Period(options)
 		{
 			this.days[dateTemp.format('DDMMYYYY')] = {
 				date:dateTemp.clone(),
-				availability:{},
+				availability:[],
 				planned:false
 			};
 			dateTemp.add(1, 'd');
@@ -238,24 +274,19 @@ function Period(options)
  *
  *
  */
-function Group(options)
+function Group(id)
 {
 	var scope = this;
 	
-	// Defaults
-	this.defaultOptions =
-	{
-		members:[],
-		length:7
-	}
-	// Prevent options undefined error
-	options = typeof options !== 'undefined' ? options : scope.defaultOptions;
-	// Set props based on options or defaults
-	for(var prop in scope.defaultOptions)
-	{
-		scope[prop] = typeof options[prop]	!== 'undefined' ? options[prop]	: scope.defaultOptions[prop];
-	}
+	// Array holding the group members
+	this.members = [];
 	
+	// TODO: Get this stuff from database based on ID
+	this.init = function()
+	{
+		this.members = ["Vla","Frits","Joey","John","Klaas"];
+		this.length = 7;
+	}
 	// TODO: Build Add member function
 	this.addMember = function()
 	{
@@ -271,6 +302,9 @@ function Group(options)
 	{
 		
 	}
+	
+	// Initialise
+	this.init();
 }
 
 var app = new App();
