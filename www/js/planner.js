@@ -45,13 +45,13 @@ function App()
 		$('.avail-control-button.prev').bind('click tap', this.prevPeriod);
 		
 		// Dummy data
-		this.data[this.activePeriod].days[moment().weekday(1).format('DDMMYYYY')].availability = ["Frits","Joey","John","Klaas"];
-		this.data[this.activePeriod].days[moment().weekday(2).format('DDMMYYYY')].availability = ["Joey","John","Klaas"];
-		this.data[this.activePeriod].days[moment().weekday(3).format('DDMMYYYY')].availability = ["Frits","Joey"];
-		this.data[this.activePeriod].days[moment().weekday(4).format('DDMMYYYY')].availability = ["Frits","Joey","John","Klaas"];
-		this.data[this.activePeriod].days[moment().weekday(5).format('DDMMYYYY')].availability = ["Frits"];
-		this.data[this.activePeriod].days[moment().weekday(6).format('DDMMYYYY')].availability = [];
-		this.data[this.activePeriod].days[moment().weekday(7).format('DDMMYYYY')].availability = ["John","Klaas"];
+		this.data[this.activePeriod].days[moment().weekday(1).format('DDMMYYYY')].available = ["Frits","Joey","John","Klaas"];
+		this.data[this.activePeriod].days[moment().weekday(2).format('DDMMYYYY')].available = ["Joey","John","Klaas"];
+		this.data[this.activePeriod].days[moment().weekday(3).format('DDMMYYYY')].available = ["Frits","Joey"];
+		this.data[this.activePeriod].days[moment().weekday(4).format('DDMMYYYY')].available = ["Frits","Joey","John","Klaas"];
+		this.data[this.activePeriod].days[moment().weekday(5).format('DDMMYYYY')].available = ["Frits"];
+		this.data[this.activePeriod].days[moment().weekday(6).format('DDMMYYYY')].available = [];
+		this.data[this.activePeriod].days[moment().weekday(7).format('DDMMYYYY')].available = ["John","Klaas"];
 		
 		scope.updatePicker();
 		
@@ -79,7 +79,7 @@ function App()
 			day.append('<div class="day-date">'+period.days[date].date.format('DD')+'</div>');
 			day.data('date',period.days[date].date.format('DDMMYYYY'));
 			
-			if(period.days[date].availability[userID] !== undefined && period.days[date].availability[userID] === true)
+			if(period.days[date].available.indexOf(userID) !== -1)
 			{
 				day.addClass('available');
 			}
@@ -103,13 +103,13 @@ function App()
 		if(el.hasClass('available'))
 		{
 			el.removeClass('available');
-			var i = scope.data[scope.activePeriod].days[date].availability.indexOf(userID);
+			var i = scope.data[scope.activePeriod].days[date].available.indexOf(userID);
 			if(i != -1) {
-				scope.data[scope.activePeriod].days[date].availability.splice(i, 1);	
+				scope.data[scope.activePeriod].days[date].available.splice(i, 1);	
 			}
 		}else{
 			el.addClass('available');
-			scope.data[scope.activePeriod].days[date].availability.push(userID);
+			scope.data[scope.activePeriod].days[date].available.push(userID);
 		}
 		
 		// TODO: Update day to db
@@ -145,14 +145,14 @@ function App()
 		var days = scope.data[scope.activePeriod].days;
 		for(var key in days)
 		{
-			days[key].percent = (days[key].availability.length / scope.group.members.length) * 100;
+			days[key].percent = (days[key].available.length / scope.group.members.length) * 100;
 		}
 		// TODO: Order according to percent
 		var container = $('#avail-plan').empty();
 		for(var key in days)
 		{
 			// TODO: Use Group's allowed-absense setting
-			if(days[key].percent > 50)
+			if(days[key].percent >= 50)
 			{
 				// TODO: Use templates for crying out loud
 				var day = $('<div class="day"></div>');
@@ -175,7 +175,7 @@ function App()
 	this.nextPeriod = function()
 	{
 		// Get next period in DDMMYYYY string
-		scope.activePeriod = moment(scope.activePeriod, 'DDMMYYYY').add(scope.periodLength, 'd');
+		scope.activePeriod = moment(scope.activePeriod, 'DDMMYYYY').add(scope.periodLength, 'd').format('DDMMYYYY');
 		
 		// If Period doesn't exist, create new
 		if(typeof scope.data[scope.activePeriod] === 'undefined')
@@ -184,6 +184,7 @@ function App()
 		}
 		
 		scope.updatePlanner();
+		scope.updatePicker();
 	};
 	
 	/*	
@@ -193,7 +194,7 @@ function App()
 	this.prevPeriod = function()
 	{
 		// Get next period in DDMMYYYY string
-		scope.activePeriod = moment(scope.activePeriod, 'DDMMYYYY').subtract(scope.periodLength, 'd');
+		scope.activePeriod = moment(scope.activePeriod, 'DDMMYYYY').subtract(scope.periodLength, 'd').format('DDMMYYYY');
 		
 		// If Period doesn't exist, create new
 		if(typeof scope.data[scope.activePeriod] === 'undefined')
@@ -202,6 +203,7 @@ function App()
 		}
 		
 		scope.updatePlanner();
+		scope.updatePicker();
 	};
 	
 }
@@ -258,7 +260,7 @@ function Period(options)
 		{
 			this.days[dateTemp.format('DDMMYYYY')] = {
 				date:dateTemp.clone(),
-				availability:[],
+				available:[],
 				planned:false
 			};
 			dateTemp.add(1, 'd');
