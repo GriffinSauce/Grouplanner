@@ -1,3 +1,5 @@
+/* global $,moment,App,Group,Period */
+
 /*
  *	Period class
  *	options.startDate: 	The starting date in DDMMYYYY format 	default: Monday of this week, will be converted to Moment
@@ -10,7 +12,7 @@ function Period(options)
 	this.defaultOptions ={
 		startDate:moment().weekday(1).format('DDMMYYYY'),
 		length:7
-	}
+	};
 	options = typeof options !== 'undefined' ? options : scope.defaultOptions; // Prevent options undefined error
 	for(var prop in scope.defaultOptions)	
 	{

@@ -1,3 +1,5 @@
+/* global $,moment,App,Group,Period */
+
 /*
  *	App class
  *

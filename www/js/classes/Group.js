@@ -1,3 +1,5 @@
+/* global $,moment,App,Group,Period */
+
 /*
  *
  *
@@ -15,22 +17,22 @@ function Group(id)
 	{
 		this.members = ["Vla","Frits","Joey","John","Klaas"];
 		this.length = 7;
-	}
+	};
 	// TODO: Build Add member function
 	this.addMember = function()
 	{
 		
-	}
+	};
 	// TODO: Build Remove member function
 	this.removeMember = function()
 	{
 		
-	}
+	};
 	// TODO: Build Delete group function
 	this.delete = function()
 	{
 		
-	}
+	};
 	
 	// Initialise
 	this.init();

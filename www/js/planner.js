@@ -1,4 +1,4 @@
-/* global $,moment */
+/* global $,moment,App,Group,Period */
 
 // UserID
 // TODO: Replace with the real deal after login
