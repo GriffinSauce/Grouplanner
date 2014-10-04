@@ -53,38 +53,6 @@ function App()
 	};
 	
 	/*	
-	 *	getDays returns days in HTML for the given period
-	 *	no period = this week
-	 */
-	this.getDays = function(period)
-	{	
-		// No period given, write this week
-		if(!period)
-		{
-			period = new Period();
-		}
-		
-		// Build period HTML
-		var periodHMTL = [];
-		for(var date in period.days)
-		{
-			var day = $('<div class="day"></div>');
-			day.append('<div class="day-name">'+period.days[date].date.format('dd')+'</div>');
-			day.append('<div class="day-date">'+period.days[date].date.format('DD')+'</div>');
-			day.data('date',period.days[date].date.format('DDMMYYYY'));
-			
-			if(period.days[date].available.indexOf(userID) !== -1)
-			{
-				day.addClass('available');
-			}
-			
-			periodHMTL.push(day);
-		}
-		
-		return periodHMTL;
-	};
-	
-	/*	
 	 *	Clickhandler for days
 	 *
 	 */
