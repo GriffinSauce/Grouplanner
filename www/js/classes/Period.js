@@ -103,26 +103,19 @@ function Period(options)
 	};
 	
 	/*	
-	 *	Update date availability UI
+	 *	Update day availability UI
 	 *
 	 */
-	this.updatePlanner = function()
+	this.updateDays = function()
 	{
 		var p = scope;
 		var days = scope.getHTML();
 		$('#avail-days').html(days);
 		$('#avail-days .day').bind('click tap', scope.dayClicked);
-		
-		var startDay = p.startDate.format('D MMM');
-		var endDay = p.endDate.format('D MMM');
-		var periodName = startDay+' - '+endDay;
-		$('#avail-controls .period span').text(periodName);
-		
-		scope.updatePicker();
 	};
 	
 	/*	
-	 *	Update date picking/planning UI
+	 *	Update date planning UI
 	 *
 	 */
 	this.updatePicker = function()
@@ -155,10 +148,7 @@ function Period(options)
 	};
 	
 	this.generateDays();
+	this.updateDays();
 	this.updatePicker();
 	// TODO: Load actual data from db
-	
-	// Add days to screen
-	$('#avail-days').html(this.getHTML());
-	$('#avail-days .day').bind('click tap', scope.dayClicked);
 }

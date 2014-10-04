@@ -44,6 +44,7 @@ function App()
 		this.data[this.activePeriod].days[moment().weekday(5).format('DDMMYYYY')].available = ["Frits"];
 		this.data[this.activePeriod].days[moment().weekday(6).format('DDMMYYYY')].available = [];
 		this.data[this.activePeriod].days[moment().weekday(7).format('DDMMYYYY')].available = ["John","Klaas"];
+		this.data[this.activePeriod].updatePicker();
 		
 		console.log('APP INITIALISED');
 	};
@@ -62,9 +63,15 @@ function App()
 		{
 			scope.data[scope.activePeriod] = new Period({startDate:scope.activePeriod, length:scope.periodLength});
 		}else{
-			scope.data[scope.activePeriod].updatePlanner();
+			scope.data[scope.activePeriod].updateDays();
 			scope.data[scope.activePeriod].updatePicker();
 		}
+		
+		// Update period name display
+		var startDay = scope.data[scope.activePeriod].startDate.format('D MMM');
+		var endDay = scope.data[scope.activePeriod].endDate.format('D MMM');
+		var periodName = startDay+' - '+endDay;
+		$('#avail-controls .period span').text(periodName);
 	};
 	
 	/*	
@@ -81,9 +88,15 @@ function App()
 		{
 			scope.data[scope.activePeriod] = new Period({startDate:scope.activePeriod, length:scope.periodLength});
 		}else{
-			scope.data[scope.activePeriod].updatePlanner();
+			scope.data[scope.activePeriod].updateDays();
 			scope.data[scope.activePeriod].updatePicker();
 		}
+		
+		// Update period name display
+		var startDay = scope.data[scope.activePeriod].startDate.format('D MMM');
+		var endDay = scope.data[scope.activePeriod].endDate.format('D MMM');
+		var periodName = startDay+' - '+endDay;
+		$('#avail-controls .period span').text(periodName);
 	};
 	
 }
