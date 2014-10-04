@@ -28,7 +28,7 @@ function Period(options)
 	/* 	Days in the period, contains array of objects:
 	* 	{
 	* 		date:Moment,
-	* 		availability:{ userID:boolean, userID:boolean },
+	* 		availability:[ userID, userID ],
 	*		planned:boolean
 	* 	}
 	*/
