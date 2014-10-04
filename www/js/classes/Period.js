@@ -6,17 +6,13 @@
 function Period(options)
 {
 	var scope = this;
-	
-	// Defaults
-	this.defaultOptions =
-	{
+	// Set props based on options or defaults
+	this.defaultOptions ={
 		startDate:moment().weekday(1).format('DDMMYYYY'),
 		length:7
 	}
-	// Prevent options undefined error
-	options = typeof options !== 'undefined' ? options : scope.defaultOptions;
-	// Set props based on options or defaults
-	for(var prop in scope.defaultOptions)
+	options = typeof options !== 'undefined' ? options : scope.defaultOptions; // Prevent options undefined error
+	for(var prop in scope.defaultOptions)	
 	{
 		scope[prop] = typeof options[prop]	!== 'undefined' ? options[prop]	: scope.defaultOptions[prop];
 	}
@@ -27,8 +23,7 @@ function Period(options)
 	// Set endDate
 	this.endDate = this.startDate.clone().add(this.length,'d');
 	
-	/* 	
-	*	Days in the period, contains array of objects:
+	/* 	Days in the period, contains array of objects:
 	* 	{
 	* 		date:Moment,
 	* 		availability:{ userID:boolean, userID:boolean },
@@ -37,7 +32,9 @@ function Period(options)
 	*/
 	this.days = [];
 	
-	// Generate days
+	/*	
+	 *	Generate day objects
+	 */
 	this.generateDays = function()
 	{
 		this.days = []; // reset
@@ -110,7 +107,7 @@ function Period(options)
 	this.updatePlanner = function()
 	{
 		var p = scope;
-		var days = scope.getDays(p);
+		var days = scope.getHTML();
 		$('#avail-days').html(days);
 		$('#avail-days .day').bind('click tap', scope.dayClicked);
 		
@@ -156,6 +153,7 @@ function Period(options)
 	};
 	
 	this.generateDays();
+	this.updatePicker();
 	// TODO: Load actual data from db
 	
 	// Add days to screen

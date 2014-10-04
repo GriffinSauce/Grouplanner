@@ -43,8 +43,6 @@ function App()
 		this.data[this.activePeriod].days[moment().weekday(6).format('DDMMYYYY')].available = [];
 		this.data[this.activePeriod].days[moment().weekday(7).format('DDMMYYYY')].available = ["John","Klaas"];
 		
-		this.data[this.activePeriod].updatePicker();
-		
 		console.log('APP INITIALISED');
 	};
 	
@@ -61,10 +59,10 @@ function App()
 		if(typeof scope.data[scope.activePeriod] === 'undefined')
 		{
 			scope.data[scope.activePeriod] = new Period({startDate:scope.activePeriod, length:scope.periodLength});
+		}else{
+			scope.data[scope.activePeriod].updatePlanner();
+			scope.data[scope.activePeriod].updatePicker();
 		}
-		
-		scope.updatePlanner();
-		scope.updatePicker();
 	};
 	
 	/*	
@@ -80,10 +78,10 @@ function App()
 		if(typeof scope.data[scope.activePeriod] === 'undefined')
 		{
 			scope.data[scope.activePeriod] = new Period({startDate:scope.activePeriod, length:scope.periodLength});
+		}else{
+			scope.data[scope.activePeriod].updatePlanner();
+			scope.data[scope.activePeriod].updatePicker();
 		}
-		
-		scope.updatePlanner();
-		scope.updatePicker();
 	};
 	
 }
