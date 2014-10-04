@@ -22,7 +22,6 @@ function App()
 	// Data contains locally loaded periods, by startDate in DDMMYYYY format
 	// Contains only this week by default
 	this.data = {};
-	this.data[this.activePeriod] = new Period({length:this.periodLength});
 	
 	/*	
 	 *	Initialise the app
@@ -30,13 +29,10 @@ function App()
 	 */
 	this.init = function()
 	{
-		
-		var days = this.data[this.activePeriod].getHTML();
-		$('#avail-days').html(days);
-		$('#avail-days .day').bind('click tap', this.dayClicked);
-	
 		$('.avail-control-button.next').bind('click tap', this.nextPeriod);
 		$('.avail-control-button.prev').bind('click tap', this.prevPeriod);
+		
+		this.data[this.activePeriod] = new Period({length:this.periodLength});
 		
 		// Dummy data
 		this.data[this.activePeriod].days[moment().weekday(1).format('DDMMYYYY')].available = ["Frits","Joey","John","Klaas"];
@@ -47,88 +43,9 @@ function App()
 		this.data[this.activePeriod].days[moment().weekday(6).format('DDMMYYYY')].available = [];
 		this.data[this.activePeriod].days[moment().weekday(7).format('DDMMYYYY')].available = ["John","Klaas"];
 		
-		scope.updatePicker();
+		this.data[this.activePeriod].updatePicker();
 		
 		console.log('APP INITIALISED');
-	};
-	
-	/*	
-	 *	Clickhandler for days
-	 *
-	 */
-	this.dayClicked = function()
-	{
-		var el = $(this);
-		var date = el.data('date');
-		
-		// Update UI and data
-		if(el.hasClass('available'))
-		{
-			el.removeClass('available');
-			var i = scope.data[scope.activePeriod].days[date].available.indexOf(userID);
-			if(i != -1) {
-				scope.data[scope.activePeriod].days[date].available.splice(i, 1);	
-			}
-		}else{
-			el.addClass('available');
-			scope.data[scope.activePeriod].days[date].available.push(userID);
-		}
-		
-		// TODO: Update day to db
-		
-		scope.updatePicker();
-	};
-	
-	/*	
-	 *	Update date availability UI
-	 *
-	 */
-	this.updatePlanner = function()
-	{
-		var p = scope.data[this.activePeriod];
-		var days = scope.getDays(p);
-		$('#avail-days').html(days);
-		$('#avail-days .day').bind('click tap', scope.dayClicked);
-		
-		var startDay = p.startDate.format('D MMM');
-		var endDay = p.endDate.format('D MMM');
-		var periodName = startDay+' - '+endDay;
-		$('#avail-controls .period span').text(periodName);
-		
-		scope.updatePicker();
-	};
-	
-	/*	
-	 *	Update date picking/planning UI
-	 *
-	 */
-	this.updatePicker = function()
-	{
-		var days = scope.data[scope.activePeriod].days;
-		for(var key in days)
-		{
-			days[key].percent = (days[key].available.length / scope.group.members.length) * 100;
-		}
-		// TODO: Order according to percent
-		var container = $('#avail-plan').empty();
-		for(var key in days)
-		{
-			// TODO: Use Group's allowed-absense setting
-			if(days[key].percent >= 50)
-			{
-				// TODO: Use templates for crying out loud
-				// TODO: Write whole week once, then only update existing DOM
-				var day = $('<div class="day"></div>');
-				day.append('<div class="label"><div class="day-name">'+days[key].date.format('dd')+'</div><div class="day-date">'+days[key].date.format('D')+'</div></div>');
-				day.append('<div class="bar"><div class="bar-content" style="width:'+days[key].percent+'%;"></div></div>');
-				day.append('<div class="go-btn">Go!</div>');
-				if(days[key].percent === 100)
-				{
-					day.addClass('go');
-				}
-				container.append(day);
-			}
-		}
 	};
 	
 	/*	

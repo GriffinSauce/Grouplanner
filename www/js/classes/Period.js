@@ -31,11 +31,7 @@ function Period(options)
 	*	Days in the period, contains array of objects:
 	* 	{
 	* 		date:Moment,
-	* 		availability:
-	* 		{
-	* 			userID:boolean,
-	* 			userID:boolean
-	* 		},
+	* 		availability:{ userID:boolean, userID:boolean },
 	*		planned:boolean
 	* 	}
 	*/
@@ -78,10 +74,91 @@ function Period(options)
 			
 			periodHMTL.push(day);
 		}
-		
 		return periodHMTL;
+	};
+	
+	/*	
+	 *	Clickhandler for days
+	 *
+	 */
+	this.dayClicked = function()
+	{
+		var el = $(this);
+		var date = el.data('date');
+		
+		// Update UI and data
+		if(el.hasClass('available'))
+		{
+			el.removeClass('available');
+			var i = scope.days[date].available.indexOf(userID);
+			if(i != -1) {
+				scope.days[date].available.splice(i, 1);	
+			}
+		}else{
+			el.addClass('available');
+			scope.days[date].available.push(userID);
+		}
+		
+		// TODO: Update day to db
+		scope.updatePicker();
+	};
+	
+	/*	
+	 *	Update date availability UI
+	 *
+	 */
+	this.updatePlanner = function()
+	{
+		var p = scope;
+		var days = scope.getDays(p);
+		$('#avail-days').html(days);
+		$('#avail-days .day').bind('click tap', scope.dayClicked);
+		
+		var startDay = p.startDate.format('D MMM');
+		var endDay = p.endDate.format('D MMM');
+		var periodName = startDay+' - '+endDay;
+		$('#avail-controls .period span').text(periodName);
+		
+		scope.updatePicker();
+	};
+	
+	/*	
+	 *	Update date picking/planning UI
+	 *
+	 */
+	this.updatePicker = function()
+	{
+		var days = scope.days;
+		for(var key in days)
+		{
+			days[key].percent = (days[key].available.length / app.group.members.length) * 100;
+		}
+		// TODO: Order according to percent
+		var container = $('#avail-plan').empty();
+		for(var key in days)
+		{
+			// TODO: Use Group's allowed-absense setting
+			if(days[key].percent >= 50)
+			{
+				// TODO: Use templates for crying out loud
+				// TODO: Write whole week once, then only update existing DOM
+				var day = $('<div class="day"></div>');
+				day.append('<div class="label"><div class="day-name">'+days[key].date.format('dd')+'</div><div class="day-date">'+days[key].date.format('D')+'</div></div>');
+				day.append('<div class="bar"><div class="bar-content" style="width:'+days[key].percent+'%;"></div></div>');
+				day.append('<div class="go-btn">Go!</div>');
+				if(days[key].percent === 100)
+				{
+					day.addClass('go');
+				}
+				container.append(day);
+			}
+		}
 	};
 	
 	this.generateDays();
 	// TODO: Load actual data from db
+	
+	// Add days to screen
+	$('#avail-days').html(this.getHTML());
+	$('#avail-days .day').bind('click tap', scope.dayClicked);
 }
