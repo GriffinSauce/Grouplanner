@@ -67,11 +67,7 @@ function App()
 			scope.data[scope.activePeriod].updatePicker();
 		}
 		
-		// Update period name display
-		var startDay = scope.data[scope.activePeriod].startDate.format('D MMM');
-		var endDay = scope.data[scope.activePeriod].endDate.format('D MMM');
-		var periodName = startDay+' - '+endDay;
-		$('#avail-controls .period span').text(periodName);
+		scope.updateName();
 	};
 	
 	/*	
@@ -92,11 +88,19 @@ function App()
 			scope.data[scope.activePeriod].updatePicker();
 		}
 		
+		scope.updateName();
+	};
+	
+	/*	
+	 *	Update period display
+	 *
+	 */
+	this.updateName = function()
+	{
 		// Update period name display
 		var startDay = scope.data[scope.activePeriod].startDate.format('D MMM');
 		var endDay = scope.data[scope.activePeriod].endDate.format('D MMM');
 		var periodName = startDay+' - '+endDay;
 		$('#avail-controls .period span').text(periodName);
 	};
-	
 }
