@@ -11,43 +11,39 @@ body{
 	margin: 0;
 }
 
-
-
+#period-controls
+{	
+	display:flex;
+	justify-content:space-between;
+	text-align: center;
+	height:4em;
+	margin-bottom:1em;
+}
+	#period-controls .period-control-button
+	{	
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width:20%;
+		font-size: 180%;
+		font-weight: 700;
+		color:#333;
+	}
+	#period-controls .period
+	{	
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width:60%;
+		font-size: 140%;
+		font-weight: 300;
+		color:#333;
+	}
 
 #availability
 {
 	width:100%;
 }
-
-	#avail-controls
-	{	
-		display:flex;
-		justify-content:space-between;
-		text-align: center;
-		height:4em;
-		margin-bottom:1em;
-	}
-		#avail-controls .avail-control-button
-		{	
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			width:20%;
-			font-size: 180%;
-			font-weight: 700;
-			color:#333;
-		}
-		#avail-controls .period
-		{	
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			width:60%;
-			font-size: 140%;
-			font-weight: 300;
-			color:#333;
-		}
-	
 	.wrapper
 	{
 		border-radius: 0.15em;
@@ -105,11 +101,6 @@ body{
 			width:100%;
 			text-align: center;
 			overflow: hidden;
-			/*background-image: url(../img/trianglify-background.svg);*/
-
-			/* TODO: remove below, crop SVG and set background cover */
-			background-position: 100% 100%;
-			background-size: 190%;
 		}
 			#avail-plan .day
 			{

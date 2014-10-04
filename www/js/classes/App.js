@@ -31,64 +31,51 @@ function App()
 	 */
 	this.init = function()
 	{
-		$('.avail-control-button.next').bind('click tap', this.nextPeriod);
-		$('.avail-control-button.prev').bind('click tap', this.prevPeriod);
-		
-		this.data[this.activePeriod] = new Period({length:this.periodLength});
-		
-		// Dummy data
-		this.data[this.activePeriod].days[moment().weekday(1).format('DDMMYYYY')].available = ["Frits","Joey","John","Klaas"];
-		this.data[this.activePeriod].days[moment().weekday(2).format('DDMMYYYY')].available = ["Joey","John","Klaas"];
-		this.data[this.activePeriod].days[moment().weekday(3).format('DDMMYYYY')].available = ["Frits","Joey"];
-		this.data[this.activePeriod].days[moment().weekday(4).format('DDMMYYYY')].available = ["Frits","Joey","John","Klaas"];
-		this.data[this.activePeriod].days[moment().weekday(5).format('DDMMYYYY')].available = ["Frits"];
-		this.data[this.activePeriod].days[moment().weekday(6).format('DDMMYYYY')].available = [];
-		this.data[this.activePeriod].days[moment().weekday(7).format('DDMMYYYY')].available = ["John","Klaas"];
-		this.data[this.activePeriod].updatePicker();
+		$('.period-control-button.next').bind('click tap', this.nextPeriod);
+		$('.period-control-button.prev').bind('click tap', this.prevPeriod);
 		
 		console.log('APP INITIALISED');
 	};
 	
 	/*	
-	 *	Switch to next period
+	 *	Load a particular period
+	 *	Input a startDate as a DDMMYYYY string
+	 */
+	this.loadPeriod = function(p)
+	{
+		this.activePeriod = p;
+		// TODO: get data from DB
+		// If Period doesn't exist, create new
+		if(typeof scope.data[scope.activePeriod] === 'undefined')
+		{
+			scope.data[scope.activePeriod] = new Period({startDate:scope.activePeriod, length:scope.periodLength});
+		}else{
+			scope.data[scope.activePeriod].updateDays();
+			scope.data[scope.activePeriod].updatePicker();
+		}
+		scope.updateName();
+	}
+		
+	/*	
+	 *	Switch to next period and load
 	 *
 	 */
 	this.nextPeriod = function()
 	{
 		// Get next period in DDMMYYYY string
-		scope.activePeriod = moment(scope.activePeriod, 'DDMMYYYY').add(scope.periodLength, 'd').format('DDMMYYYY');
-		
-		// If Period doesn't exist, create new
-		if(typeof scope.data[scope.activePeriod] === 'undefined')
-		{
-			scope.data[scope.activePeriod] = new Period({startDate:scope.activePeriod, length:scope.periodLength});
-		}else{
-			scope.data[scope.activePeriod].updateDays();
-			scope.data[scope.activePeriod].updatePicker();
-		}
-		
-		scope.updateName();
+		var next = moment(scope.activePeriod, 'DDMMYYYY').add(scope.periodLength, 'd').format('DDMMYYYY');
+		scope.loadPeriod(next);
 	};
 	
 	/*	
-	 *	Switch to previous period
+	 *	Switch to previous period and load
 	 *
 	 */
 	this.prevPeriod = function()
 	{
 		// Get next period in DDMMYYYY string
-		scope.activePeriod = moment(scope.activePeriod, 'DDMMYYYY').subtract(scope.periodLength, 'd').format('DDMMYYYY');
-		
-		// If Period doesn't exist, create new
-		if(typeof scope.data[scope.activePeriod] === 'undefined')
-		{
-			scope.data[scope.activePeriod] = new Period({startDate:scope.activePeriod, length:scope.periodLength});
-		}else{
-			scope.data[scope.activePeriod].updateDays();
-			scope.data[scope.activePeriod].updatePicker();
-		}
-		
-		scope.updateName();
+		var prev = moment(scope.activePeriod, 'DDMMYYYY').subtract(scope.periodLength, 'd').format('DDMMYYYY');
+		scope.loadPeriod(prev);
 	};
 	
 	/*	
@@ -101,6 +88,6 @@ function App()
 		var startDay = scope.data[scope.activePeriod].startDate.format('D MMM');
 		var endDay = scope.data[scope.activePeriod].endDate.format('D MMM');
 		var periodName = startDay+' - '+endDay;
-		$('#avail-controls .period span').text(periodName);
+		$('#period-controls .period span').text(periodName);
 	};
 }
