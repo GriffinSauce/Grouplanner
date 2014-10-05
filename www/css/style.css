@@ -111,16 +111,16 @@ body{
 				width:100%;
 				height: 1.6em;
 				padding: 0;
-				background-color:#F0F0F0;
+				background-color:#F2F0F2;
 				
 			}
 			#avail-plan .day.doable,
 			#avail-plan .day.go
 			{
 				height: 4.5em;
-				border-top: 0.2em solid #F5F5f5;
-				border-bottom: 0.2em solid #F5F5f5;
-				margin:-0.2em 0 0 0;
+				border-top: 0.15em solid #F2F0F2;
+				border-bottom: 0.15em solid #F2F0F2;
+				margin:-0.15em 0 0 0;
 				background-color:#FFF;
 				transition:height 0.2s ease;
 			}
