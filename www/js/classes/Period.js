@@ -52,10 +52,31 @@ function Period(options)
 		}
 	};
 	
+	
 	/*	
-	 *	getHTML returns days in HTML
+	 *	Gets period html
 	 */
 	this.getHTML = function()
+	{
+		var data = {id:this.startDate.format('DDMMYYYY'),days:[]};
+		for(var date in scope.days)
+		{
+			data.days.push({
+				day:scope.days[date].date.format('dd'),
+				date:scope.days[date].date.format('DD'),
+				available:scope.days[date].available.indexOf(userID) !== -1,
+				percent:(scope.days[date].available.length / app.group.members.length) * 100
+			});
+		}
+		var compiledTemplate = Handlebars.getTemplate('availability');
+ 		return compiledTemplate(data);
+	}
+	
+	
+	/*	
+	 *	getDayHTML returns days in HTML
+	 */
+	this.getDayHTML = function()
 	{	
 		// Build period HTML
 		var periodHMTL = [];
@@ -109,7 +130,7 @@ function Period(options)
 	this.updateDays = function()
 	{
 		var p = scope;
-		var days = scope.getHTML();
+		var days = scope.getDayHTML();
 		$('#avail-days').html(days);
 		$('#avail-days .day').bind('click tap', scope.dayClicked);
 	};
