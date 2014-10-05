@@ -9,64 +9,17 @@
 		<link rel="icon" type="image/vnd.microsoft.icon" href="favicon.png" />
 		<link href="https://fonts.googleapis.com/css?family=Roboto:100,200,300,400,500,600,700" rel="stylesheet" type="text/css">
 		<link href="css/style.css" rel="stylesheet" type="text/css">
-		<link href="css/calendar.css" rel="stylesheet" type="text/css">
 	</head>
 	<body>
 		
+		<div id='period-controls'>
+			<div class='period-control-button prev'><span class='period-previous-button'>&lsaquo;</span></div>
+			<div class='period'><span>07 sept - 13 sept</span></div>
+			<div class='period-control-button next'><span class='period-next-button'>&rsaquo;</span></div>
+		</div>
 		
 		<div id="availability">
-			<div id='avail-controls'>
-				<div class='avail-control-button prev'><span class='avail-previous-button'>&lsaquo;</span></div>
-				<div class='period'><span>07 sept - 13 sept</span></div>
-				<div class='avail-control-button next'><span class='avail-next-button'>&rsaquo;</span></div>
-			</div>
-			
-			<div class="wrapper">
-				<div class='header'>
-					I'm available on
-				</div>
-				<div id='avail-days'>
-					
-				</div>
-			</div>
-			
-			<div class="wrapper">
-				<div class='header'>
-					Pick the best day
-				</div>
-				<div id='avail-plan'>
-					<div class="day go">
-						<div class="label">
-							<div class="day-name">Sa</div>
-							<div class="day-date">27</div>
-						</div>
-						<div class="bar">
-							<div class="bar-content" style="width:100%;"></div>
-						</div>
-						<div class="go-btn">Go!</div>
-					</div>
-					<div class="day">
-						<div class="label">
-							<div class="day-name">Mo</div>
-							<div class="day-date">22</div>
-						</div>
-						<div class="bar">
-							<div class="bar-content" style="width:70%;"></div>
-						</div>
-						<div class="go-btn">Go!</div>
-					</div>
-					<div class="day">
-						<div class="label">
-							<div class="day-name">Tu</div>
-							<div class="day-date">23</div>
-						</div>
-						<div class="bar">
-							<div class="bar-content" style="width:20%;"></div>
-						</div>
-						<div class="go-btn">Go!</div>
-					</div>
-				</div>
-			</div>
+		
 		</div>
 		
 		<div class="btn" id="view-calendar">
@@ -105,45 +58,13 @@
 			</div>
 		</div>
 		
-		
-		<script type="text/template" id="clndr-template">
-			<div class='clndr-controls'>
-				<div class='clndr-control-button'><span class='clndr-previous-button'>&lsaquo;</span></div>
-				<div class='month'><%= month %> <%= year %></div>
-				<div class='clndr-control-button rightalign'><span class='clndr-next-button'>&rsaquo;</span></div>
-			</div>
-			<table class='clndr-table' border='0' cellspacing='0' cellpadding='0'>
-				<thead>
-					<tr class='header-days'>
-						<% for(var i = 0; i < daysOfTheWeek.length; i++) { %>
-							<td class='header-day'><%= daysOfTheWeek[i] %></td>
-						<% } %>
-					</tr>
-				</thead>
-
-				<tbody>
-					<% for(var i = 0; i < numberOfRows; i++){ %>
-						<tr>
-							<% for(var j = 0; j < 7; j++){ %>
-								<% var d = j + i * 7; %>
-								<td class='<%= days[d].classes %>'>
-									<div class='day-contents'>
-										<%= days[d].day %>
-									</div>
-								</td>
-							<% } %>
-						</tr>
-					<% } %>
-				</tbody>
-			</table>
-		</script>
-		
-		<div id="calendar"></div>
-		
 	</body>
 	<script src="lib/jquery-2.1.1.min.js"></script>
 	<script src="lib/moment-with-locales.js"></script>
-	<script src="lib/underscore-min.js"></script>
-	<script src="lib/clndr.min.js"></script>
+	<script src="lib/handlebars-v2.0.0.js"></script>
+	<script src="js/handlebars-ext.js"></script>
+	<script src="js/classes/App.js"></script>
+	<script src="js/classes/Group.js"></script>
+	<script src="js/classes/Period.js"></script>
 	<script src="js/planner.js"></script>
 </html>
