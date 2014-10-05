@@ -63,7 +63,7 @@ var GrouplannerApp = function() {
 
 	self.setupDatabaseConnection = function()
 	{
-		mongoose.connect('mongodb://' + process.env.OPENSHIFT_MONGODB_DB_HOST);
+		mongoose.connect('mongodb://' + (process.env.OPENSHIFT_MONGODB_DB_HOST || self.ipaddress));
 		var db = mongoose.connection;
 		db.once('open', function callback () {
 		  console.log('Connected to the database');
