@@ -109,26 +109,45 @@ body{
 				flex-direction: row;
 				align-items: stretch;
 				width:100%;
-				height: 4.5em;
+				height: 1.6em;
 				padding: 0;
-				background-color:#FFF;
+				background-color:#F0F0F0;
+				
+			}
+			#avail-plan .day.doable,
+			#avail-plan .day.go
+			{
+				height: 4.5em;
+				border-top: 0.2em solid #F5F5f5;
 				border-bottom: 0.2em solid #F5F5f5;
+				margin:-0.2em 0 0 0;
+				background-color:#FFF;
+				transition:height 0.2s ease;
+			}
+			#avail-plan .day:first-child
+			{
+				border-top: none !important;
 			}
 			#avail-plan .day:last-child
 			{
-				border-bottom: none;
+				border-bottom: none !important;
 			}
 				#avail-plan .day .label
 				{
 					height:100%;
-					padding:0.5em;
+					padding:0 0.5em;
 					width:3em;
 					flex-basis: 3em;
 					flex-shrink: 0;
 					flex-grow: 0;
-					font-size: 110%;
 				}
-					#avail-plan .day .label .day-name
+				#avail-plan .day.doable .label,
+				#avail-plan .day.go .label
+				{
+					padding:0.5em;	
+				}
+					#avail-plan .day.doable .label  .day-name,
+					#avail-plan .day.go .label .day-name
 					{
 						font-weight: 400;
 						color:#555;
@@ -136,23 +155,47 @@ body{
 					#avail-plan .day .label .day-date
 					{
 						font-weight: 300;
+					}
+					#avail-plan .day .label .day-name,
+					#avail-plan .day .label .day-date
+					{
+						display: inline-block;
+						font-size: 80%;
 						color:#AAA;
+					}
+					#avail-plan .day.doable .label  .day-name,
+					#avail-plan .day.doable .label  .day-date,
+					#avail-plan .day.go .label .day-name
+					#avail-plan .day.go .label .day-date
+					{
+						display: block;
+						font-size: 110%;
 					}
 				#avail-plan .day .bar
 				{
-					height:1em;
+					height:0.5em;
 					width: 100%;
 					margin:0.5em 0.5em 0.5em 0;
 					background-color:#EEE;
 				}
+				#avail-plan .day.doable .bar,
+				#avail-plan .day.go .bar
+				{
+					height:1em;
+				}
+
 					#avail-plan .day .bar .bar-content
 					{
 						position: relative;
-						background-color: #a0e6a4;
-						height:1em;
+						background-color: #e0e0e0;
+						height:100%;
 						width:0%;
 						border-radius: 0.2em;
-						transition:width 1s ease;
+						transition:width 0.2s ease, background-color 0.2s ease;
+					}
+					#avail-plan .day.doable .bar .bar-content
+					{
+						background-color:#a0e6a4;
 					}
 					#avail-plan .day.go .bar .bar-content
 					{
@@ -160,15 +203,25 @@ body{
 					}
 				#avail-plan .day .go-btn
 				{
+					display:none;
+					opacity: 0;
 					position:absolute;
 					bottom:0.5em;
 					right:0.5em;
 					padding: 0.2em 0.7em 0.3em 0.7em;
 					color:#888;
 					background-color:#F0F0F0;
+					transition: opacity 0.1s ease 1s;
+				}
+				#avail-plan .day.doable .go-btn
+				{
+					display:block;
+					opacity: 1;
 				}
 				#avail-plan .day.go .go-btn
 				{
+					display:block;
+					opacity: 1;
 					color:#FFF;
 					background-color:#5ed963;
 				}
