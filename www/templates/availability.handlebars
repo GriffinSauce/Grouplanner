@@ -1,11 +1,11 @@
-<div id="{{id}}">
+<div class="period"  id="{{id}}">
 	<div class="wrapper">
 		<div class="header">
 			I'm available on
 		</div>
 		<div id="avail-days">
 			{{#each days}}
-			<div class="day {{#if available}}available{{/if}}">
+			<div class="day {{#if available}}available{{/if}}" id="{{dateFull}}">
 				<div class="day-name">{{day}}</div>
 				<div class="day-date">{{date}}</div>
 			</div>
@@ -19,7 +19,7 @@
 		</div>
 		<div id="avail-plan">
 			{{#each days}}
-			<div class="day">
+			<div class="day" id="{{dateFull}}">
 				<div class="label">
 					<div class="day-name">{{day}}</div>
 					<div class="day-date">{{date}}</div>

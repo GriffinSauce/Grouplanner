@@ -64,6 +64,7 @@ function Period(options)
 			data.days.push({
 				day:scope.days[date].date.format('dd'),
 				date:scope.days[date].date.format('DD'),
+				dateFull:date,
 				available:scope.days[date].available.indexOf(userID) !== -1,
 				percent:(scope.days[date].available.length / app.group.members.length) * 100
 			});
@@ -72,31 +73,6 @@ function Period(options)
  		return compiledTemplate(data);
 	}
 	
-	
-	/*	
-	 *	getDayHTML returns days in HTML
-	 */
-	this.getDayHTML = function()
-	{	
-		// Build period HTML
-		var periodHMTL = [];
-		for(var date in scope.days)
-		{
-			var day = $('<div class="day"></div>');
-			day.append('<div class="day-name">'+scope.days[date].date.format('dd')+'</div>');
-			day.append('<div class="day-date">'+scope.days[date].date.format('DD')+'</div>');
-			day.data('date',scope.days[date].date.format('DDMMYYYY'));
-			
-			if(scope.days[date].available.indexOf(userID) !== -1)
-			{
-				day.addClass('available');
-			}
-			
-			periodHMTL.push(day);
-		}
-		return periodHMTL;
-	};
-	
 	/*	
 	 *	Clickhandler for days
 	 *
@@ -104,7 +80,7 @@ function Period(options)
 	this.dayClicked = function()
 	{
 		var el = $(this);
-		var date = el.data('date');
+		var date = el.attr('id');
 		
 		// Update UI and data
 		if(el.hasClass('available'))
@@ -129,10 +105,17 @@ function Period(options)
 	 */
 	this.updateDays = function()
 	{
-		var p = scope;
-		var days = scope.getDayHTML();
-		$('#avail-days').html(days);
-		$('#avail-days .day').bind('click tap', scope.dayClicked);
+		var days = scope.days;
+		for(var key in days)
+		{
+			var day = $('#'+scope.startDate.format('DDMMYYYY')).find('#avail-days #'+key);
+			if(days[key].available.indexOf(userID) !== -1)
+			{
+				day.removeClass('available').addClass('available');
+			}else{
+				day.removeClass('available');	
+			}
+		}
 	};
 	
 	/*	
@@ -145,31 +128,33 @@ function Period(options)
 		for(var key in days)
 		{
 			days[key].percent = (days[key].available.length / app.group.members.length) * 100;
+			// TODO: Use Group's allowed-absense setting
+			
+			var day = $('#'+scope.startDate.format('DDMMYYYY')).find('#avail-plan #'+key);
+			day.find('.bar-content').css({width: days[key].percent+'%'});
+			
+			day.removeClass('doable go');
+			if(days[key].percent >= 50){ 	day.addClass('doable'); }
+			if(days[key].percent === 100){	day.addClass('go');		}
 		}
 		// TODO: Order according to percent
-		var container = $('#avail-plan').empty();
-		for(var key in days)
+	};
+	
+	this.activate = function()
+	{
+		$('#availability .period').hide();
+		var el = $('#'+scope.startDate.format('DDMMYYYY'));
+		var inDom = el.length !== 0;
+		if(inDom)
 		{
-			// TODO: Use Group's allowed-absense setting
-			if(days[key].percent >= 50)
-			{
-				// TODO: Use templates for crying out loud
-				// TODO: Write whole week once, then only update existing DOM
-				var day = $('<div class="day"></div>');
-				day.append('<div class="label"><div class="day-name">'+days[key].date.format('dd')+'</div><div class="day-date">'+days[key].date.format('D')+'</div></div>');
-				day.append('<div class="bar"><div class="bar-content" style="width:'+days[key].percent+'%;"></div></div>');
-				day.append('<div class="go-btn">Go!</div>');
-				if(days[key].percent === 100)
-				{
-					day.addClass('go');
-				}
-				container.append(day);
-			}
+			el.show();
+		}else{
+			var html = $(scope.getHTML());
+			$('#avail-days .day',html).bind('click tap', scope.dayClicked);
+			$('#availability').append(html);
 		}
 	};
 	
 	this.generateDays();
-	this.updateDays();
-	this.updatePicker();
 	// TODO: Load actual data from db
 }

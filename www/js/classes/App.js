@@ -49,10 +49,8 @@ function App()
 		if(typeof scope.data[scope.activePeriod] === 'undefined')
 		{
 			scope.data[scope.activePeriod] = new Period({startDate:scope.activePeriod, length:scope.periodLength});
-		}else{
-			scope.data[scope.activePeriod].updateDays();
-			scope.data[scope.activePeriod].updatePicker();
 		}
+		scope.data[scope.activePeriod].activate();
 		scope.updateName();
 	}
 		
