@@ -143,10 +143,12 @@ var GrouplannerApp = function() {
 			var googleStrategySettingsFile = require(__dirname + '/google-secret.json');
 			googleStrategySettings.client_id = googleStrategySettingsFile.web.client_id;
 			googleStrategySettings.client_secret = googleStrategySettingsFile.web.client_secret;
+			googleStrategySettings.callbackURL = 'http://' + self.ipaddress + ':' + self.port + '/oauth2callback';
 		} else
 		{
 			googleStrategySettings.client_id = process.env.GOOGLE_CLIENT_ID;
 			googleStrategySettings.client_secret = process.env.GOOGLE_CLIENT_SECRET;
+			googleStrategySettings.callbackURL = 'http://www.grouplanner.nl/oauth2callback';
 		}
 
 		passport.use(new GoogleStrategy
@@ -154,7 +156,7 @@ var GrouplannerApp = function() {
 			{
 				clientID: googleStrategySettings.client_id,
 				clientSecret: googleStrategySettings.client_secret,
-				callbackURL: 'http://' + self.ipaddress + ':' + self.port + '/oauth2callback'
+				callbackURL: googleStrategySettings.callbackURL
 			},
 			function(accessToken, refreshToken, profile, done)
 			{
