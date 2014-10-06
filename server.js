@@ -136,7 +136,7 @@ var GrouplannerApp = function() {
 
 	self.setupAuthentication = function()
 	{
-		var googleStrategySettings;
+		var googleStrategySettings = {};
 
 		if(self.environment == 'local')
 		{
