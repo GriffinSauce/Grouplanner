@@ -1,0 +1,35 @@
+<div class="period"  id="{{id}}">
+	<div class="wrapper">
+		<div class="header">
+			I'm available on
+		</div>
+		<div id="avail-days">
+			{{#each days}}
+			<div class="day {{#if available}}available{{/if}}" id="{{dateFull}}">
+				<div class="day-name">{{day}}</div>
+				<div class="day-date">{{date}}</div>
+			</div>
+			{{/each}}
+		</div>
+	</div>
+
+	<div class="wrapper">
+		<div class="header">
+			Pick the best day
+		</div>
+		<div id="avail-plan">
+			{{#each days}}
+			<div class="day" id="{{dateFull}}">
+				<div class="label">
+					<div class="day-name">{{day}}</div>
+					<div class="day-date">{{date}}</div>
+				</div>
+				<div class="bar">
+					<div class="bar-content" style="width:{{percent}}%;"></div>
+				</div>
+				<div class="go-btn">Go!</div>
+			</div>
+			{{/each}}
+		</div>
+	</div>
+</div>
