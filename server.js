@@ -1,11 +1,12 @@
 #!/bin/env node
 //  OpenShift sample Node application
 var express = require('express');
-var User = require(__dirname + '/db/user.js');
 var mongoose = require('mongoose');
 
 var passport = require('passport');
-var GoogleStrategy = require('passport-google').Strategy;
+var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+
+var User = require(__dirname + '/db/user.js');
 
 /**
  *  Define the sample application.
@@ -26,12 +27,14 @@ var GrouplannerApp = function() {
         //  Set the environment variables we need.
         self.ipaddress = process.env.OPENSHIFT_NODEJS_IP;
         self.port      = process.env.OPENSHIFT_NODEJS_PORT || 8085;
+		self.environment = 'remote';
 
         if (typeof self.ipaddress === "undefined") {
             //  Log errors on OpenShift but continue w/ 127.0.0.1 - this
             //  allows us to run/test the app locally.
             console.warn('No OPENSHIFT_NODEJS_IP var, using 127.0.0.1');
             self.ipaddress = "127.0.0.1";
+			self.environment = 'local';
         }
     };
 
@@ -82,18 +85,34 @@ var GrouplannerApp = function() {
      *  Initialize the server (express) and create the routes and register
      *  the handlers.
      */
-    self.initializeServer = function() {
+    self.initializeServer = function()
+	{
+		// Express init
         self.app = express();
 		self.app.set('title', 'Grouplanner');
-		self.app.use("/", express.static(__dirname + '/www'));
-		self.app.use(express.bodyParser());
-		self.app.use(express.session({secret: 'fg783#$%f'}));
-  		self.app.use(passport.initialize());
-  		self.app.use(passport.session());
-		self.app.get('/auth/google', passport.authenticate('google'));
-		self.app.get('/auth/google/return', passport.authenticate('google', {successRedirect: '/', failureRedirect: '/login.html'}));
+		self.app.use(passport.initialize());
+
+		// Passport routes
+		self.app.get('/auth/google', passport.authenticate('google', {scope: 'https://www.googleapis.com/auth/userinfo.email'}));
+		self.app.get('/oauth2callback', passport.authenticate('google', { failureRedirect: '/login' }),
+		function(req, res)
+		{
+			// Successful authentication, redirect home.
+			res.redirect('/');
+		});
+
+		// User test routes
 		self.app.put('/user', self.addUser);
 		self.app.get('/user/:userid', self.getUser);
+
+		self.app.use("/", express.static(__dirname + '/www'));
+
+		self.app.use(express.cookieParser());
+		self.app.use(express.bodyParser());
+		self.app.use(express.session({secret: 'fg783#$%f'}));
+
+		// Passport init
+  		self.app.use(passport.session());
     };
 
 	self.addUser = function(req, res)
@@ -117,17 +136,47 @@ var GrouplannerApp = function() {
 
 	self.setupAuthentication = function()
 	{
-		passport.use(new GoogleStrategy(
+		var googleStrategySettings;
+
+		if(self.environment == 'local')
+		{
+			var googleStrategySettingsFile = require(__dirname + '/google-secret.json');
+			googleStrategySettings.client_id = googleStrategySettingsFile.web.client_id;
+			googleStrategySettings.client_secret = googleStrategySettingsFile.web.client_secret;
+		} else
+		{
+			googleStrategySettings.client_id = process.env.GOOGLE_CLIENT_ID;
+			googleStrategySettings.client_secret = process.env.GOOGLE_CLIENT_SECRET;
+		}
+
+		passport.use(new GoogleStrategy
+		(
 			{
-				returnURL: 'http://www.example.com/auth/google/return',
-				realm: 'http://localhost:8085/'
+				clientID: googleStrategySettings.client_id,
+				clientSecret: googleStrategySettings.client_secret,
+				callbackURL: 'http://' + self.ipaddress + ':' + self.port + '/oauth2callback'
 			},
-			function(identifier, profile, done)
+			function(accessToken, refreshToken, profile, done)
 			{
-				console.log(profile);
-				User.findOrCreate({ openId: identifier }, function(err, user)
+				User.findOrCreate(
+					{
+						googleId: profile.id,
+						email: profile.emails[0].value,
+						username: profile.displayName,
+						name:
+						{
+							first: profile.name.givenName,
+							last: profile.name.familyName
+						},
+						gender: profile.gender,
+						picture: profile.picture
+					}, function (err, user)
 				{
-					done(err, user);
+					return done(err, user);
+				});
+				process.nextTick(function()
+				{
+					return done(null, profile);
 				});
 			}
 		));

@@ -1,4 +1,7 @@
+/*globals require, module */
+
 var mongoose = require('mongoose');
+var findOrCreate = require('mongoose-findorcreate');
 var Schema = mongoose.Schema;
 var userSchema = new Schema(
 {
@@ -14,7 +17,9 @@ var userSchema = new Schema(
 		created: { type: Date, default: Date.now },
 		loggedin: { type: Date, default: Date.now },
 	},
-	openId: {type: String},
+	googleId: {type: String},
+	picture: {type: String},
+	gender: {type: String},
 	meta:
 	{
 
@@ -25,5 +30,7 @@ userSchema.virtual('name.full').get(function()
 {
 	return this.name.first + ' ' + this.name.last;
 });
+
+userSchema.plugin(findOrCreate);
 
 module.exports = mongoose.model('User', userSchema);
