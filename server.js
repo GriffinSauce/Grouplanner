@@ -1,6 +1,7 @@
 #!/bin/env node
 //  OpenShift sample Node application
 var express = require('express');
+var handlebars = require('express-handlebars');
 var mongoose = require('mongoose');
 
 var passport = require('passport');
@@ -96,7 +97,18 @@ var GrouplannerApp = function() {
 		// Express init
         self.app = express();
 		self.app.set('title', 'Grouplanner');
+		self.app.use(express.cookieParser());
+		self.app.use(express.bodyParser());
+		self.app.use(express.methodOverride());
+		self.app.use(express.session({secret: 'fg783#$%f'}));
+
+		// Passport init
 		self.app.use(passport.initialize());
+  		self.app.use(passport.session());
+
+		// Add templating engine
+		self.app.engine('handlebars', handlebars());
+		self.app.set('view engine', 'handlebars');
 
 		// Passport routes
 		self.app.get('/auth/google', passport.authenticate('google', {scope: 'https://www.googleapis.com/auth/userinfo.email'}));
@@ -104,21 +116,29 @@ var GrouplannerApp = function() {
 		function(req, res)
 		{
 			// Successful authentication, redirect home.
-			res.redirect('/planner.html');
+			res.redirect('/planner');
 		});
 
 		// User test routes
 		self.app.put('/user', self.addUser);
 		self.app.get('/user/:userid', self.getUser);
 
+		// Set routes
+		self.app.get('/', function(req, res) { res.render('index'); });
+		self.app.get('/login', function(req, res) { res.render('login'); });
+		self.app.get('/planner', function(req, res)
+		{
+			if(req.user === undefined)
+			{
+				res.redirect('/login');
+			} else
+			{
+				res.render('planner', {user: req.user});
+			}
+		});
+
 		self.app.use("/", express.static(__dirname + '/www'));
 
-		self.app.use(express.cookieParser());
-		self.app.use(express.bodyParser());
-		self.app.use(express.session({secret: 'fg783#$%f'}));
-
-		// Passport init
-  		self.app.use(passport.session());
     };
 
 	self.addUser = function(req, res)
@@ -188,12 +208,9 @@ var GrouplannerApp = function() {
 				});
 			}
 		));
-		passport.serializeUser(function(user, done) { done(null, user.id); });
-		passport.deserializeUser(function(id, done) {
-			User.findById(id, function(err, user) {
-				done(err, user);
-			});
-		});
+
+		passport.serializeUser(function(user, done) { done(null, user); });
+		passport.deserializeUser(function(obj, done) { done(null, obj); });
 	}
 
     /**
