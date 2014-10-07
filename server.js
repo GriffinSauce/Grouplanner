@@ -98,7 +98,7 @@ var GrouplannerApp = function() {
 		function(req, res)
 		{
 			// Successful authentication, redirect home.
-			res.redirect('/planner');
+			res.redirect('/planner.html');
 		});
 
 		// User test routes
