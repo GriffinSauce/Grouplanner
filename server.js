@@ -170,8 +170,8 @@ var GrouplannerApp = function() {
 							first: profile.name.givenName,
 							last: profile.name.familyName
 						},
-						gender: profile.gender,
-						picture: profile.picture
+						gender: profile._json.gender,
+						picture: profile._json.picture
 					}, function (err, user)
 				{
 					return done(err, user);
