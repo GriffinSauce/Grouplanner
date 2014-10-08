@@ -214,7 +214,47 @@
 					background-color:#5ed963;
 				}
 
-
+		#planned
+		{
+			text-align: center;
+		}
+			#planned #day
+			{
+				padding:1em;
+				background-color:#FFF;
+			}
+				#planned #day .day-name
+				{
+					color:#333;
+					font-size:140%;
+					width:4em;
+					margin:auto;
+					padding-bottom: 0.5em;
+					border-bottom: 0.2em solid #5ed963;
+				}
+				#planned #day .day-date
+				{
+					color:#c1c1c1;
+					font-size:400%;
+				}
+				#planned #day .day-month
+				{
+					color:#989898;
+					font-size:140%;
+				}
+			#planned #available
+			{
+				color:#999;
+				padding:0.5em;
+				background-color: #f0f0f0;
+			}
+		#notes
+		{
+			padding:2em;
+			min-height:10em;
+			color:#333;
+			background-color:#e7ef85;
+		}
 
 	.btn#view-calendar
 	{

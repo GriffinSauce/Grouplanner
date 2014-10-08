@@ -61,19 +61,34 @@ function Period(options)
 	 */
 	this.getHTML = function()
 	{
-		var data = {id:this.startDate.format('DDMMYYYY'),days:[]};
-		for(var date in scope.days)
+		if(!scope.plannedDate)
 		{
-			data.days.push({
-				day:scope.days[date].date.format('dd'),
-				date:scope.days[date].date.format('DD'),
-				dateFull:date,
-				available:scope.days[date].available.indexOf(userID) !== -1,
-				percent:(scope.days[date].available.length / app.group.members.length) * 100
-			});
+			var data = {id:this.startDate.format('DDMMYYYY'),days:[]};
+			for(var date in scope.days)
+			{
+				data.days.push({
+					day:scope.days[date].date.format('dd'),
+					date:scope.days[date].date.format('DD'),
+					dateFull:date,
+					available:scope.days[date].available.indexOf(userID) !== -1,
+					percent:(scope.days[date].available.length / app.group.members.length) * 100
+				});
+			}
+			var compiledTemplate = Handlebars.getTemplate('availability');
+			return compiledTemplate(data);
+		}else{
+			// TODO: Use real data
+			var data = {
+				id:this.startDate.format('DDMMYYYY'),
+				day:'Monday',
+				date:'09',
+				month:'October',
+				available:'Frits, Joey and Klaas',
+				notes:'...'
+			};
+			var compiledTemplate = Handlebars.getTemplate('planned');
+			return compiledTemplate(data);
 		}
-		var compiledTemplate = Handlebars.getTemplate('availability');
- 		return compiledTemplate(data);
 	}
 	
 	/*	
@@ -120,18 +135,9 @@ function Period(options)
 		
 		// Update UI
 		var el = $('#'+scope.startDate.format('DDMMYYYY'));
-		el.empty();
-		// TODO: Use real data
-		var data = {
-			day:'Mo',
-			date:'09',
-			month:'October',
-			available:'Frits, Joey and Klaas',
-			notes:'...'
-		};
-		var compiledTemplate = Handlebars.getTemplate('planned');
- 		el.append(compiledTemplate(data));
-		
+		el.remove();
+		var html = $(scope.getHTML());
+ 		$('#availability').append(html);
 	};
 	
 	/*	
