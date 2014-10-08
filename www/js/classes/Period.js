@@ -119,6 +119,18 @@ function Period(options)
 		// TODO: Update data to db
 		
 		// Update UI
+		var el = $('#'+scope.startDate.format('DDMMYYYY'));
+		el.empty();
+		// TODO: Use real data
+		var data = {
+			day:'Mo',
+			date:'09',
+			month:'October',
+			available:'Frits, Joey and Klaas',
+			notes:'...'
+		};
+		var compiledTemplate = Handlebars.getTemplate('planned');
+ 		el.append(compiledTemplate(data));
 		
 	};
 	
