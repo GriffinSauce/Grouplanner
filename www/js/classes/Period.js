@@ -34,6 +34,9 @@ function Period(options)
 	*/
 	this.days = [];
 	
+	// Planned date, false or moment
+	this.plannedDate = false;
+	
 	/*	
 	 *	Generate day objects
 	 */
@@ -81,6 +84,7 @@ function Period(options)
 	{
 		var el = $(this);
 		var date = el.attr('id');
+		console.log('Changing availability on: '+date);
 		
 		// Update UI and data
 		if(el.hasClass('available'))
@@ -97,6 +101,25 @@ function Period(options)
 		
 		// TODO: Update day to db
 		scope.updatePicker();
+	};
+	
+	/*	
+	 *	Clickhandler for go buttons
+	 *
+	 */
+	this.goClicked = function()
+	{
+		var el = $(this);
+		var date = el.parent().attr('id');
+		console.log('Planning date: '+date);
+		
+		// Update data
+		scope.plannedDate = moment(date, 'DDMMYYYY');
+		scope.days[date].planned = true;
+		// TODO: Update data to db
+		
+		// Update UI
+		
 	};
 	
 	/*	
@@ -151,6 +174,7 @@ function Period(options)
 		}else{
 			var html = $(scope.getHTML());
 			$('#avail-days .day',html).bind('click tap', scope.dayClicked);
+			$('#avail-plan .go-btn',html).bind('click tap', scope.goClicked);
 			$('#availability').append(html);
 		}
 	};

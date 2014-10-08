@@ -198,6 +198,7 @@
 					padding: 0.2em 0.7em 0.3em 0.7em;
 					color:#888;
 					background-color:#F0F0F0;
+					cursor: pointer;
 					transition: opacity 0.1s ease 1s;
 				}
 				#avail-plan .day.doable .go-btn
