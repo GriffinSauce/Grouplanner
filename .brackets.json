@@ -1,0 +1,18 @@
+
+{
+	"path": {
+		"sass/grouplanner.scss": {
+			"sass.enabled": true,
+			"sass.options": {
+				"outputDir": "../www/css/",
+				"imagePath": null,
+				"sourceComments": "map",
+				"outputStyle": "nested"
+			}
+		},
+		"sass/imports/*.scss": {
+			"sass.enabled": false,
+			"linting.collapsed": false
+		}
+	}
+}

@@ -25,7 +25,10 @@
     "passport-google-oauth": "~0.1.5",
     "mongoose-findorcreate": "~0.1.2"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "gulp": "^3.8.8",
+    "gulp-sass": "^1.0.0"
+  },
   "bundleDependencies": [],
   "private": true,
   "main": "server.js"
