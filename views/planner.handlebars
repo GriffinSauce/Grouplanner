@@ -11,25 +11,30 @@
 		<link href="css/grouplanner.css" rel="stylesheet" type="text/css">
 	</head>
 	<body id="planner">
-		
+
+		<div id="TEST">
+			<img src="{{user.picture}}" width="75" height="75"/>
+			<span>{{user.username}}</span>
+		</div>
+
 		<div id='period-controls'>
 			<div class='period-control-button prev'><span class='period-previous-button'>&lsaquo;</span></div>
 			<div class='period'><span>07 sept - 13 sept</span></div>
 			<div class='period-control-button next'><span class='period-next-button'>&rsaquo;</span></div>
 		</div>
-		
+
 		<div id="availability">
-		
+
 		</div>
-		
+
 		<div class="btn" id="view-calendar">
 			<span></span>
 			<span>Remind people</span>
 		</div>
-			
+
 		<div id="group-info">
 			<h1>In this group:</h1>
-			
+
 			<div id="users">
 				<div class="user">
 					<div class="img"><img src="http://lorempixel.com/100/100/people" /></div>
@@ -45,19 +50,19 @@
 					<div class="img"><img src="http://lorempixel.com/102/102/people" /></div>
 					<div class="name">Joey Kakbek</div>
 				</div>
-				
+
 				<div class="user">
 					<div class="img"><img src="http://lorempixel.com/103/103/people" /></div>
 					<div class="name">John de Snol</div>
 				</div>
-				
+
 				<div class="user">
 					<div class="img"><img src="http://lorempixel.com/104/104/people" /></div>
 					<div class="name">Klaas Kleuter</div>
 				</div>
 			</div>
 		</div>
-		
+
 	</body>
 	<script src="lib/jquery-2.1.1.min.js"></script>
 	<script src="lib/moment-with-locales.js"></script>

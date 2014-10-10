@@ -23,7 +23,8 @@
     "mongoose": "~3.8.16",
     "passport": "~0.2.1",
     "passport-google-oauth": "~0.1.5",
-    "mongoose-findorcreate": "~0.1.2"
+    "mongoose-findorcreate": "~0.1.2",
+    "express-handlebars": "~1.1.0"
   },
   "devDependencies": {
     "gulp": "^3.8.8",

@@ -1,6 +1,7 @@
 #!/bin/env node
 //  OpenShift sample Node application
 var express = require('express');
+var handlebars = require('express-handlebars');
 var mongoose = require('mongoose');
 
 var passport = require('passport');
@@ -69,7 +70,13 @@ var GrouplannerApp = function() {
 
 	self.setupDatabaseConnection = function()
 	{
-		mongoose.connect('mongodb://' + (process.env.OPENSHIFT_MONGODB_DB_HOST || self.ipaddress));
+		if(self.environment == 'local')
+		{
+			mongoose.connect('mongodb://' + (process.env.OPENSHIFT_MONGODB_DB_HOST || self.ipaddress) + '/grouplanner');
+		} else
+		{
+			mongoose.connect('mongodb://' + process.env.MONGODB_USER + ':' + process.env.MONGODB_PASS + '@' + (process.env.OPENSHIFT_MONGODB_DB_HOST || self.ipaddress) + '/grouplanner');
+		}
 		var db = mongoose.connection;
 		db.once('open', function callback () {
 		  console.log('Connected to the database');
@@ -90,7 +97,18 @@ var GrouplannerApp = function() {
 		// Express init
         self.app = express();
 		self.app.set('title', 'Grouplanner');
+		self.app.use(express.cookieParser());
+		self.app.use(express.bodyParser());
+		self.app.use(express.methodOverride());
+		self.app.use(express.session({secret: 'fg783#$%f'}));
+
+		// Passport init
 		self.app.use(passport.initialize());
+  		self.app.use(passport.session());
+
+		// Add templating engine
+		self.app.engine('handlebars', handlebars());
+		self.app.set('view engine', 'handlebars');
 
 		// Passport routes
 		self.app.get('/auth/google', passport.authenticate('google', {scope: 'https://www.googleapis.com/auth/userinfo.email'}));
@@ -105,14 +123,22 @@ var GrouplannerApp = function() {
 		self.app.put('/user', self.addUser);
 		self.app.get('/user/:userid', self.getUser);
 
+		// Set routes
+		self.app.get('/', function(req, res) { res.render('index'); });
+		self.app.get('/login', function(req, res) { res.render('login'); });
+		self.app.get('/planner', function(req, res)
+		{
+			if(req.user === undefined)
+			{
+				res.redirect('/login');
+			} else
+			{
+				res.render('planner', {user: req.user});
+			}
+		});
+
 		self.app.use("/", express.static(__dirname + '/www'));
 
-		self.app.use(express.cookieParser());
-		self.app.use(express.bodyParser());
-		self.app.use(express.session({secret: 'fg783#$%f'}));
-
-		// Passport init
-  		self.app.use(passport.session());
     };
 
 	self.addUser = function(req, res)
@@ -170,8 +196,8 @@ var GrouplannerApp = function() {
 							first: profile.name.givenName,
 							last: profile.name.familyName
 						},
-						gender: profile.gender,
-						picture: profile.picture
+						gender: profile._json.gender,
+						picture: profile._json.picture
 					}, function (err, user)
 				{
 					return done(err, user);
@@ -182,12 +208,27 @@ var GrouplannerApp = function() {
 				});
 			}
 		));
-		passport.serializeUser(function(user, done) { done(null, user.id); });
-		passport.deserializeUser(function(id, done) {
-			User.findById(id, function(err, user) {
-				done(err, user);
-			});
+
+		passport.serializeUser(function(user, done)
+		{
+			var grouplannerUser = {};
+			switch(user.provider)
+			{
+				case 'google':
+					User.findOne({googleId: user.id}, function(err, dbUser)
+					{
+						if(err) { console.warn(err); grouplannerUser = user; }
+						else { grouplannerUser = dbUser; }
+						done(null, grouplannerUser);
+					});
+					break;
+				default:
+					grouplannerUser = user;
+					done(null, grouplannerUser);
+					break;
+			}
 		});
+		passport.deserializeUser(function(obj, done) { done(null, obj); });
 	}
 
     /**
