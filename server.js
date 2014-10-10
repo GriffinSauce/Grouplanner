@@ -209,7 +209,25 @@ var GrouplannerApp = function() {
 			}
 		));
 
-		passport.serializeUser(function(user, done) { done(null, user); });
+		passport.serializeUser(function(user, done)
+		{
+			var grouplannerUser = {};
+			switch(user.provider)
+			{
+				case 'google':
+					User.findOne({googleId: user.id}, function(err, dbUser)
+					{
+						if(err) { console.warn(err); grouplannerUser = user; }
+						else { grouplannerUser = dbUser; }
+						done(null, grouplannerUser);
+					});
+					break;
+				default:
+					grouplannerUser = user;
+					done(null, grouplannerUser);
+					break;
+			}
+		});
 		passport.deserializeUser(function(obj, done) { done(null, obj); });
 	}
 
