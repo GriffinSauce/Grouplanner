@@ -50,7 +50,49 @@ body {
         height: 15%;
         max-height: 540px; }
     body#create section {
-      padding: 1em 2em; }
+      padding: 1em 2em 0 2em; }
+      body#create section#form {
+        font-size: 110%; }
+    body#create .btn {
+      margin-bottom: 1em; }
+  body input {
+    padding: 0.3em 0.3em 0.3em 0.4em;
+    font-size: 100%;
+    border: 1px solid #CBCBCB;
+    border-radius: 0.2em; }
+    body input#length {
+      width: 4em; }
+  body select {
+    padding: 0.3em 0.3em 0.3em 0.4em;
+    font-size: 100%;
+    border: 1px solid #CBCBCB;
+    border-radius: 0.2em; }
+  body .radio {
+    display: inline-flex;
+    margin: 0 0.5em 0 0.5em;
+    vertical-align: middle;
+    cursor: pointer; }
+    body .radio .option {
+      margin: 0;
+      padding: 0.4em 0.6em 0.5em 0.6em;
+      color: rgba(255, 255, 255, 0.6);
+      background-color: #697dd3;
+      border-top: none;
+      border-bottom: 0.2em #3f509b solid;
+      transition: background-color 0.1s ease, color 0.1s ease; }
+      body .radio .option.active {
+        margin: 0.1em 0 0 0;
+        padding: 0.25em 0.6em 0.65em 0.6em;
+        color: #FFF;
+        background-color: #4558a8;
+        border-top: 0.2em #404C81 solid;
+        border-bottom: none; }
+      body .radio .option:first-child {
+        border-top-left-radius: 0.3em;
+        border-bottom-left-radius: 0.3em; }
+      body .radio .option:last-child {
+        border-top-right-radius: 0.3em;
+        border-bottom-right-radius: 0.3em; }
   body #group-info h1 {
     width: 100%;
     font-weight: 300;

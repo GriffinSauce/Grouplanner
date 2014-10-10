@@ -10,40 +10,55 @@
 		<link href="https://fonts.googleapis.com/css?family=Roboto:100,200,300,400,500,600,700" rel="stylesheet" type="text/css">
 		<link href="css/grouplanner.css" rel="stylesheet" type="text/css">
 	</head>
-	<body id="index">
+	<body id="create">
 		<div id="logo">
 			<img src="img/grouplanner_logo.png">
 			<h1>So, what cha doin'?</h1>
 		</div>
 
-		<section>
-			<div id="form">
-				We're called <input id="name" type="text" placeholder="name" />
-				And we want to plan 
+		<section id="form">
+			<p>
+				We're called <input id="name" type="text" placeholder="name" size="11"/>
+			</p>
+			<p>
+				We want to plan 
 				<select id="type" name="type">
 					<option value="dates">dates</option>
 					<option value="rehearsals">rehearsals</option>
 					<option value="meetings">meetings</option>
 				</select>
-				Once every <input id="length" type="number" /> days
-				<span id="planRight" class="radio">
+			</p>
+			<p>
+				Once every <input id="length" type="number" value="7"/> days
+			</p>
+		</section>
+		<section id="permissions">
+			<h2>Permissions</h2>
+			<p>
+				<span id="planning" class="radio">
 					<span class="option">Only I</span>
-					<span class="option">Everybody</span>
+					<span class="option active">Everybody</span>
 				</span>			
-				can choose dates and 
-				<span id="planRight" class="radio">
-					<span class="option">Only I</span>
+				can choose dates
+			</p>
+			<p>
+				<span id="settings" class="radio">
+					<span class="option active">Only I</span>
 					<span class="option">Everybody</span>
 				</span>
-				can change settings.
-			</div>
+				can change settings
+			</p>
 		</section>
 		<section>
-			<a id="createGroupBtn" class="btn" href="create">Start planning</a><br>
-			<a id="nevermindBtn" href="#">I wanted to join an existing group</a>
+			<p>
+				<a id="createGroupBtn" class="btn" href="create">Start planning</a>
+			</p>
+			<p>
+				<a id="nevermindBtn" href="#">I wanted to join an existing group</a>
+			</p>
 		</section>
 	</body>
 	<script src="lib/jquery-2.1.1.min.js"></script>
 	<script src="lib/moment-with-locales.js"></script>
-	<script src="js/index.js"></script>
+	<script src="js/create.js"></script>
 </html>
