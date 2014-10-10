@@ -11,8 +11,9 @@ body
 	padding: 0.5em;
 	margin: 0;
 	
-	@import 'imports/login';
 	@import 'imports/index';
+	@import 'imports/login';
+	@import 'imports/create';
 	@import 'imports/group';
 	@import 'imports/planner';
 }

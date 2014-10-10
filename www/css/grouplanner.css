@@ -7,6 +7,19 @@ html {
 body {
   padding: 0.5em;
   margin: 0; }
+  body#index {
+    text-align: center;
+    margin: 0;
+    padding: 0; }
+    body#index #logo {
+      padding: 2em 2em 0 2em;
+      background-color: white;
+      border-bottom: 10px #CDBDFF solid; }
+      body#index #logo img {
+        height: 15%;
+        max-height: 540px; }
+    body#index section {
+      padding: 1em 2em; }
   body#login {
     text-align: center; }
     body#login #google .btn {
@@ -25,18 +38,18 @@ body {
       border-bottom-color: #3178ad; }
     body#login #twitter .btn:hover {
       background: #2795E9; }
-  body#index {
+  body#create {
     text-align: center;
     margin: 0;
     padding: 0; }
-    body#index #logo {
+    body#create #logo {
       padding: 2em 2em 0 2em;
       background-color: white;
       border-bottom: 10px #CDBDFF solid; }
-      body#index #logo img {
+      body#create #logo img {
         height: 15%;
         max-height: 540px; }
-    body#index section {
+    body#create section {
       padding: 1em 2em; }
   body #group-info h1 {
     width: 100%;
