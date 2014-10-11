@@ -238,7 +238,9 @@ var GrouplannerApp = function() {
 			{
 				User.findOrCreate(
 					{
-						googleId: profile.id,
+						googleId: profile.id
+					},
+					{
 						email: profile.emails[0].value,
 						username: profile.displayName,
 						name:
