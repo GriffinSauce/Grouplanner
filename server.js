@@ -8,7 +8,7 @@ var passport = require('passport');
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
 var User = require(__dirname + '/db/user.js');
-var Group = (__dirname + '/db/group.js');
+var Group = require(__dirname + '/db/group.js');
 
 /**
  *  Define the sample application.
