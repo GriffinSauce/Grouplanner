@@ -46,19 +46,24 @@ body {
     body#create #banner {
       padding: 1.5em 2em 0 2em; }
       body#create #banner img {
-        height: 10%; }
+        height: 10%;
+        float: left; }
+      body#create #banner h1 {
+        color: #9736CA; }
+      body#create #banner p {
+        color: #697DD3; }
     body#create h2 {
       position: relative;
       text-align: center; }
       body#create h2 span {
         position: relative;
         padding: 0 0.7em;
-        background-color: #FFF;
+        background-color: #E0E0E0;
         z-index: 2; }
       body#create h2:before {
         content: "";
         display: block;
-        border-top: solid 1px #F4F4F4;
+        border-top: solid 1px #D0D0D0;
         width: 100%;
         height: 1px;
         position: absolute;
@@ -67,82 +72,19 @@ body {
     body#create section {
       padding: 0em 1em 0 1em; }
       body#create section#form {
+        text-align: left;
         font-size: 110%; }
+        body#create section#form p {
+          padding: 0 1em; }
       body#create section#permissions {
         text-align: left;
-        padding: 1px 1em 0.5em 1em;
-        background-color: #FFF;
+        padding: 1px 1em 1em 1em;
         border-bottom: 10px #CDBDFF solid; }
-    body#create .btn {
-      margin-bottom: 1em; }
-  body input {
-    color: #333;
-    background-color: rgba(207, 207, 207, 0.8);
-    padding: 0.4em 0.3em 0.4em 0.4em;
-    font-size: 100%;
-    border-width: 0;
-    border-radius: 0.2em; }
-    body input#length {
-      width: 3em;
-      text-align: center;
-      border: none;
-      background-color: rgba(255, 255, 255, 0.4);
-      border-radius: 0; }
-  body .numberBtn {
-    display: inline-block;
-    position: relative;
-    width: 1em;
-    padding: 0.3em 0.5em 0.4em 0.5em;
-    font-weight: 900;
-    color: #666;
-    background-color: #FFF;
-    z-index: 2; }
-    body .numberBtn#plus {
-      margin-left: -0.3em;
-      border-left: 0.1em solid #DDD;
-      border-bottom-right-radius: 0.2em;
-      border-top-right-radius: 0.2em; }
-    body .numberBtn#minus {
-      margin-right: -0.3em;
-      border-right: 0.1em solid #DDD;
-      border-bottom-left-radius: 0.2em;
-      border-top-left-radius: 0.2em; }
-  body select {
-    padding: 0.4em 0.3em 0.4em 0.4em;
-    font-size: 100%;
-    background-color: rgba(207, 207, 207, 0.8);
-    border-width: 0;
-    border-radius: 0.2em; }
-  body .radio {
-    display: inline-flex;
-    margin: 0 0.5em 0 0;
-    vertical-align: middle;
-    cursor: pointer; }
-    body .radio .option {
-      margin: 0;
-      padding: 0.4em 0.6em 0.5em 0.6em;
-      color: rgba(255, 255, 255, 0.6);
-      background-color: #697dd3;
-      border-top: none;
-      border-bottom: 0.2em #3f509b solid;
-      transition: background-color 0.1s ease, color 0.1s ease; }
-      body .radio .option.active {
-        margin: 0.1em 0 0 0;
-        padding: 0.4em 0.6em 0.5em 0.6em;
-        color: #FFF;
-        background-color: #4558a8;
-        border-bottom: none; }
-      body .radio .option:first-child {
-        border-top-left-radius: 0.3em;
-        border-bottom-left-radius: 0.3em; }
-      body .radio .option:last-child {
-        border-top-right-radius: 0.3em;
-        border-bottom-right-radius: 0.3em; }
-  body hr {
-    border-top: none;
-    border-left: none;
-    border-right: none;
-    border-bottom-color: #D0D0D0; }
+      body#create section:last-of-type {
+        padding: 1em;
+        background-color: #FAFAFA; }
+    body#create a {
+      margin-bottom: 0.5em; }
   body #group-info h1 {
     width: 100%;
     font-weight: 300;
@@ -357,13 +299,91 @@ h2 {
 
 .btn {
   display: inline-block;
-  padding: 7px 10px 8px 10px;
+  padding: 0.4em 0.7em 0.5em 0.7em;
+  font-size: 140%;
   color: #FFF;
   background-color: #19be78;
   text-decoration: none;
   cursor: pointer;
-  border-bottom: 2px #16ad6d solid;
-  border-radius: 3px;
+  border-bottom: 0.2em #16ad6d solid;
+  border-radius: 0.2em;
   transition: background-color 0.1s; }
   .btn:hover {
     background-color: #00e886; }
+
+input {
+  margin: 0 0.3em;
+  color: #333;
+  background-color: rgba(207, 207, 207, 0.8);
+  padding: 0.4em 0.3em 0.4em 0.4em;
+  font-size: 100%;
+  border-width: 0;
+  border-radius: 0.2em; }
+  input.number {
+    margin: 0;
+    width: 3em;
+    text-align: center;
+    border: none;
+    background-color: rgba(255, 255, 255, 0.4);
+    border-radius: 0; }
+
+.numberBtn {
+  display: inline-block;
+  position: relative;
+  width: 1em;
+  padding: 0.3em 0.5em 0.4em 0.5em;
+  font-weight: 900;
+  color: #666;
+  background-color: #FFF;
+  text-align: center;
+  z-index: 2; }
+  .numberBtn#plus {
+    margin: 0 0.3em 0 -0.3em;
+    border-left: 0.1em solid #DDD;
+    border-bottom-right-radius: 0.2em;
+    border-top-right-radius: 0.2em; }
+  .numberBtn#minus {
+    margin: 0 -0.3em 0 0.3em;
+    border-right: 0.1em solid #DDD;
+    border-bottom-left-radius: 0.2em;
+    border-top-left-radius: 0.2em; }
+
+select {
+  margin: 0 0.3em;
+  padding: 0.4em 0.3em 0.4em 0.4em;
+  font-size: 100%;
+  background-color: rgba(255, 255, 255, 0.4);
+  border-width: 0;
+  border-radius: 0.2em; }
+
+.radio {
+  display: inline-flex;
+  margin: 0 0.5em 0 0;
+  vertical-align: middle;
+  cursor: pointer; }
+  .radio .option {
+    margin: 0;
+    padding: 0.4em 0.6em 0.5em 0.6em;
+    color: rgba(255, 255, 255, 0.6);
+    background-color: #697dd3;
+    border-top: none;
+    border-bottom: 0.2em #3f509b solid;
+    transition: background-color 0.1s ease, color 0.1s ease; }
+    .radio .option.active {
+      margin: 0.1em 0 0 0;
+      padding: 0.4em 0.6em 0.5em 0.6em;
+      color: #FFF;
+      background-color: #4558a8;
+      border-bottom: none; }
+    .radio .option:first-child {
+      border-top-left-radius: 0.3em;
+      border-bottom-left-radius: 0.3em; }
+    .radio .option:last-child {
+      border-top-right-radius: 0.3em;
+      border-bottom-right-radius: 0.3em; }
+
+hr {
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom-color: #D0D0D0; }

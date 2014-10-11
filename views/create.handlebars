@@ -14,13 +14,16 @@
 		<div id="banner">
 			<img src="img/grouplanner_logo.png">
 			<h1>So, what cha doin'?</h1>
+			<p>
+				Just tell us some things about your group and you'll be ready to go.
+			</p>
 		</div>
 
 		<section id="form">
+			<h2><span>Info</span></h2>
 			<p>
 				We're called <input id="name" type="text" placeholder="name" size="11"/>
 			</p>
-			<hr>
 			<p>
 				We want to plan 
 				<select id="type" name="type">
@@ -29,11 +32,10 @@
 					<option value="meetings">meetings</option>
 				</select>
 			</p>
-			<hr>
 			<p>
 				Once every 
 				<span id="minus" class="numberBtn">-</span>
-				<input id="length" type="number" value="7"/>
+				<input id="length" class="number" type="number" value="7"/>
 				<span id="plus" class="numberBtn">+</span>
 				days
 			</p>
