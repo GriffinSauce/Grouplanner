@@ -124,6 +124,8 @@ var GrouplannerApp = function() {
 		self.app.put('/user', self.addUser);
 		self.app.get('/user/:userid', self.getUser);
 
+		self.app.put('/group', self.addGroup);
+
 		// Set routes
 		self.app.get('/', function(req, res) { res.render('index'); });
 		self.app.get('/login', function(req, res) { res.render('login'); });
@@ -141,6 +143,29 @@ var GrouplannerApp = function() {
 		self.app.use("/", express.static(__dirname + '/www'));
 
     };
+
+	self.addGroup = function(req, res)
+	{
+		// TODO: Return response in json format
+		if(req.user === undefined)
+		{
+			res.send('User should login before creating a group');
+		} else
+		{
+			var group = new Group(req.body);
+			group.creator = req.user._id;
+			require('crypto').randomBytes(48, function(ex, buf)
+			{
+				group.token = buf.toString('hex');
+				group.save(function(err)
+				{
+					if(err) { console.log('Error saving group %s to the database', group.name); }
+					else { console.log('Group %s saved to the database', group.name); }
+					res.send('saved as: ' + group._id + '\n');
+				});
+			});
+		}
+	};
 
 	self.addUser = function(req, res)
 	{
