@@ -23,9 +23,13 @@ $(document).ready(function(){
 			data: data
 		})
 		.done(function( data ) {
-			console.log( "Returned data:"+data );
-			alert('Success!');
-			window.location.href = '/planner';
+			if(data.success)
+			{
+				alert('Success!');
+				window.location.href = '/planner';
+			}else{
+				alert('Error 2');
+			}
 		});
 	})
 	$('.radio .option').click(function(){
