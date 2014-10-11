@@ -127,6 +127,7 @@ var GrouplannerApp = function() {
 		self.app.get('/user/:userid', self.getUser);
 
 		self.app.put('/group', self.addGroup);
+		self.app.get('/group/:groupid', self.getGroup);
 
 		// Set routes
 		self.app.get('/', function(req, res) { res.render('index'); });
@@ -167,6 +168,7 @@ var GrouplannerApp = function() {
 		{
 			var group = new Group(req.body);
 			group.creator = req.user._id;
+			group.members.push(req.user._id);
 			require('crypto').randomBytes(48, function(ex, buf)
 			{
 				group.token = buf.toString('hex');
@@ -178,6 +180,14 @@ var GrouplannerApp = function() {
 				});
 			});
 		}
+	};
+	
+	self.getGroup = function(req, res)
+	{
+		Group.findOne({_id: req.params.groupid}, function(err, group)
+		{
+			res.send(JSON.stringify(group));
+		});
 	};
 
 	self.addUser = function(req, res)
