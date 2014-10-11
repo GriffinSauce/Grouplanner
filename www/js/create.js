@@ -17,7 +17,8 @@ $(document).ready(function(){
 				name:name,
 				eventtype:type,
 				lenght:length,
-				description:description
+				description:description,
+				startDate:moment().weekday(1).toDate()
 			}
 			$.ajax({
 				url: '/group',
@@ -27,7 +28,6 @@ $(document).ready(function(){
 			.done(function( data ) {
 				if(data.success)
 				{
-					alert('Success!');
 					window.location.href = '/planner';
 				}else{
 					alert('Error 2'); // lol
