@@ -132,6 +132,7 @@ var GrouplannerApp = function() {
 		// Set routes
 		self.app.get('/', function(req, res) { res.render('index'); });
 		self.app.get('/login', function(req, res) { res.render('login'); });
+		self.app.get('/help', function(req, res) { res.render('help'); });
 		self.app.get('/create', function(req, res) 
 		{
 			if(req.user === undefined)
