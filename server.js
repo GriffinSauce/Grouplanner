@@ -2,6 +2,7 @@
 //  OpenShift sample Node application
 var express = require('express');
 var handlebars = require('express-handlebars');
+var MongoStore = require('connect-mongo')(express);
 var mongoose = require('mongoose');
 var jshare = require('jshare');
 var passport = require('passport');
@@ -101,7 +102,12 @@ var GrouplannerApp = function() {
 		self.app.use(express.cookieParser());
 		self.app.use(express.bodyParser());
 		self.app.use(express.methodOverride());
-		self.app.use(express.session({secret: 'fg783#$%f'}));
+		self.app.use(express.session({
+			secret: 'fg783#$%f',
+			store: new MongoStore({
+				mongoose_connection:mongoose.connections[0]
+			})
+		}));
 
 		// Add JShare
 		self.app.use(jshare());

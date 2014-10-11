@@ -18,6 +18,7 @@
     "npm": ">= 1.0.0"
   },
   "dependencies": {
+    "connect-mongo": "^0.4.1",
     "express": "~3.4.4",
     "express-handlebars": "~1.1.0",
     "jshare": "0.0.9",
