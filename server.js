@@ -149,7 +149,7 @@ var GrouplannerApp = function() {
 	{
 		if(req.user === undefined)
 		{
-			res.json({result:'User should login before creating a group'});
+			res.json({success: false, message:'User should login before creating a group'});
 		} else
 		{
 			var group = new Group(req.body);
@@ -161,7 +161,7 @@ var GrouplannerApp = function() {
 				{
 					if(err) { console.log('Error saving group %s to the database', group.name); }
 					else { console.log('Group %s saved to the database', group.name); }
-					res.json({result: 'saved as: ' + group._id + '\n'});
+					res.json({success:true, id:group._id, message: 'saved as: ' + group._id + '\n'});
 				});
 			});
 		}
