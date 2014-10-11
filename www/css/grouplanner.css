@@ -70,7 +70,7 @@ body {
         top: 50%;
         z-index: 1; }
     body#create section {
-      padding: 0em 1em 0 1em; }
+      padding: 1em 1em 2em 1em; }
       body#create section#form {
         text-align: left;
         font-size: 110%; }
@@ -78,10 +78,9 @@ body {
           padding: 0 1em; }
       body#create section#permissions {
         text-align: left;
-        padding: 1px 1em 1em 1em;
+        padding: 0em 1em 2em 1em;
         border-bottom: 10px #CDBDFF solid; }
       body#create section:last-of-type {
-        padding: 1em;
         background-color: #FAFAFA; }
     body#create a {
       margin-bottom: 0.5em; }

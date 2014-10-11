@@ -49,7 +49,7 @@
 	
 	section
 	{
-		padding:0em 1em 0 1em;
+		padding: 1em 1em 2em 1em;
 		
 		&#form
 		{
@@ -64,12 +64,11 @@
 		&#permissions
 		{
 			text-align: left;
-			padding: 1px 1em 1em 1em;
+			padding: 0em 1em 2em 1em;
 			border-bottom: 10px #CDBDFF solid;
 		}
 		&:last-of-type
 		{
-			padding: 1em;
 			background-color:#FAFAFA;
 		}
 	}
