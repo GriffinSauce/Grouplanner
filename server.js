@@ -116,8 +116,10 @@ var GrouplannerApp = function() {
 		self.app.get('/oauth2callback', passport.authenticate('google', { failureRedirect: '/login' }),
 		function(req, res)
 		{
-			// Successful authentication, redirect home.
-			res.redirect('/planner');
+			// Successful authentication, redirect to requested page
+			var redirect_to = req.session.redirect_to ? req.session.redirect_to : '/';
+			delete req.session.redirect_to;
+			res.redirect(redirect_to);
 		});
 
 		// User test routes
@@ -129,11 +131,22 @@ var GrouplannerApp = function() {
 		// Set routes
 		self.app.get('/', function(req, res) { res.render('index'); });
 		self.app.get('/login', function(req, res) { res.render('login'); });
-		self.app.get('/create', function(req, res) { res.render('create'); });
+		self.app.get('/create', function(req, res) 
+		{
+			if(req.user === undefined)
+			{
+				req.session.redirect_to = '/create';
+				res.redirect('/login');
+			} else
+			{
+				res.render('create', {user: req.user});
+			}
+		});
 		self.app.get('/planner', function(req, res)
 		{
 			if(req.user === undefined)
 			{
+				req.session.redirect_to = '/planner';
 				res.redirect('/login');
 			} else
 			{
