@@ -19,12 +19,13 @@
   },
   "dependencies": {
     "express": "~3.4.4",
+    "express-handlebars": "~1.1.0",
+    "jshare": "0.0.9",
     "mongodb": "~1.4.10",
     "mongoose": "~3.8.16",
-    "passport": "~0.2.1",
-    "passport-google-oauth": "~0.1.5",
     "mongoose-findorcreate": "~0.1.2",
-    "express-handlebars": "~1.1.0"
+    "passport": "~0.2.1",
+    "passport-google-oauth": "~0.1.5"
   },
   "devDependencies": {
     "gulp": "^3.8.8",

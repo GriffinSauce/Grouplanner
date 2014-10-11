@@ -3,7 +3,7 @@
 var express = require('express');
 var handlebars = require('express-handlebars');
 var mongoose = require('mongoose');
-
+var jshare = require('jshare');
 var passport = require('passport');
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
@@ -103,6 +103,9 @@ var GrouplannerApp = function() {
 		self.app.use(express.methodOverride());
 		self.app.use(express.session({secret: 'fg783#$%f'}));
 
+		// Add JShare
+		self.app.use(jshare());
+		
 		// Passport init
 		self.app.use(passport.initialize());
   		self.app.use(passport.session());
@@ -141,6 +144,7 @@ var GrouplannerApp = function() {
 				res.redirect('/login');
 			} else
 			{
+				res.jshare.user = req.user;
 				res.render('create', {user: req.user});
 			}
 		});
@@ -152,6 +156,7 @@ var GrouplannerApp = function() {
 				res.redirect('/login');
 			} else
 			{
+				res.jshare.user = req.user;
 				res.render('planner', {user: req.user});
 			}
 		});
