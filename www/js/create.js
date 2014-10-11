@@ -23,7 +23,7 @@ $(document).ready(function(){
 			data: data
 		})
 		.done(function( data ) {
-			console.log( "Returned data:"+ JSON.parse(data) );
+			console.log( "Returned data:"+data );
 			alert('Success!');
 			window.location.href = '/planner';
 		});
