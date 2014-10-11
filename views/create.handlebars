@@ -11,7 +11,7 @@
 		<link href="css/grouplanner.css" rel="stylesheet" type="text/css">
 	</head>
 	<body id="create">
-		<div id="logo">
+		<div id="banner">
 			<img src="img/grouplanner_logo.png">
 			<h1>So, what cha doin'?</h1>
 		</div>
@@ -20,6 +20,7 @@
 			<p>
 				We're called <input id="name" type="text" placeholder="name" size="11"/>
 			</p>
+			<hr>
 			<p>
 				We want to plan 
 				<select id="type" name="type">
@@ -28,12 +29,18 @@
 					<option value="meetings">meetings</option>
 				</select>
 			</p>
+			<hr>
 			<p>
-				Once every <input id="length" type="number" value="7"/> days
+				Once every 
+				<span id="minus" class="numberBtn">-</span>
+				<input id="length" type="number" value="7"/>
+				<span id="plus" class="numberBtn">+</span>
+				days
 			</p>
 		</section>
+		
 		<section id="permissions">
-			<h2>Permissions</h2>
+			<h2><span>Permissions</span></h2>
 			<p>
 				<span id="planning" class="radio">
 					<span class="option">Only I</span>

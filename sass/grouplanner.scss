@@ -8,8 +8,21 @@ html
 }
 body
 {
-	padding: 0.5em;
+	padding: 0;
 	margin: 0;
+	
+	#banner
+	{
+		padding:2em 2em 0 2em;
+		background-color:white;
+		border-bottom: 10px #CDBDFF solid;
+		
+		img
+		{
+			height:15%;
+			max-height:540px;
+		}
+	}
 	
 	@import 'imports/index';
 	@import 'imports/login';
