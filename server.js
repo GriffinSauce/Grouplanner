@@ -105,7 +105,8 @@ var GrouplannerApp = function() {
 		self.app.use(express.session({
 			secret: 'fg783#$%f',
 			store: new MongoStore({
-				mongoose_connection:mongoose.connections[0]
+				mongoose_connection:mongoose.connections[0],
+				db:mongoose.connection.db
 			})
 		}));
 
@@ -140,7 +141,21 @@ var GrouplannerApp = function() {
 
 		// Set routes
 		self.app.get('/', function(req, res) { res.render('index'); });
-		self.app.get('/login', function(req, res) { res.render('login'); });
+		self.app.get('/login', function(req, res)
+		{
+			if(req.user === undefined)
+			{
+				res.render('login');
+			}else{
+				// User is already logged in
+ 				res.redirect('/');
+			}
+		});
+		self.app.get('/logout', function(req, res)
+		{
+			req.logout();
+ 			res.redirect('/');
+		});
 		self.app.get('/help', function(req, res) { res.render('help'); });
 		self.app.get('/create', function(req, res) 
 		{
