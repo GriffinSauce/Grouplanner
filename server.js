@@ -123,14 +123,7 @@ var GrouplannerApp = function() {
 
 		// Passport routes
 		self.app.get('/auth/google', passport.authenticate('google', {scope: 'https://www.googleapis.com/auth/userinfo.email'}));
-		self.app.get('/oauth2callback', passport.authenticate('google', { failureRedirect: '/login' }),
-		function(req, res)
-		{
-			// Successful authentication, redirect to requested page
-			var redirect_to = req.session.redirect_to ? req.session.redirect_to : '/';
-			delete req.session.redirect_to;
-			res.redirect(redirect_to);
-		});
+		self.app.get('/oauth2callback', passport.authenticate('google', { successRedirect:'loginSuccess', failureRedirect: '/login' }));
 
 		// User test routes
 		self.app.put('/user', self.addUser);
@@ -150,6 +143,12 @@ var GrouplannerApp = function() {
 				// User is already logged in
  				res.redirect('/');
 			}
+		});
+		self.app.get('/loginSuccess', function(req, res)
+		{
+			var redirect_to = req.session.redirect_to ? req.session.redirect_to : '/';
+			delete req.session.redirect_to;
+			res.redirect(redirect_to);
 		});
 		self.app.get('/logout', function(req, res)
 		{
