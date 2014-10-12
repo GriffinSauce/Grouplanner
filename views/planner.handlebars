@@ -12,9 +12,16 @@
 	</head>
 	<body id="planner">
 
-		<div id="TEST">
-			<img src="{{user.picture}}" width="75" height="75"/>
-			<span>{{user.username}}</span>
+		<div id="header">
+			<img id="logo" src="img/grouplanner_logo.png">
+			<div id="settings">
+				<div id="icon"><span>-</span><br><span>-</span><br><span>-</span><br></div>
+				<div id="user">
+					<img id="user" src="{{user.picture}}"/>
+					<span>{{user.username}}</span>
+				</div>
+				<a class="btn" href="/logout">Log out</a>
+			</div>
 		</div>
 
 		<div id='period-controls'>
@@ -25,11 +32,6 @@
 
 		<div id="availability">
 
-		</div>
-
-		<div class="btn" id="view-calendar">
-			<span></span>
-			<span>Remind people</span>
 		</div>
 
 		<div id="group-info">

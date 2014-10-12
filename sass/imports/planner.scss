@@ -1,6 +1,97 @@
 &#planner
 {
-	padding: 0.5em;
+	
+	#header
+	{
+		padding:1em;
+		background-color:white;
+		border-bottom: 0.2em #CDBDFF solid;
+		
+		#logo
+		{
+			height:2em;
+		}
+		
+		#settings
+		{
+			position:absolute;
+			top:0.5em;
+			right:0.5em;
+			max-height:0em;
+			width:3em;
+			height: auto;
+			padding-top:3em;
+			overflow:hidden;
+			transition:	all 0.5s ease;
+			z-index:20;
+			box-shadow: 0em 0em 0em rgba(0, 0, 0, 0.5);
+			
+			#icon
+			{
+				position:absolute;
+				top:0;
+				right:0;
+				height:3em;
+				width:3em;
+				background-color:#FFF;
+				
+				/* Lazy man's icon */
+				padding-top: 0.5em;
+				height:2.5em;
+				text-align: center;
+				span
+				{
+					font-size:200%;
+					line-height:0.01em;
+				}
+			}
+			
+			#user
+			{
+				position: relative;
+				height:6em;
+				overflow:hidden;
+				margin:0 0 0.5em 0;
+				
+				img
+				{
+					margin-top: -3em;
+					width: 16em;
+					height: 16em;
+				}
+				
+				span
+				{
+					position:absolute;
+					left:1em;
+					bottom: 0.5em;
+					color:#FFF;
+					font-size: 120%;
+					font-weight: 600;
+				}
+			}
+			
+			.btn
+			{
+				margin: 1em;
+				font-size: 110%;
+			}
+			
+			&.open
+			{
+				max-height:120%;
+				width:16em;
+				padding:3em 0 0 0;
+				background-color:#FFF;
+				box-shadow: 0.1em 0.1em 1em rgba(0, 0, 0, 0.5);
+				
+				#icon
+				{
+					background-color: #FFF;
+				}
+			}
+		}
+	}
 	
 	#period-controls
 	{	
@@ -9,6 +100,7 @@
 		text-align: center;
 		height:4em;
 		margin-bottom:1em;
+		padding: 0.5em;
 	
 		.period-control-button
 		{	
@@ -34,7 +126,7 @@
 	
 	#availability
 	{
-		width:100%;
+		padding: 0.5em;
 		
 		.period
 		{

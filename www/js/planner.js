@@ -22,3 +22,10 @@ app.data[thisWeek].updatePicker();
 app.data[thisWeek].updateDays();
 
 app.init();
+
+// header
+$(document).ready(function(){
+	$('#settings').click(function(e){
+		$(this).toggleClass('open');
+	});
+});
