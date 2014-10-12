@@ -8,10 +8,13 @@ var groupSchema = new Schema(
 	groupid: {type: Schema.Types.ObjectId},
 	startdate: {type: Date},
 	enddate: {type: Date},
-	available:
+	plannedDate: {type: Date},
+	days:[
 	{
-		// Date timestamp and members
-	}
+		date: {type: Date},
+		available: [],
+		planned: {type:Boolean, default: false}
+	}]
 }, { autoIndex: false });
 
 groupSchema.plugin(findOrCreate);
