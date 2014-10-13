@@ -284,10 +284,7 @@ var GrouplannerApp = function() {
 						},
 						gender: profile._json.gender,
 						picture: profile._json.picture
-					}, function (err, user)
-				{
-					return done(err, user);
-				});
+					}, function (){});
 				process.nextTick(function()
 				{
 					return done(null, profile);
