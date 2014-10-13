@@ -18,7 +18,11 @@ var passport = require('passport');
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
 var User = require(__dirname + '/db/user.js');
-var Group = require(__dirname + '/db/group.js');
+
+var routes =
+{
+	group: require(__dirname + '/routes/group.js')
+};
 
 /**
  *  Define the sample application.
@@ -134,9 +138,7 @@ var GrouplannerApp = function() {
 		self.app.get('/auth/google', passport.authenticate('google', {scope: 'https://www.googleapis.com/auth/userinfo.email'}));
 		self.app.get('/oauth2callback', passport.authenticate('google', { successRedirect:'loginSuccess', failureRedirect: '/login' }));
 
-		self.app.put('/group', self.addGroup);
-		self.app.get('/group/:groupid', self.getGroup);
-
+		self.app.use('/', routes.group);
 		// Set routes
 		self.app.get('/', function(req, res) { res.render('index'); });
 		self.app.get('/login', function(req, res)
@@ -189,37 +191,6 @@ var GrouplannerApp = function() {
 		self.app.use("/", serveStatic(__dirname + '/www'));
 
     };
-
-	self.addGroup = function(req, res)
-	{
-		if(req.user === undefined)
-		{
-			res.json({success: false, message:'User should login before creating a group'});
-		} else
-		{
-			var group = new Group(req.body);
-			group.creator = req.user._id;
-			group.members.push(req.user._id);
-			require('crypto').randomBytes(48, function(ex, buf)
-			{
-				group.token = buf.toString('hex');
-				group.save(function(err)
-				{
-					if(err) { console.log('Error saving group %s to the database', group.name); }
-					else { console.log('Group %s saved to the database', group.name); }
-					res.json({success:true, id:group._id, message: 'saved as: ' + group._id + '\n'});
-				});
-			});
-		}
-	};
-	
-	self.getGroup = function(req, res)
-	{
-		Group.findOne({_id: req.params.groupid}, function(err, group)
-		{
-			res.send(JSON.stringify(group));
-		});
-	};
 
 	self.setupAuthentication = function()
 	{
