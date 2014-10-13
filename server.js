@@ -134,10 +134,6 @@ var GrouplannerApp = function() {
 		self.app.get('/auth/google', passport.authenticate('google', {scope: 'https://www.googleapis.com/auth/userinfo.email'}));
 		self.app.get('/oauth2callback', passport.authenticate('google', { successRedirect:'loginSuccess', failureRedirect: '/login' }));
 
-		// User test routes
-		self.app.put('/user', self.addUser);
-		self.app.get('/user/:userid', self.getUser);
-
 		self.app.put('/group', self.addGroup);
 		self.app.get('/group/:groupid', self.getGroup);
 
@@ -222,25 +218,6 @@ var GrouplannerApp = function() {
 		Group.findOne({_id: req.params.groupid}, function(err, group)
 		{
 			res.send(JSON.stringify(group));
-		});
-	};
-
-	self.addUser = function(req, res)
-	{
-		var user = new User(req.body);
-		user.save(function(err)
-		{
-			if(err) { console.log('Error saving user %s %s to the database', user.name.first, user.name.last); }
-			else { console.log('User %s %s saved to the database', user.name.first, user.name.last); }
-			res.send('saved as: ' + user._id + '\n');
-		});
-	};
-
-	self.getUser = function(req, res)
-	{
-		User.findOne({_id: req.params.userid}, function(err, user)
-		{
-			res.send(JSON.stringify(user));
 		});
 	};
 
