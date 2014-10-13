@@ -1,8 +1,17 @@
 #!/bin/env node
 //  OpenShift sample Node application
 var express = require('express');
+
+// Express middleware
+var bodyParser = require('body-parser');
+var cookieParser = require('cookie-parser');
+var session = require('express-session');
+var methodOverride = require('method-override');
+var serveStatic = require('serve-static');
+
 var handlebars = require('express-handlebars');
-var MongoStore = require('connect-mongo')(express);
+var MongoStore = require('connect-mongo')(session);
+
 var mongoose = require('mongoose');
 var jshare = require('jshare');
 var passport = require('passport');
@@ -99,10 +108,10 @@ var GrouplannerApp = function() {
 		// Express init
         self.app = express();
 		self.app.set('title', 'Grouplanner');
-		self.app.use(express.cookieParser());
-		self.app.use(express.bodyParser());
-		self.app.use(express.methodOverride());
-		self.app.use(express.session({
+		self.app.use(cookieParser());
+		self.app.use(bodyParser.json());
+		self.app.use(methodOverride('X-HTTP-Method-Override'));
+		self.app.use(session({
 			secret: 'fg783#$%f',
 			store: new MongoStore({
 				mongoose_connection:mongoose.connections[0],
@@ -181,7 +190,7 @@ var GrouplannerApp = function() {
 			}
 		});
 
-		self.app.use("/", express.static(__dirname + '/www'));
+		self.app.use("/", serveStatic(__dirname + '/www'));
 
     };
 
@@ -275,10 +284,7 @@ var GrouplannerApp = function() {
 						},
 						gender: profile._json.gender,
 						picture: profile._json.picture
-					}, function (err, user)
-				{
-					return done(err, user);
-				});
+					}, function (){});
 				process.nextTick(function()
 				{
 					return done(null, profile);
