@@ -138,57 +138,50 @@ var GrouplannerApp = function() {
 		self.app.get('/auth/google', passport.authenticate('google', {scope: 'https://www.googleapis.com/auth/userinfo.email'}));
 		self.app.get('/oauth2callback', passport.authenticate('google', { successRedirect:'loginSuccess', failureRedirect: '/login' }));
 
-		self.app.use('/', routes.group);
 		// Set routes
 		self.app.get('/', function(req, res) { res.render('index'); });
-		self.app.get('/login', function(req, res)
-		{
-			if(req.user === undefined)
-			{
-				res.render('login');
-			}else{
-				// User is already logged in
- 				res.redirect('/');
-			}
-		});
+		self.app.get('/login', function(req, res) { res.render('login'); });
 		self.app.get('/loginSuccess', function(req, res)
 		{
 			var redirect_to = req.session.redirect_to ? req.session.redirect_to : '/';
 			delete req.session.redirect_to;
 			res.redirect(redirect_to);
 		});
+		
 		self.app.get('/logout', function(req, res)
 		{
 			req.logout();
  			res.redirect('/');
 		});
+		
 		self.app.get('/help', function(req, res) { res.render('help'); });
+		self.app.use("/", serveStatic(__dirname + '/www'));
+		
+		self.app.use(function(req, res, next)
+		{
+			console.log("CHECK USER LOGIN");
+			if(req.user === undefined)
+			{
+				req.session.redirect_to = req.url;
+				res.redirect('/login');
+			}
+			next();
+		});
+		
+		// AUTHENTICATED ROUTES
+		self.app.use('/', routes.group);
 		self.app.get('/create', function(req, res) 
 		{
-			if(req.user === undefined)
-			{
-				req.session.redirect_to = '/create';
-				res.redirect('/login');
-			} else
-			{
-				res.jshare.user = req.user;
-				res.render('create', {user: req.user});
-			}
+			res.jshare.user = req.user;
+			res.render('create', {user: req.user});
 		});
+		
 		self.app.get('/planner', function(req, res)
 		{
-			if(req.user === undefined)
-			{
-				req.session.redirect_to = '/planner';
-				res.redirect('/login');
-			} else
-			{
-				res.jshare.user = req.user;
-				res.render('planner', {user: req.user});
-			}
+			res.jshare.user = req.user;
+			res.render('planner', {user: req.user});
 		});
 
-		self.app.use("/", serveStatic(__dirname + '/www'));
 
     };
 
