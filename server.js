@@ -1,5 +1,7 @@
 #!/bin/env node
-//  OpenShift sample Node application
+
+setUpVariables();
+
 var express = require('express');
 
 // Express middleware
@@ -23,6 +25,23 @@ var routes =
 	group: require(__dirname + '/routes/group.js')
 };
 
+function setUpVariables()
+{
+	//  Set the environment variables we need.
+	global.grouplanner.ipaddress = process.env.OPENSHIFT_NODEJS_IP;
+	global.grouplanner.port      = process.env.OPENSHIFT_NODEJS_PORT || 8085;
+	global.grouplanner.environment = 'remote';
+
+	if (typeof global.grouplanner.ipaddress === "undefined")
+	{
+		//  Log errors on OpenShift but continue w/ 127.0.0.1 - this
+		//  allows us to run/test the app locally.
+		console.warn('No OPENSHIFT_NODEJS_IP var, using 127.0.0.1');
+		global.grouplanner.ipaddress = "127.0.0.1";
+		global.grouplanner.environment = 'local';
+	}
+}
+
 /**
  *  Define the sample application.
  */
@@ -34,24 +53,6 @@ var GrouplannerApp = function() {
     /*  ================================================================  */
     /*  Helper functions.                                                 */
     /*  ================================================================  */
-
-    /**
-     *  Set up server IP address and port # using env variables/defaults.
-     */
-    self.setupVariables = function() {
-        //  Set the environment variables we need.
-        self.ipaddress = process.env.OPENSHIFT_NODEJS_IP;
-        self.port      = process.env.OPENSHIFT_NODEJS_PORT || 8085;
-		self.environment = 'remote';
-
-        if (typeof self.ipaddress === "undefined") {
-            //  Log errors on OpenShift but continue w/ 127.0.0.1 - this
-            //  allows us to run/test the app locally.
-            console.warn('No OPENSHIFT_NODEJS_IP var, using 127.0.0.1');
-            self.ipaddress = "127.0.0.1";
-			self.environment = 'local';
-        }
-    };
 
     /**
      *  terminator === the termination handler
