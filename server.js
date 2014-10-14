@@ -15,6 +15,7 @@ var MongoStore = require('connect-mongo')(session);
 
 var mongoose = require('mongoose');
 var jshare = require('jshare');
+var serveStatic = require('serve-static');
 
 var routes =
 {
@@ -133,6 +134,7 @@ var GrouplannerApp = function() {
 		self.app.engine('handlebars', handlebars());
 		self.app.set('view engine', 'handlebars');
 
+		self.app.use("/www", serveStatic(__dirname + '/www'));
 		self.app.use('/', routes.main.router);
 		self.app.use('/', routes.passport.router);
 
@@ -143,13 +145,14 @@ var GrouplannerApp = function() {
 			{
 				req.session.redirect_to = req.url;
 				res.redirect('/login');
+			} else
+			{
+				next();
 			}
-			next();
 		});
 		
 		// AUTHENTICATED ROUTES
 		self.app.use('/', routes.group.router);
-
     };
 
     /**
