@@ -165,18 +165,6 @@ var GrouplannerApp = function() {
 		
 		// AUTHENTICATED ROUTES
 		self.app.use('/', routes.group);
-		self.app.get('/create', function(req, res) 
-		{
-			res.jshare.user = req.user;
-			res.render('create', {user: req.user});
-		});
-		
-		self.app.get('/planner', function(req, res)
-		{
-			res.jshare.user = req.user;
-			res.render('planner', {user: req.user});
-		});
-
 
     };
 
