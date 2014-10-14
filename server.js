@@ -15,14 +15,12 @@ var MongoStore = require('connect-mongo')(session);
 
 var mongoose = require('mongoose');
 var jshare = require('jshare');
-var passport = require('passport');
-var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
-
-var User = require(__dirname + '/db/user.js');
 
 var routes =
 {
-	group: require(__dirname + '/routes/group.js')
+	main: 		require(__dirname + '/routes/main.js'),
+	passport: 	require(__dirname + '/routes/passport.js'),
+	group: 		require(__dirname + '/routes/group.js')
 };
 
 function setUpVariables()
@@ -127,31 +125,15 @@ var GrouplannerApp = function() {
 		self.app.use(jshare());
 		
 		// Passport init
-		self.app.use(passport.initialize());
-  		self.app.use(passport.session());
+		self.app.use(routes.passport.passport.initialize());
+  		self.app.use(routes.passport.passport.session());
 
 		// Add templating engine
 		self.app.engine('handlebars', handlebars());
 		self.app.set('view engine', 'handlebars');
 
-		// Passport routes
-		self.app.get('/auth/google', passport.authenticate('google', {scope: 'https://www.googleapis.com/auth/userinfo.email'}));
-		self.app.get('/oauth2callback', passport.authenticate('google', { successRedirect:'loginSuccess', failureRedirect: '/login' }));
-
-		// Set routes
-		self.app.get('/login', function(req, res) { res.render('login'); });
-		self.app.get('/loginSuccess', function(req, res)
-		{
-			var redirect_to = req.session.redirect_to ? req.session.redirect_to : '/';
-			delete req.session.redirect_to;
-			res.redirect(redirect_to);
-		});
-		
-		self.app.get('/logout', function(req, res)
-		{
-			req.logout();
- 			res.redirect('/');
-		});
+		self.app.use('/', routes.main.router);
+		self.app.use('/', routes.passport.router);
 
 		self.app.use(function(req, res, next)
 		{
@@ -165,88 +147,17 @@ var GrouplannerApp = function() {
 		});
 		
 		// AUTHENTICATED ROUTES
-		self.app.use('/', routes.group);
+		self.app.use('/', routes.group.router);
 
     };
-
-	self.setupAuthentication = function()
-	{
-		var googleStrategySettings = {};
-
-		if(global.grouplanner.environment == 'local')
-		{
-			var googleStrategySettingsFile = require(__dirname + '/google-secret.json');
-			googleStrategySettings.client_id = googleStrategySettingsFile.web.client_id;
-			googleStrategySettings.client_secret = googleStrategySettingsFile.web.client_secret;
-			googleStrategySettings.callbackURL = 'http://' + global.grouplanner.ipaddress + ':' + global.grouplanner.port + '/oauth2callback';
-		} else
-		{
-			googleStrategySettings.client_id = process.env.GOOGLE_CLIENT_ID;
-			googleStrategySettings.client_secret = process.env.GOOGLE_CLIENT_SECRET;
-			googleStrategySettings.callbackURL = 'http://www.grouplanner.nl/oauth2callback';
-		}
-
-		passport.use(new GoogleStrategy
-		(
-			{
-				clientID: googleStrategySettings.client_id,
-				clientSecret: googleStrategySettings.client_secret,
-				callbackURL: googleStrategySettings.callbackURL
-			},
-			function(accessToken, refreshToken, profile, done)
-			{
-				User.findOrCreate(
-					{
-						googleId: profile.id
-					},
-					{
-						email: profile.emails[0].value,
-						username: profile.displayName,
-						name:
-						{
-							first: profile.name.givenName,
-							last: profile.name.familyName
-						},
-						gender: profile._json.gender,
-						picture: profile._json.picture
-					}, function (){});
-				process.nextTick(function()
-				{
-					return done(null, profile);
-				});
-			}
-		));
-
-		passport.serializeUser(function(user, done)
-		{
-			var grouplannerUser = {};
-			switch(user.provider)
-			{
-				case 'google':
-					User.findOne({googleId: user.id}, function(err, dbUser)
-					{
-						if(err) { console.warn(err); grouplannerUser = user; }
-						else { grouplannerUser = dbUser; }
-						done(null, grouplannerUser);
-					});
-					break;
-				default:
-					grouplannerUser = user;
-					done(null, grouplannerUser);
-					break;
-			}
-		});
-		passport.deserializeUser(function(obj, done) { done(null, obj); });
-	}
 
     /**
      *  Initializes the sample application.
      */
-    self.initialize = function() {
-        self.setupVariables();
+    self.initialize = function()
+	{
         self.setupTerminationHandlers();
 		self.setupDatabaseConnection();
-		self.setupAuthentication();
         // Create the express server and routes.
         self.initializeServer();
     };

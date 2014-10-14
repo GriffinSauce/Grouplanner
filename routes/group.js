@@ -7,6 +7,17 @@ var Group = require(__dirname + '/../db/group.js');
 
 router.put('/group', addGroup);
 router.get('/group/:groupid', getGroup);
+router.get('/create', function(req, res)
+{
+	res.jshare.user = req.user;
+	res.render('create', {user: req.user});
+});
+
+router.get('/planner', function(req, res)
+{
+	res.jshare.user = req.user;
+	res.render('planner', {user: req.user});
+});
 
 function addGroup(req, res)
 {
@@ -39,4 +50,4 @@ function getGroup(req, res)
 	});
 }
 
-module.exports = router;
+module.exports.router = router;
