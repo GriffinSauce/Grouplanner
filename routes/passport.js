@@ -5,7 +5,7 @@ var router = express.Router();
 
 var passport = require('passport');
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
-var User = require(__dirname + '/db/user.js');
+var User = require(__dirname + '/../db/user.js');
 
 // Passport routes
 router.get('/auth/google', passport.authenticate('google', {scope: 'https://www.googleapis.com/auth/userinfo.email'}));
@@ -30,7 +30,7 @@ var googleStrategySettings = {};
 
 if(global.grouplanner.environment == 'local')
 {
-	var googleStrategySettingsFile = require(__dirname + '/google-secret.json');
+	var googleStrategySettingsFile = require(__dirname + '/../google-secret.json');
 	googleStrategySettings.client_id = googleStrategySettingsFile.web.client_id;
 	googleStrategySettings.client_secret = googleStrategySettingsFile.web.client_secret;
 	googleStrategySettings.callbackURL = 'http://' + global.grouplanner.ipaddress + ':' + global.grouplanner.port + '/oauth2callback';
