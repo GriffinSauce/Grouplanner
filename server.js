@@ -140,7 +140,6 @@ var GrouplannerApp = function() {
 
 		self.app.use(function(req, res, next)
 		{
-			console.log("CHECK USER LOGIN");
 			if(req.user === undefined)
 			{
 				req.session.redirect_to = req.url;
