@@ -94,4 +94,5 @@ passport.serializeUser(function(user, done)
 
 passport.deserializeUser(function(obj, done) { done(null, obj); });
 
+module.exports.router = router;
 module.exports.passport = passport;
