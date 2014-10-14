@@ -85,12 +85,12 @@ var GrouplannerApp = function() {
 
 	self.setupDatabaseConnection = function()
 	{
-		if(self.environment == 'local')
+		if(global.grouplanner.environment == 'local')
 		{
-			mongoose.connect('mongodb://' + (process.env.OPENSHIFT_MONGODB_DB_HOST || self.ipaddress) + '/grouplanner');
+			mongoose.connect('mongodb://' + (process.env.OPENSHIFT_MONGODB_DB_HOST || global.grouplanner.ipaddress) + '/grouplanner');
 		} else
 		{
-			mongoose.connect('mongodb://' + process.env.MONGODB_USER + ':' + process.env.MONGODB_PASS + '@' + (process.env.OPENSHIFT_MONGODB_DB_HOST || self.ipaddress) + '/grouplanner');
+			mongoose.connect('mongodb://' + process.env.MONGODB_USER + ':' + process.env.MONGODB_PASS + '@' + (process.env.OPENSHIFT_MONGODB_DB_HOST || global.grouplanner.ipaddress) + '/grouplanner');
 		}
 		var db = mongoose.connection;
 		db.once('open', function callback () {
@@ -173,12 +173,12 @@ var GrouplannerApp = function() {
 	{
 		var googleStrategySettings = {};
 
-		if(self.environment == 'local')
+		if(global.grouplanner.environment == 'local')
 		{
 			var googleStrategySettingsFile = require(__dirname + '/google-secret.json');
 			googleStrategySettings.client_id = googleStrategySettingsFile.web.client_id;
 			googleStrategySettings.client_secret = googleStrategySettingsFile.web.client_secret;
-			googleStrategySettings.callbackURL = 'http://' + self.ipaddress + ':' + self.port + '/oauth2callback';
+			googleStrategySettings.callbackURL = 'http://' + global.grouplanner.ipaddress + ':' + global.grouplanner.port + '/oauth2callback';
 		} else
 		{
 			googleStrategySettings.client_id = process.env.GOOGLE_CLIENT_ID;
@@ -257,8 +257,8 @@ var GrouplannerApp = function() {
      */
     self.start = function() {
         //  Start the app on the specific interface (and port).
-        self.app.listen(self.port, self.ipaddress, function() {
-            console.log('%s: Node server started on %s:%d ...', Date(Date.now() ), self.ipaddress, self.port);
+        self.app.listen(global.grouplanner.port, global.grouplanner.ipaddress, function() {
+            console.log('%s: Node server started on %s:%d ...', Date(Date.now() ), global.grouplanner.ipaddress, global.grouplanner.port);
         });
     };
 
