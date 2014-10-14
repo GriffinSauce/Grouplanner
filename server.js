@@ -7,7 +7,6 @@ var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var methodOverride = require('method-override');
-var serveStatic = require('serve-static');
 
 var handlebars = require('express-handlebars');
 var MongoStore = require('connect-mongo')(session);
@@ -139,7 +138,6 @@ var GrouplannerApp = function() {
 		self.app.get('/oauth2callback', passport.authenticate('google', { successRedirect:'loginSuccess', failureRedirect: '/login' }));
 
 		// Set routes
-		self.app.get('/', function(req, res) { res.render('index'); });
 		self.app.get('/login', function(req, res) { res.render('login'); });
 		self.app.get('/loginSuccess', function(req, res)
 		{
@@ -153,10 +151,7 @@ var GrouplannerApp = function() {
 			req.logout();
  			res.redirect('/');
 		});
-		
-		self.app.get('/help', function(req, res) { res.render('help'); });
-		self.app.use("/", serveStatic(__dirname + '/www'));
-		
+
 		self.app.use(function(req, res, next)
 		{
 			console.log("CHECK USER LOGIN");
