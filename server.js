@@ -3,6 +3,8 @@
 setUpVariables();
 
 var express = require('express');
+var http = require('http');
+var io = require('socket.io');
 
 // Express middleware
 var bodyParser = require('body-parser');
@@ -122,7 +124,21 @@ var GrouplannerApp = function() {
 				db:mongoose.connection.db
 			})
 		}));
-
+		
+		// Set up Socket.IO
+		var server = http.createServer(self.app);
+		self.io = io.listen(server);
+		server.listen(8000); // TODO: Check this port, provide ip:port to the view via JShare
+		
+		// Test Socket.IO
+		self.io.on('connection', function (client) {
+			client.on('helloServer', function(variables){
+				console.log('Client said hello, yay!');
+				self.io.emit('helloClient', {});
+			});
+		});
+		
+		
 		// Add JShare
 		self.app.use(jshare());
 		
