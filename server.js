@@ -132,6 +132,7 @@ var GrouplannerApp = function() {
 		
 		// Test Socket.IO
 		self.io.on('connection', function (client) {
+			console.log('Socket IO is listening');
 			client.on('helloServer', function(variables){
 				console.log('Client said hello, yay!');
 				self.io.emit('helloClient', {});
