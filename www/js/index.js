@@ -1,4 +1,4 @@
-var socket = io('http://127.0.0.1:8000');
+var socket = io();
 
 socket.emit('helloServer', {});
 socket.on('helloClient', function (data) {

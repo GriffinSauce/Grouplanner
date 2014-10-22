@@ -15,9 +15,9 @@ if (typeof global.grouplanner.ipaddress === "undefined")
 	global.grouplanner.environment = 'local';
 }
 
-var express = require('express');
-var http = require('http');
-var io = require('socket.io');
+var app = require('express')();
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
 
 // Express middleware
 var bodyParser = require('body-parser');
@@ -51,7 +51,6 @@ var db = mongoose.connection;
 db.once('open', function callback() { console.log('Connected to the database'); });
 
 // EXPRESS SETUP
-var app = express();
 app.set('title', 'Grouplanner');
 app.use(cookieParser());
 app.use(bodyParser.json());
@@ -64,10 +63,6 @@ app.use(session({
 	})
 }));
 
-// Set up Socket.IO
-var server = http.createServer(app);
-io = io.listen(server);
-server.listen(8000); // TODO: Check this port, provide ip:port to the view via JShare
 		
 // Test Socket.IO
 io.on('connection', function (client)
@@ -111,7 +106,7 @@ app.use(function(req, res, next)
 app.use('/', routes.group.router);
 
 // START SERVER
-app.listen(global.grouplanner.port, global.grouplanner.ipaddress, function()
+http.listen(global.grouplanner.port, global.grouplanner.ipaddress, function()
 {
 	console.log('%s: Node server started on %s:%d ...', Date(Date.now() ), global.grouplanner.ipaddress, global.grouplanner.port);
 });
