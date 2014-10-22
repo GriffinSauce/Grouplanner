@@ -1,6 +1,19 @@
 #!/bin/env node
 
-setUpVariables();
+//  Set the environment variables we need.
+global.grouplanner = {};
+global.grouplanner.ipaddress = process.env.OPENSHIFT_NODEJS_IP;
+global.grouplanner.port      = process.env.OPENSHIFT_NODEJS_PORT || 8085;
+global.grouplanner.environment = 'remote';
+
+if (typeof global.grouplanner.ipaddress === "undefined")
+{
+	//  Log errors on OpenShift but continue w/ 127.0.0.1 - this
+	//  allows us to run/test the app locally.
+	console.warn('No OPENSHIFT_NODEJS_IP var, using 127.0.0.1');
+	global.grouplanner.ipaddress = "127.0.0.1";
+	global.grouplanner.environment = 'local';
+}
 
 var express = require('express');
 var http = require('http');
@@ -26,181 +39,105 @@ var routes =
 	group: 		require(__dirname + '/routes/group.js')
 };
 
-function setUpVariables()
+// DATABASE CONNECTION
+if(global.grouplanner.environment == 'local')
 {
-	//  Set the environment variables we need.
-	global.grouplanner = {};
-	global.grouplanner.ipaddress = process.env.OPENSHIFT_NODEJS_IP;
-	global.grouplanner.port      = process.env.OPENSHIFT_NODEJS_PORT || 8085;
-	global.grouplanner.environment = 'remote';
+	mongoose.connect('mongodb://' + (process.env.OPENSHIFT_MONGODB_DB_HOST || global.grouplanner.ipaddress) + '/grouplanner');
+} else
+{
+	mongoose.connect('mongodb://' + process.env.MONGODB_USER + ':' + process.env.MONGODB_PASS + '@' + (process.env.OPENSHIFT_MONGODB_DB_HOST || global.grouplanner.ipaddress) + '/grouplanner');
+}
+var db = mongoose.connection;
+db.once('open', function callback() { console.log('Connected to the database'); });
 
-	if (typeof global.grouplanner.ipaddress === "undefined")
+// EXPRESS SETUP
+var app = express();
+app.set('title', 'Grouplanner');
+app.use(cookieParser());
+app.use(bodyParser.json());
+app.use(methodOverride('X-HTTP-Method-Override'));
+app.use(session({
+	secret: 'fg783#$%f',
+	store: new MongoStore({
+		mongoose_connection:mongoose.connections[0],
+		db:mongoose.connection.db
+	})
+}));
+
+// Set up Socket.IO
+var server = http.createServer(app);
+io = io.listen(server);
+server.listen(8000); // TODO: Check this port, provide ip:port to the view via JShare
+		
+// Test Socket.IO
+io.on('connection', function (client)
+{
+	console.log('Socket IO is listening');
+	client.on('helloServer', function()
 	{
-		//  Log errors on OpenShift but continue w/ 127.0.0.1 - this
-		//  allows us to run/test the app locally.
-		console.warn('No OPENSHIFT_NODEJS_IP var, using 127.0.0.1');
-		global.grouplanner.ipaddress = "127.0.0.1";
-		global.grouplanner.environment = 'local';
+		console.log('Client said hello, yay!');
+		io.emit('helloClient', {});
+	});
+});
+
+// Add JShare
+app.use(jshare());
+
+// Passport init
+app.use(routes.passport.passport.initialize());
+app.use(routes.passport.passport.session());
+
+// Add templating engine
+app.engine('handlebars', handlebars());
+app.set('view engine', 'handlebars');
+
+app.use("/www", serveStatic(__dirname + '/www'));
+app.use('/', routes.main.router);
+app.use('/', routes.passport.router);
+
+app.use(function(req, res, next)
+{
+	if(req.user === undefined)
+	{
+		req.session.redirect_to = req.url;
+		res.redirect('/login');
+	} else
+	{
+		next();
 	}
+});
+
+// AUTHENTICATED ROUTES
+app.use('/', routes.group.router);
+
+// START SERVER
+app.listen(global.grouplanner.port, global.grouplanner.ipaddress, function()
+{
+	console.log('%s: Node server started on %s:%d ...', Date(Date.now() ), global.grouplanner.ipaddress, global.grouplanner.port);
+});
+
+/**
+ *  terminator === the termination handler
+ *  Terminate server on receipt of the specified signal.
+ *  @param {string} sig  Signal to terminate on.
+ */
+function terminator(sig)
+{
+	if (typeof sig === "string")
+	{
+	   console.log('%s: Received %s - terminating sample app ...', Date(Date.now()), sig);
+	   process.exit(1);
+	}
+	console.log('%s: Node server stopped.', Date(Date.now()) );
 }
 
-/**
- *  Define the sample application.
- */
-var GrouplannerApp = function() {
+// Process on exit and signals.
+process.on('exit', function(){ terminator(); });
 
-    //  Scope.
-    var self = this;
-
-    /*  ================================================================  */
-    /*  Helper functions.                                                 */
-    /*  ================================================================  */
-
-    /**
-     *  terminator === the termination handler
-     *  Terminate server on receipt of the specified signal.
-     *  @param {string} sig  Signal to terminate on.
-     */
-    self.terminator = function(sig){
-        if (typeof sig === "string") {
-           console.log('%s: Received %s - terminating sample app ...', Date(Date.now()), sig);
-           process.exit(1);
-        }
-        console.log('%s: Node server stopped.', Date(Date.now()) );
-    };
-
-
-    /**
-     *  Setup termination handlers (for exit and a list of signals).
-     */
-    self.setupTerminationHandlers = function(){
-        //  Process on exit and signals.
-        process.on('exit', function() { self.terminator(); });
-
-        // Removed 'SIGPIPE' from the list - bugz 852598.
-        ['SIGHUP', 'SIGINT', 'SIGQUIT', 'SIGILL', 'SIGTRAP', 'SIGABRT',
-         'SIGBUS', 'SIGFPE', 'SIGUSR1', 'SIGSEGV', 'SIGUSR2', 'SIGTERM'
-        ].forEach(function(element) {
-            process.on(element, function() { self.terminator(element); });
-        });
-    };
-
-	self.setupDatabaseConnection = function()
-	{
-		if(global.grouplanner.environment == 'local')
-		{
-			mongoose.connect('mongodb://' + (process.env.OPENSHIFT_MONGODB_DB_HOST || global.grouplanner.ipaddress) + '/grouplanner');
-		} else
-		{
-			mongoose.connect('mongodb://' + process.env.MONGODB_USER + ':' + process.env.MONGODB_PASS + '@' + (process.env.OPENSHIFT_MONGODB_DB_HOST || global.grouplanner.ipaddress) + '/grouplanner');
-		}
-		var db = mongoose.connection;
-		db.once('open', function callback () {
-		  console.log('Connected to the database');
-		});
-	};
-
-
-    /*  ================================================================  */
-    /*  App server functions (main app logic here).                       */
-    /*  ================================================================  */
-
-    /**
-     *  Initialize the server (express) and create the routes and register
-     *  the handlers.
-     */
-    self.initializeServer = function()
-	{
-		// Express init
-        self.app = express();
-		self.app.set('title', 'Grouplanner');
-		self.app.use(cookieParser());
-		self.app.use(bodyParser.json());
-		self.app.use(methodOverride('X-HTTP-Method-Override'));
-		self.app.use(session({
-			secret: 'fg783#$%f',
-			store: new MongoStore({
-				mongoose_connection:mongoose.connections[0],
-				db:mongoose.connection.db
-			})
-		}));
-		
-		// Set up Socket.IO
-		var server = http.createServer(self.app);
-		self.io = io.listen(server);
-		server.listen(8000); // TODO: Check this port, provide ip:port to the view via JShare
-		
-		// Test Socket.IO
-		self.io.on('connection', function (client) {
-			console.log('Socket IO is listening');
-			client.on('helloServer', function(variables){
-				console.log('Client said hello, yay!');
-				self.io.emit('helloClient', {});
-			});
-		});
-		
-		
-		// Add JShare
-		self.app.use(jshare());
-		
-		// Passport init
-		self.app.use(routes.passport.passport.initialize());
-  		self.app.use(routes.passport.passport.session());
-
-		// Add templating engine
-		self.app.engine('handlebars', handlebars());
-		self.app.set('view engine', 'handlebars');
-
-		self.app.use("/www", serveStatic(__dirname + '/www'));
-		self.app.use('/', routes.main.router);
-		self.app.use('/', routes.passport.router);
-
-		self.app.use(function(req, res, next)
-		{
-			if(req.user === undefined)
-			{
-				req.session.redirect_to = req.url;
-				res.redirect('/login');
-			} else
-			{
-				next();
-			}
-		});
-		
-		// AUTHENTICATED ROUTES
-		self.app.use('/', routes.group.router);
-    };
-
-    /**
-     *  Initializes the sample application.
-     */
-    self.initialize = function()
-	{
-        self.setupTerminationHandlers();
-		self.setupDatabaseConnection();
-        // Create the express server and routes.
-        self.initializeServer();
-    };
-
-
-    /**
-     *  Start the server (starts up the sample application).
-     */
-    self.start = function() {
-        //  Start the app on the specific interface (and port).
-        self.app.listen(global.grouplanner.port, global.grouplanner.ipaddress, function() {
-            console.log('%s: Node server started on %s:%d ...', Date(Date.now() ), global.grouplanner.ipaddress, global.grouplanner.port);
-        });
-    };
-
-};   /*  Sample Application.  */
-
-
-
-/**
- *  main():  Main code.
- */
-var grouplanner = new GrouplannerApp();
-grouplanner.initialize();
-grouplanner.start();
-
+// Removed 'SIGPIPE' from the list - bugz 852598.
+['SIGHUP', 'SIGINT', 'SIGQUIT', 'SIGILL', 'SIGTRAP', 'SIGABRT',
+ 'SIGBUS', 'SIGFPE', 'SIGUSR1', 'SIGSEGV', 'SIGUSR2', 'SIGTERM'
+].forEach(function(element)
+{
+	process.on(element, function() { terminator(element); });
+});
