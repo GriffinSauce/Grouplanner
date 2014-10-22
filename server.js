@@ -18,6 +18,7 @@ if (typeof global.grouplanner.ipaddress === "undefined")
 var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
+global.io = io;
 
 // Express middleware
 var bodyParser = require('body-parser');
@@ -63,17 +64,8 @@ app.use(session({
 	})
 }));
 
-		
-// Test Socket.IO
-io.on('connection', function (client)
-{
-	console.log('Socket IO is listening');
-	client.on('helloServer', function()
-	{
-		console.log('Client said hello, yay!');
-		io.emit('helloClient', {});
-	});
-});
+// Api
+var api = require(__dirname + '/api.js');
 
 // Add JShare
 app.use(jshare());

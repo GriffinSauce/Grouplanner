@@ -1,6 +1,5 @@
 var socket = io();
 
-socket.emit('helloServer', {});
-socket.on('helloClient', function (data) {
-	console.log('Server said hello back, yay!');
+socket.emit('helloServer', {}, function(msg) {
+	console.log('Server said: '+msg);
 });
