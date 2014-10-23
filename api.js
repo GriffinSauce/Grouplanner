@@ -6,7 +6,7 @@
 
 // Imports
 var Group = require(__dirname + '/db/group.js');
-var io = global.io;
+var io = global.grouplanner.io;
 
 // Object containing all functions
 var apiFunctions = {

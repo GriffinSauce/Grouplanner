@@ -18,7 +18,7 @@ if (typeof global.grouplanner.ipaddress === "undefined")
 var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
-global.io = io;
+global.grouplanner.io = io;
 
 // Express middleware
 var bodyParser = require('body-parser');
