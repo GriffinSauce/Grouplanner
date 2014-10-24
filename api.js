@@ -1,9 +1,4 @@
 #!/bin/env node
-/*
- *
- *	api.js contains all events communication between client and server
- *
- */
 
 // Imports
 var Group = require(__dirname + '/db/group.js');
