@@ -1,6 +1,7 @@
 #!/bin/env node
 
 // Imports
+var Period = require(__dirname + '/db/period.js');
 var Group = require(__dirname + '/db/group.js');
 var io = global.grouplanner.io;
 
@@ -50,8 +51,36 @@ var apiFunctions = {
 				callback({success:true, id:group._id, message: 'saved as: ' + group._id + '\n'});
 			});
 		});
-	}
+	},
 	
+	/*	
+	 *	Get period
+	 *	input.startDate = period startDate
+	 */
+	'get/period' : function(input,callback)
+	{
+		Period.findOne({startDate: input.startDate}, function(err, period)
+		{
+			callback(period);
+		});
+	},
+	
+	/*	
+	 *	Create period
+	 *	input.period = period data
+	 */
+	'create/period' : function(input,callback)
+	{
+		// TODO: Check whether user is logged in
+		// On the other hand, the page is not available if not...
+		var period = new Period(input.period);
+		period.save(function(err)
+		{
+			if(err) { console.log('Error saving group %s to the database', period.name); }
+			else { console.log('Period %s saved to the database', period.name); }
+			callback({success:true, startDate:period.startDate, message: 'saved as: ' + period.startDate + '\n'});
+		});
+	}
 };
 
 // Export for use in server.js
