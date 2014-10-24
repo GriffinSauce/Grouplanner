@@ -3,7 +3,7 @@
 var mongoose = require('mongoose');
 var findOrCreate = require('mongoose-findorcreate');
 var Schema = mongoose.Schema;
-var groupSchema = new Schema(
+var periodSchema = new Schema(
 {
 	groupid: {type: Schema.Types.ObjectId},
 	startdate: {type: Date},
@@ -17,6 +17,6 @@ var groupSchema = new Schema(
 	}]
 }, { autoIndex: false });
 
-groupSchema.plugin(findOrCreate);
+periodSchema.plugin(findOrCreate);
 
-module.exports = mongoose.model('Group', groupSchema);
+module.exports = mongoose.model('Period', periodSchema);
