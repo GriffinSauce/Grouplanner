@@ -1,3 +1,4 @@
+var socket = io();
 /*
  *	Group creation
  *
@@ -20,19 +21,15 @@ $(document).ready(function(){
 				description:description,
 				startDate:moment().weekday(1).toDate()
 			}
-			$.ajax({
-				url: '/group',
-				type: 'PUT',
-				data: data
-			})
-			.done(function( data ) {
-				if(data.success)
+			socket.emit('create/group', {group:data,user:jshare.user}, function(rtnData) {
+				if(rtnData.success)
 				{
 					window.location.href = '/planner';
 				}else{
 					alert('Error 2'); // lol
 				}
 			});
+
 		}
 	});
 	
