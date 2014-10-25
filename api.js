@@ -54,16 +54,41 @@ var apiFunctions = {
 	/*	
 	 *	Get period
 	 *	input.startDate = period startDate
+	 *	input.groupid = _id of the group this period is part of
 	 */
 	'get/period' : function(input,callback)
 	{
-		Period.findOne({startDate: input.startDate}, function(err, period)
+		Period.findOrCreate({startDate: input.startDate, groupid: input.groupid}, function(err, period)
 		{
 			callback(period);
 		});
 	},
 	
 	/*	
+	 *	Put available
+	 *	input.periodid = _id of the period
+	 *	input.date = date of availability
+	 *	input.available = true / false
+	 */
+	'put/available' : function(input,callback)
+	{
+		var conditions = {_id: input.periodid};
+		var update = {days:{}};
+		if(input.available)
+		{
+			update.days[input.date] = { $addToSet: { available: this.passport.user.id }	};
+		} else
+		{
+			update.days[input.date] = { $pull: { available: this.passport.user.id }	};
+		}
+
+		Period.update(conditions, update, function(err)
+		{
+			callback(err);
+		});
+	},
+
+	/*
 	 *	Create period
 	 *	input.period = period data
 	 */

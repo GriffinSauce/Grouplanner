@@ -9,12 +9,10 @@ var periodSchema = new Schema(
 	startdate: {type: Date},
 	enddate: {type: Date},
 	plannedDate: {type: Date},
-	days:[
+	days:
 	{
-		date: {type: Date},
-		available: [],
-		planned: {type:Boolean, default: false}
-	}]
+
+	}
 }, { autoIndex: false });
 
 periodSchema.plugin(findOrCreate);
