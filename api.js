@@ -36,7 +36,6 @@ var apiFunctions = {
 	 */
 	'create/group' : function(input, callback)
 	{
-		// On the other hand, the page is not available if not...
 		var group = new Group(input.group);
 		group.creator = this.passport.user._id;
 		group.members.push(this.passport.user._id);
@@ -70,8 +69,6 @@ var apiFunctions = {
 	 */
 	'create/period' : function(input,callback)
 	{
-		// TODO: Check whether user is logged in
-		// On the other hand, the page is not available if not...
 		var period = new Period(input.period);
 		period.save(function(err)
 		{
