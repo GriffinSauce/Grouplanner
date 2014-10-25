@@ -34,13 +34,12 @@ var apiFunctions = {
 	 *	input.group = group data
 	 *	input.user = current user
 	 */
-	'create/group' : function(input,callback)
+	'create/group' : function(input, callback)
 	{
-		// TODO: Check whether user is logged in
 		// On the other hand, the page is not available if not...
 		var group = new Group(input.group);
-		group.creator = input.user._id;
-		group.members.push(input.user._id);
+		group.creator = this.passport.user._id;
+		group.members.push(this.passport.user._id);
 		require('crypto').randomBytes(48, function(ex, buf)
 		{
 			group.token = buf.toString('hex');
@@ -89,9 +88,7 @@ module.exports = apiFunctions;
 // Socket listeners
 io.on('connection', function (client)
 {
-	var userId = client.request.session.passport.user;
-    console.log("Your User ID is", userId);
-
+	client.passport = client.request.session.passport;
 	for(var key in apiFunctions)
 	{
 		client.on(key, apiFunctions[key]);
