@@ -51,18 +51,27 @@ if(global.grouplanner.environment == 'local')
 var db = mongoose.connection;
 db.once('open', function callback() { console.log('Connected to the database'); });
 
-// EXPRESS SETUP
-app.set('title', 'Grouplanner');
-app.use(cookieParser());
-app.use(bodyParser.json());
-app.use(methodOverride('X-HTTP-Method-Override'));
-app.use(session({
+
+var sessionMiddleware = session(
+{
 	secret: 'fg783#$%f',
 	store: new MongoStore({
 		mongoose_connection:mongoose.connections[0],
 		db:mongoose.connection.db
 	})
-}));
+});
+
+// EXPRESS SETUP
+app.set('title', 'Grouplanner');
+app.use(cookieParser());
+app.use(bodyParser.json());
+app.use(methodOverride('X-HTTP-Method-Override'));
+app.use(sessionMiddleware);
+
+global.grouplanner.io.use(function(socket, next)
+{
+	sessionMiddleware(socket.request, {}, next);
+});
 
 // Api
 var api = require(__dirname + '/api.js');

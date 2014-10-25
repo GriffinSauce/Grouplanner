@@ -89,7 +89,9 @@ module.exports = apiFunctions;
 // Socket listeners
 io.on('connection', function (client)
 {
-	console.log('Socket IO is listening');
+	var userId = client.request.session.passport.user;
+    console.log("Your User ID is", userId);
+
 	for(var key in apiFunctions)
 	{
 		client.on(key, apiFunctions[key]);
