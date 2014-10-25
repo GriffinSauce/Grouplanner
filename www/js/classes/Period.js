@@ -203,9 +203,7 @@ function Period(options)
 			startDate:scope.startDate.toDate(),
 			endDate:scope.endDate.toDate()
 		}
-		console.log(period);
 		socket.emit('get/period', period, function(data) {
-			console.log(data);
 			if(data.success)
 			{
 				// Save data
