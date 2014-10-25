@@ -24,6 +24,7 @@ $(document).ready(function(){
 			socket.emit('create/group', {group:data,user:jshare.user}, function(rtnData) {
 				if(rtnData.success)
 				{
+					localStorage['groupid'] = rtnData.id;
 					window.location.href = '/planner';
 				}else{
 					alert('Error 2'); // lol
