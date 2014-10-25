@@ -15,7 +15,7 @@ function App()
 	// Currently active group
 	// TODO: Supply Group ID (from select, localstorage or default for the user)
 	// TODO: Remove dummy
-	this.group = new Group();
+	this.group = {};
 	
 	// Period length
 	// Default 7
@@ -24,6 +24,12 @@ function App()
 	// Data contains locally loaded periods, by startDate in DDMMYYYY format
 	// Contains only this week by default
 	this.data = {};
+	
+	// User data
+	this.user = {};
+	
+	// Ready handlers
+	this.readyHandlers = [];
 	
 	/*	
 	 *	Initialise the app
@@ -34,8 +40,25 @@ function App()
 		$('.period-control-button.next').bind('click tap', this.nextPeriod);
 		$('.period-control-button.prev').bind('click tap', this.prevPeriod);
 		
-		console.log('APP INITIALISED');
+		// Get data that is supplied with jshare
+		scope.user = jshare.user;
+		scope.group = new Group(localStorage['groupid'], function(){
+			for(var key in scope.readyHandlers)
+			{
+				scope.readyHandlers[key]();
+			}
+			console.log('APP INITIALISED');
+		});
 	};
+	
+	/*	
+	 *	Add readyhandler
+	 *
+	 */
+	this.ready = function(fn)
+	{
+		scope.readyHandlers.push(fn);	
+	}
 	
 	/*	
 	 *	Load a particular period
@@ -88,4 +111,6 @@ function App()
 		var periodName = startDay+' - '+endDay;
 		$('#period-controls .period span').text(periodName);
 	};
+	
+	this.init();
 }
