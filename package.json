@@ -26,6 +26,7 @@
     "express-session": "~1.8.2",
     "jshare": "0.0.9",
     "method-override": "~2.2.0",
+    "moment": "^2.8.3",
     "mongodb": "~1.4.10",
     "mongoose": "~3.8.16",
     "mongoose-findorcreate": "~0.1.2",

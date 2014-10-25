@@ -4,6 +4,7 @@
 var Period = require(__dirname + '/db/period.js');
 var Group = require(__dirname + '/db/group.js');
 var io = global.grouplanner.io;
+var moment = require('moment');
 
 /*
  *	Command structure:	'method/resource'
@@ -58,7 +59,15 @@ var apiFunctions = {
 	 */
 	'get/period' : function(input,callback)
 	{
-		Period.findOrCreate({startDate: input.startDate, groupid: input.groupid}, function(err, period)
+		Period.findOrCreate(
+		{
+			groupid: input.groupid,
+			startDate: input.startDate
+		},
+		{
+			endDate: input.endDate
+		},
+		function(err, period)
 		{
 			callback(period);
 		});

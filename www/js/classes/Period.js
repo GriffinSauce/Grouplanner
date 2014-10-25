@@ -47,7 +47,6 @@ function Period(options)
 		for(var i=0; i<this.length; i++)
 		{
 			this.days[dateTemp.format('DDMMYYYY')] = {
-				date:dateTemp.clone(),
 				available:[],
 				planned:false
 			};
@@ -67,10 +66,10 @@ function Period(options)
 			for(var date in scope.days)
 			{
 				data.days.push({
-					day:scope.days[date].date.format('dd'),
-					date:scope.days[date].date.format('DD'),
+					day:moment(date,'DDMMYYYY').format('dd'),
+					date:moment(date,'DDMMYYYY').format('DD'),
 					dateFull:date,
-					available:scope.days[date].available.indexOf(userID) !== -1,
+					available:scope.days[date].available.indexOf(app.user._id) !== -1,
 					percent:(scope.days[date].available.length / app.group.members.length) * 100
 				});
 			}
@@ -105,13 +104,13 @@ function Period(options)
 		if(el.hasClass('available'))
 		{
 			el.removeClass('available');
-			var i = scope.days[date].available.indexOf(userID);
+			var i = scope.days[date].available.indexOf(app.user._id);
 			if(i != -1) {
 				scope.days[date].available.splice(i, 1);	
 			}
 		}else{
 			el.addClass('available');
-			scope.days[date].available.push(userID);
+			scope.days[date].available.push(app.user._id);
 		}
 		
 		// TODO: Update day to db
@@ -150,7 +149,7 @@ function Period(options)
 		for(var key in days)
 		{
 			var day = $('#'+scope.startDate.format('DDMMYYYY')).find('#avail-days #'+key);
-			if(days[key].available.indexOf(userID) !== -1)
+			if(days[key].available.indexOf(app.user._id) !== -1)
 			{
 				day.removeClass('available').addClass('available');
 			}else{
@@ -197,6 +196,34 @@ function Period(options)
 		}
 	};
 	
+	this.loadData = function()
+	{
+		var period = {
+			groupid : app.group._id,
+			startDate:scope.startDate.toDate(),
+			endDate:scope.endDate.toDate()
+		}
+		console.log(period);
+		socket.emit('get/period', period, function(data) {
+			console.log(data);
+			if(data.success)
+			{
+				// Save data
+				scope.days = data.days;
+				if(typeof data.plannedDate !== 'undefined')
+				{
+					scope.plannedDate = data.plannedDate;
+				}else{
+					scope.plannedDate = false;
+				}
+				
+				// Update UI
+				this.updateDays();
+				this.updatePicker();
+			}
+		});
+	};
+	
 	this.generateDays();
-	// TODO: Load actual data from db
+	this.loadData(); // Load data and update UI
 }
