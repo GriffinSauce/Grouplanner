@@ -180,6 +180,10 @@ function Period(options)
 		// TODO: Order according to percent
 	};
 	
+	/*	
+	 *	Show this period in the UI
+	 *
+	 */
 	this.activate = function()
 	{
 		$('#availability .period').hide();
@@ -196,10 +200,14 @@ function Period(options)
 		}
 	};
 	
-	this.loadData = function()
+	/*	
+	 *	Load data from db and update UI
+	 *
+	 */
+	this.updateData = function()
 	{
 		var period = {
-			groupid : app.group._id,
+			groupid:app.group._id,
 			startDate:scope.startDate.toDate(),
 			endDate:scope.endDate.toDate()
 		}
@@ -208,6 +216,7 @@ function Period(options)
 			{
 				// Save data
 				scope.days = data.days;
+				scope.id = data._id;
 				if(typeof data.plannedDate !== 'undefined')
 				{
 					scope.plannedDate = data.plannedDate;
@@ -223,5 +232,5 @@ function Period(options)
 	};
 	
 	this.generateDays();
-	this.loadData(); // Load data and update UI
+	this.updateData();
 }
