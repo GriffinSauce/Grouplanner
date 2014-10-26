@@ -98,22 +98,33 @@ function Period(options)
 	{
 		var el = $(this);
 		var date = el.attr('id');
+		var available = null;
 		console.log('Changing availability on: '+date);
 		
 		// Update UI and data
 		if(el.hasClass('available'))
 		{
+			available = false;
 			el.removeClass('available');
 			var i = scope.days[date].available.indexOf(app.user._id);
 			if(i != -1) {
 				scope.days[date].available.splice(i, 1);	
 			}
 		}else{
+			available = true;
 			el.addClass('available');
 			scope.days[date].available.push(app.user._id);
 		}
 		
-		// TODO: Update day to db
+		// Update day to db
+		var data = {
+			periodid:scope.id,
+			date:moment(date,'DDMMYYYY').toDate(),
+			available:available
+		}
+		socket.emit('put/available', data, function(err) {
+			console.log(err);
+		});
 		scope.updatePicker();
 	};
 	

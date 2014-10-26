@@ -81,6 +81,7 @@ var apiFunctions = {
 	 */
 	'put/available' : function(input,callback)
 	{
+		console.log('Updating date '+input.date);
 		var conditions = {_id: input.periodid};
 		var update = {days:{}};
 		if(input.available)
@@ -94,6 +95,7 @@ var apiFunctions = {
 		Period.update(conditions, update, function(err)
 		{
 			callback(err);
+			console.log(err);
 		});
 	},
 
