@@ -58,9 +58,31 @@ var apiFunctions = {
 	 */
 	'get/period' : function(input,callback)
 	{
-		Period.findOrCreate({startDate: input.startDate, groupid: input.groupid}, function(err, period)
+		Period.findOrCreate({startDate: input.startDate, groupid: input.groupid}, function(err, period, created)
 		{
-			callback(period);
+			if(created)
+			{
+				Group.findOne({_id: input.groupid}, function(err, group)
+				{
+					var days = {};
+					for(var i = 0; i < group.periodLength; i++)
+					{
+						var datum = input.startDate;
+						// datum x i
+						days[datum].available = [];
+						days[datum].planned = false;
+					}
+					period.days = days;
+					period.save(function(err)
+					{
+						if(err) { console.log('Error saving period setup to the database', group.name); }
+						callback(period);
+					});
+				});
+			} else
+			{
+				callback(period);
+			}
 		});
 	},
 	

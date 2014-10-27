@@ -10,7 +10,7 @@ var groupSchema = new Schema(
 	description: {type: String, default: ''},
 	image: {data: Buffer, contentType: String},
 	startdate: {type: Date},
-	length: {type: Number, default: 7},
+	periodLength: {type: Number, default: 7},
 	members: {type: Array, default: []},
 	creator: {type: Schema.Types.ObjectId},
 	invites:
