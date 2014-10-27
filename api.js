@@ -57,8 +57,9 @@ var apiFunctions = {
 	 *	input.startDate = period startDate
 	 *	input.groupid = _id of the group this period is part of
 	 */
-	'get/period' : function(input,callback)
+	'get/period' : function(input, callback)
 	{
+		console.log(input);
 		Period.findOrCreate(
 		{
 			groupid: input.groupid,
@@ -67,9 +68,32 @@ var apiFunctions = {
 		{
 			endDate: input.endDate
 		},
-		function(err, period)
+		function(err, period, created)
 		{
-			callback(period);
+			if(created)
+			{
+				Group.findOne({_id: input.groupid}, function(err, group)
+				{
+					var days = {};
+					for(var i = 0; i < group.periodLength; i++)
+					{
+						var datum = moment(input.startDate);
+						datum.add(i, 'days');
+						days[datum] = {};
+						days[datum].available = [];
+						days[datum].planned = false;
+					}
+					period.days = days;
+					period.save(function(err)
+					{
+						if(err) { console.log('Error saving period setup to the database', group.name); }
+						callback(period);
+					});
+				});
+			} else
+			{
+				callback(period);
+			}
 		});
 	},
 	

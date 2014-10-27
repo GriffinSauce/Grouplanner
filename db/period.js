@@ -9,7 +9,7 @@ var periodSchema = new Schema(
 	startDate: {type: Date},
 	endDate: {type: Date},
 	plannedDate: {type: Date},
-	days: {type: Array, default: []},
+	days: {type: Object, default: {}},
 }, { autoIndex: false });
 
 periodSchema.plugin(findOrCreate);
