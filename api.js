@@ -121,21 +121,6 @@ var apiFunctions = {
 			callback(err);
 			console.log(err);
 		});
-	},
-
-	/*
-	 *	Create period
-	 *	input.period = period data
-	 */
-	'create/period' : function(input,callback)
-	{
-		var period = new Period(input.period);
-		period.save(function(err)
-		{
-			if(err) { console.log('Error saving group %s to the database', period.name); }
-			else { console.log('Period %s saved to the database', period.name); }
-			callback({success:true, startDate:period.startDate, message: 'saved as: ' + period.startDate + '\n'});
-		});
 	}
 };
 
