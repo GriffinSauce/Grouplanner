@@ -109,13 +109,17 @@ var apiFunctions = {
 	{
 		console.log('Updating date '+input.date+' in period '+input.periodid);
 		var conditions = {_id: input.periodid};
-		var update = {days:{}};
+		var update = {};
 		if(input.available)
 		{
-			update.days[input.date] = { $addToSet: { available: this.passport.user.id }	};
+			update.$addToSet = {};
+			update.$addToSet['days.'+input.date+'.available'] = this.passport.user._id;
+			console.log(this.passport.user._id+' is available');
 		} else
 		{
-			update.days[input.date] = { $pull: { available: this.passport.user.id }	};
+			update.days.$pull = {};
+			update.days.$pull['days.'+input.date+'.available'] = this.passport.user._id;
+			console.log(this.passport.user._id+' is not available');
 		}
 
 		Period.update(conditions, update, function(err)
