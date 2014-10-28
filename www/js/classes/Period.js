@@ -119,7 +119,7 @@ function Period(options)
 		// Update day to db
 		var data = {
 			periodid:scope.id,
-			date:moment(date,'DDMMYYYY').toDate(),
+			date:date,
 			available:available
 		}
 		socket.emit('put/available', data, function(err) {
@@ -219,8 +219,8 @@ function Period(options)
 	{
 		var period = {
 			groupid:app.group._id,
-			startDate:scope.startDate.toDate(),
-			endDate:scope.endDate.toDate()
+			startDate:scope.startDate.format('DDMMYYYY'),
+			endDate:scope.endDate.format('DDMMYYYY')
 		}
 		socket.emit('get/period', period, function(data) {
 			if(data.success)

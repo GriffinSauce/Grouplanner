@@ -59,6 +59,7 @@ var apiFunctions = {
 	 */
 	'get/period' : function(input, callback)
 	{
+		console.log('Getting period with params:');
 		console.log(input);
 		Period.findOrCreate(
 		{
@@ -77,11 +78,12 @@ var apiFunctions = {
 					var days = {};
 					for(var i = 0; i < group.periodLength; i++)
 					{
-						var datum = moment(input.startDate);
+						var datum = moment(input.startDate, 'DDMMYYYY');
 						datum.add(i, 'days');
-						days[datum] = {};
-						days[datum].available = [];
-						days[datum].planned = false;
+						days[datum.format('DDMMYYYY')] = {
+							available:[],
+							planned:false
+						};
 					}
 					period.days = days;
 					period.save(function(err)
@@ -105,7 +107,7 @@ var apiFunctions = {
 	 */
 	'put/available' : function(input,callback)
 	{
-		console.log('Updating date '+input.date);
+		console.log('Updating date '+input.date+' in period '+input.periodid);
 		var conditions = {_id: input.periodid};
 		var update = {days:{}};
 		if(input.available)

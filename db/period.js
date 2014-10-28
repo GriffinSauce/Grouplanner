@@ -6,9 +6,9 @@ var Schema = mongoose.Schema;
 var periodSchema = new Schema(
 {
 	groupid: {type: Schema.Types.ObjectId},
-	startDate: {type: Date},
-	endDate: {type: Date},
-	plannedDate: {type: Date},
+	startDate: {type: String},
+	endDate: {type: String},
+	plannedDate: {type: String},
 	days: {type: Object, default: {}},
 }, { autoIndex: false });
 
