@@ -223,7 +223,7 @@ function Period(options)
 			endDate:scope.endDate.format('DDMMYYYY')
 		}
 		socket.emit('get/period', period, function(data) {
-			if(data.success)
+			if(data)
 			{
 				// Save data
 				scope.days = data.days;
@@ -236,8 +236,8 @@ function Period(options)
 				}
 				
 				// Update UI
-				this.updateDays();
-				this.updatePicker();
+				scope.updateDays();
+				scope.updatePicker();
 			}
 		});
 	};
