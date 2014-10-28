@@ -118,8 +118,7 @@ var apiFunctions = {
 
 		Period.update(conditions, update, function(err)
 		{
-			callback(err);
-			console.log(err);
+			if(err) { console.log('Error updating'); console.log(err); }
 		});
 	}
 };
