@@ -1,4 +1,4 @@
-/* global $,moment,App,Group,Period */
+/* global $,moment,App,Group,Period,jshare,localStorage */
 
 /*
  *	App class
@@ -42,7 +42,8 @@ function App()
 		
 		// Get data that is supplied with jshare
 		scope.user = jshare.user;
-		scope.group = new Group(localStorage['groupid'], function(){
+		scope.group = new Group(localStorage['groupid'], function(){	
+			scope.periodLength = scope.group.periodLength;
 			for(var key in scope.readyHandlers)
 			{
 				scope.readyHandlers[key]();
@@ -58,7 +59,7 @@ function App()
 	this.ready = function(fn)
 	{
 		scope.readyHandlers.push(fn);	
-	}
+	};
 	
 	/*	
 	 *	Load a particular period
@@ -75,7 +76,7 @@ function App()
 		}
 		scope.data[scope.activePeriod].activate();
 		scope.updateName();
-	}
+	};
 		
 	/*	
 	 *	Switch to next period and load
@@ -83,6 +84,7 @@ function App()
 	 */
 	this.nextPeriod = function()
 	{
+		console.log('Loading next period');
 		// Get next period in DDMMYYYY string
 		var next = moment(scope.activePeriod, 'DDMMYYYY').add(scope.periodLength, 'd').format('DDMMYYYY');
 		scope.loadPeriod(next);
@@ -94,6 +96,7 @@ function App()
 	 */
 	this.prevPeriod = function()
 	{
+		console.log('Loading previous period');
 		// Get next period in DDMMYYYY string
 		var prev = moment(scope.activePeriod, 'DDMMYYYY').subtract(scope.periodLength, 'd').format('DDMMYYYY');
 		scope.loadPeriod(prev);
