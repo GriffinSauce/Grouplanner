@@ -129,8 +129,8 @@ var apiFunctions = {
 			console.log(this.passport.user._id+' is available');
 		} else
 		{
-			update.days.$pull = {};
-			update.days.$pull['days.'+input.date+'.available'] = this.passport.user._id;
+			update.$pull = {};
+			update.$pull['days.'+input.date+'.available'] = this.passport.user._id;
 			console.log(this.passport.user._id+' is not available');
 		}
 
