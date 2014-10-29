@@ -24,10 +24,22 @@ var apiFunctions = {
 	 */
 	'get/group' : function(input,callback)
 	{
-		Group.findOne({_id: input.id}, function(err, group)
+		console.log('Getting group by ID: '+input.id);
+		if(input.id !== undefined)
 		{
-			callback(group);
-		});
+			Group.findOne({_id: input.id}, function(err, group)
+			{
+				console.log('Group found');
+				callback(group);
+			});
+		}else{
+			// Find a random group this user is a member of
+			Group.findOne({'members':{$in:[this.passport.user._id]}}, function(err, group)
+			{
+				console.log('Group not found, returning random');
+				callback(group);
+			});	
+		}
 	},
 	
 	/*	
