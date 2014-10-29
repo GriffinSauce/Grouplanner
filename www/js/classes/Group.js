@@ -9,23 +9,21 @@ function Group(id, ready)
 {
 	var scope = this;
 	
-	// Props
-	/*this._id = '';
-	this.name = '';
-	this.description = '';
-	this.eventtype = '';
-	this.periodLength = 0;
-	this.members = [];*/
-	
 	// TODO: Get this stuff from database based on ID
 	this.init = function()
 	{
 		socket.emit('get/group', {id:id}, function(data) {
 			console.log('Group data loaded');
+			
+			// Save to localstorage in case another group was returned
+			localStorage['groupid'] = data._id;
+			
+			// Save to scope
 			for(var key in data)
 			{
 				scope[key] = data[key];
 			}
+			
 			// done loading so call ready
 			ready();
 		});
