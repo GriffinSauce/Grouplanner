@@ -138,6 +138,24 @@ var apiFunctions = {
 		{
 			if(err) { console.log('Error updating'); console.log(err); }
 		});
+	},
+	
+	/*	
+	 *	Put planned
+	 *	input.periodid = _id of the period
+	 *	input.date = date that is planned
+	 *	input.planned = true / false
+	 */
+	'put/planned' : function(input,callback)
+	{
+		console.log('Updating date '+input.date+' in period '+input.periodid);
+		var update = {};
+		update['days.'+input.date+'.planned'] = input.planned;
+		update.plannedDate = input.planned ? input.date : false;
+		Period.update({_id: input.periodid}, update, function(err)
+		{
+			if(err) { console.log('Error updating'); console.log(err); }
+		});
 	}
 };
 

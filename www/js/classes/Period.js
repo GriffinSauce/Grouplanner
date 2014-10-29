@@ -76,13 +76,13 @@ function Period(options)
 			var compiledTemplate = Handlebars.getTemplate('availability');
 			return compiledTemplate(data);
 		}else{
-			// TODO: Use real data
+			var date = moment(scope.plannedDate, 'DDMMYYYY');
 			var data = {
 				id:this.startDate.format('DDMMYYYY'),
-				day:'Monday',
-				date:'09',
-				month:'October',
-				available:'Frits, Joey and Klaas',
+				day:date.format('dddd'),
+				date:date.format('DD'),
+				month:date.format('MMMM'),
+				available:'Frits, Joey and Klaas', // TODO: Use real data
 				notes:'...'
 			};
 			var compiledTemplate = Handlebars.getTemplate('planned');
@@ -139,9 +139,18 @@ function Period(options)
 		console.log('Planning date: '+date);
 		
 		// Update data
-		scope.plannedDate = moment(date, 'DDMMYYYY');
+		scope.plannedDate = date;
 		scope.days[date].planned = true;
-		// TODO: Update data to db
+		
+		// Update data to db
+		var data = {
+			periodid:scope.id,
+			date:date,
+			planned:true
+		}
+		socket.emit('put/planned', data, function(err) {
+			console.log(err);
+		});
 		
 		// Update UI
 		var el = $('#'+scope.startDate.format('DDMMYYYY'));
@@ -236,8 +245,16 @@ function Period(options)
 				}
 				
 				// Update UI
-				scope.updateDays();
-				scope.updatePicker();
+				if(!scope.plannedDate)
+				{
+					scope.updateDays();
+					scope.updatePicker();
+				}else{
+					var el = $('#'+scope.startDate.format('DDMMYYYY'));
+					el.remove();
+					var html = $(scope.getHTML());
+					$('#availability').append(html);
+				}
 			}
 		});
 	};
