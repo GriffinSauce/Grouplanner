@@ -3,13 +3,24 @@
 	
 	#header
 	{
+		height:2em;
 		padding:1em;
 		background-color:white;
 		border-bottom: 0.2em #CDBDFF solid;
 		
 		#logo
 		{
+			float:left;
 			height:2em;
+			margin:0 1em 0 0.5em;
+		}
+		
+		#name
+		{
+			float:left;
+			font-size:140%;
+			font-weight: 500;
+			color:#555;
 		}
 		
 		#settings

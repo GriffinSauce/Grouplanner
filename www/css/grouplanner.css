@@ -115,11 +115,19 @@ body {
           font-size: 80%;
           padding: 0 1em; }
   body#planner #header {
+    height: 2em;
     padding: 1em;
     background-color: white;
     border-bottom: 0.2em #CDBDFF solid; }
     body#planner #header #logo {
-      height: 2em; }
+      float: left;
+      height: 2em;
+      margin: 0 1em 0 0.5em; }
+    body#planner #header #name {
+      float: left;
+      font-size: 140%;
+      font-weight: 500;
+      color: #555; }
     body#planner #header #settings {
       position: absolute;
       top: 0.5em;

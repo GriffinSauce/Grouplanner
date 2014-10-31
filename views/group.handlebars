@@ -14,6 +14,7 @@
 
 		<div id="header">
 			<img id="logo" src="../www/img/grouplanner_logo.png">
+			<div id="name">{{group.name}}</div>
 			<div id="settings">
 				<div id="icon"><span>-</span><br><span>-</span><br><span>-</span><br></div>
 				<div id="user">
@@ -40,7 +41,7 @@
 				{{#each group.members}}
 				<div class="user">
 					<div class="img"><img src="{{picture}}" /></div>
-					<div class="name">{{name.first}} {{name.last}}</div>
+					<div class="name">{{username}}</div>
 				</div>
 				{{/each}}
 			</div>
