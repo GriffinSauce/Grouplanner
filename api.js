@@ -3,6 +3,7 @@
 // Imports
 var Period = require(__dirname + '/db/period.js');
 var Group = require(__dirname + '/db/group.js');
+var User = require(__dirname + '/db/user.js');
 var io = global.grouplanner.io;
 var moment = require('moment');
 
@@ -49,6 +50,7 @@ var apiFunctions = {
 	 */
 	'create/group' : function(input, callback)
 	{
+		var scope = this;
 		var group = new Group(input.group);
 		group.creator = this.passport.user._id;
 		group.members.push(this.passport.user._id);
@@ -60,6 +62,12 @@ var apiFunctions = {
 				if(err) { console.log('Error saving group %s to the database', group.name); }
 				else { console.log('Group %s saved to the database', group.name); }
 				callback({success:true, id:group._id, message: 'saved as: ' + group._id + '\n'});
+				
+				User.update({_id:group.creator}, {lastgroup:group._id}, function(err)
+				{
+					if(err) { console.log('Error updating'); console.log(err); }
+					console.log('Saved to user as lastgroup');
+				});
 			});
 		});
 	},
@@ -137,6 +145,7 @@ var apiFunctions = {
 		Period.update(conditions, update, function(err)
 		{
 			if(err) { console.log('Error updating'); console.log(err); }
+			callback({success:true});
 		});
 	},
 	
@@ -155,6 +164,24 @@ var apiFunctions = {
 		Period.update({_id: input.periodid}, update, function(err)
 		{
 			if(err) { console.log('Error updating'); console.log(err); }
+			callback({success:true});
+		});
+	},
+	
+	/*	
+	 *	Put user, users can only update their own data
+	 *	input.lastgroup = _id of group
+	 */
+	'put/user' : function(input,callback)
+	{
+		console.log('Updating user '+this.passport.user._id);
+		var update = {
+			lastgroup:input.lastgroup
+		};
+		User.update({_id:this.passport.user._id}, update, function(err)
+		{
+			if(err) { console.log('Error updating'); console.log(err); }
+			callback({success:true});
 		});
 	}
 };
