@@ -5,20 +5,28 @@ var router = express.Router();
 
 var Group = require(__dirname + '/../db/group.js');
 
-router.put('/group', addGroup);
-router.get('/group/:groupid', getGroup);
 router.get('/create', function(req, res)
 {
 	res.jshare.user = req.user;
 	res.render('create', {user: req.user});
 });
 
-router.get('/planner', function(req, res)
+router.get('/group/', function(req, res)
 {
-	res.jshare.user = req.user;
-	res.render('planner', {user: req.user});
+	res.redirect('/group/'+req.user.lastgroup);
+});
+router.get('/group/:groupid', function(req, res)
+{
+	Group.findOne({_id: req.params.groupid}, function(err, group)
+	{
+		res.jshare.user = req.user;
+		res.jshare.group = group;
+		res.render('group', {user:req.user, group:group});
+	});
 });
 
+/* Not in use, depricate?
+router.put('/group', addGroup);
 function addGroup(req, res)
 {
 	if(req.user === undefined)
@@ -41,13 +49,7 @@ function addGroup(req, res)
 		});
 	}
 }
+*/
 
-function getGroup(req, res)
-{
-	Group.findOne({_id: req.params.groupid}, function(err, group)
-	{
-		res.send(JSON.stringify(group));
-	});
-}
 
 module.exports.router = router;

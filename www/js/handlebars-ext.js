@@ -5,7 +5,7 @@
 Handlebars.getTemplate = function(name) {
 	if (Handlebars.templates === undefined || Handlebars.templates[name] === undefined) {
 		$.ajax({
-			url : 'www/templates/' + name + '.handlebars',
+			url : '/www/templates/' + name + '.handlebars',
 			success : function(data) {
 				if (Handlebars.templates === undefined) {
 					Handlebars.templates = {};
