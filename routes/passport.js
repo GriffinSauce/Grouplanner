@@ -92,7 +92,11 @@ passport.serializeUser(function(user, done)
 	}
 });
 
-passport.deserializeUser(function(obj, done) { done(null, obj); });
+passport.deserializeUser(function(obj, done) {
+	User.findOne(obj._id, function (err, user) {
+		done(err, user);
+	});
+});
 
 module.exports.router = router;
 module.exports.passport = passport;
