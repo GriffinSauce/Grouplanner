@@ -3,11 +3,9 @@
 var socket = io();
 
 var app = new App();
-app.ready(function(){
-	// Load this week
-	var thisWeek = moment().weekday(1).format('DDMMYYYY');
-	app.loadPeriod(thisWeek);
-});
+// Load this week
+var thisWeek = moment().weekday(1).format('DDMMYYYY');
+app.loadPeriod(thisWeek);
 
 // header
 $(document).ready(function(){

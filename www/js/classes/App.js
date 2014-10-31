@@ -28,9 +28,6 @@ function App()
 	// User data
 	this.user = {};
 	
-	// Ready handlers
-	this.readyHandlers = [];
-	
 	/*	
 	 *	Initialise the app
 	 *
@@ -42,23 +39,10 @@ function App()
 		
 		// Get data that is supplied with jshare
 		scope.user = jshare.user;
-		scope.group = new Group(scope.user.lastgroup, function(){	
-			scope.periodLength = scope.group.periodLength;
-			for(var key in scope.readyHandlers)
-			{
-				scope.readyHandlers[key]();
-			}
-			console.log('APP INITIALISED');
-		});
-	};
-	
-	/*	
-	 *	Add readyhandler
-	 *
-	 */
-	this.ready = function(fn)
-	{
-		scope.readyHandlers.push(fn);	
+		scope.group = new Group(jshare.group);
+		scope.periodLength = scope.group.periodLength;
+
+		console.log('APP INITIALISED');
 	};
 	
 	/*	

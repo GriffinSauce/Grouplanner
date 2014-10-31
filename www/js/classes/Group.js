@@ -5,26 +5,9 @@
  *	an a ready function to call when loaded
  *
  */
-function Group(id, ready)
+function Group(data)
 {
 	var scope = this;
-	
-	// TODO: Get this stuff from database based on ID
-	this.init = function()
-	{
-		socket.emit('get/group', {id:id}, function(data) {
-			console.log('Group data loaded');
-			
-			// Save to scope
-			for(var key in data)
-			{
-				scope[key] = data[key];
-			}
-			
-			// done loading so call ready
-			ready();
-		});
-	};
 	
 	// TODO: Build Add member function
 	this.addMember = function()
@@ -42,6 +25,9 @@ function Group(id, ready)
 		
 	};
 	
-	// Initialise
-	this.init();
+	// Save supplied data into this object
+	for(var key in data)
+	{
+		scope[key] = data[key];
+	}
 }
