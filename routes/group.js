@@ -17,7 +17,7 @@ router.get('/group/', function(req, res)
 });
 router.get('/group/:groupid', function(req, res)
 {
-	Group.findOne({_id: req.params.groupid}, function(err, group)
+	Group.findOne({_id: req.params.groupid}).populate('members').exec(function(err, group)
 	{
 		res.jshare.user = req.user;
 		res.jshare.group = group;

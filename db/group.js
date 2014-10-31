@@ -11,7 +11,9 @@ var groupSchema = new Schema(
 	image: {data: Buffer, contentType: String},
 	startdate: {type: Date},
 	periodLength: {type: Number, default: 7},
-	members: {type: Array, default: []},
+	members: [
+		{type: Schema.Types.ObjectId, ref: 'User'}
+	],
 	creator: {type: Schema.Types.ObjectId},
 	invites:
 	{

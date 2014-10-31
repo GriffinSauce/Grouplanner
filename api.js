@@ -28,14 +28,14 @@ var apiFunctions = {
 		console.log('Getting group by ID: '+input.id);
 		if(input.id !== undefined)
 		{
-			Group.findOne({_id: input.id}, function(err, group)
+			Group.findOne({_id: input.id}).populate('members').exec(function(err, group)
 			{
 				console.log('Group found');
 				callback(group);
 			});
 		}else{
 			// Find a random group this user is a member of
-			Group.findOne({_id: this.passport.user.lastgroup}, function(err, group)
+			Group.findOne({_id: this.passport.user.lastgroup}).populate('members').exec(function(err, group)
 			{
 				console.log('Group not found, returning lastgroup');
 				callback(group);
