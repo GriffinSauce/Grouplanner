@@ -36,32 +36,13 @@
 
 		<div id="group-info">
 			<h1>In this group:</h1>
-
 			<div id="users">
+				{{#each group.members}}
 				<div class="user">
-					<div class="img"><img src="http://lorempixel.com/100/100/people" /></div>
-					<div class="name">Vla Smoel</div>
+					<div class="img"><img src="{{picture}}" /></div>
+					<div class="name">{{name.first}} {{name.last}}</div>
 				</div>
-
-				<div class="user">
-					<div class="img"><img src="http://lorempixel.com/101/101/people" /></div>
-					<div class="name">Frits Frummelveeg</div>
-				</div>
-
-				<div class="user">
-					<div class="img"><img src="http://lorempixel.com/102/102/people" /></div>
-					<div class="name">Joey Kakbek</div>
-				</div>
-
-				<div class="user">
-					<div class="img"><img src="http://lorempixel.com/103/103/people" /></div>
-					<div class="name">John de Snol</div>
-				</div>
-
-				<div class="user">
-					<div class="img"><img src="http://lorempixel.com/104/104/people" /></div>
-					<div class="name">Klaas Kleuter</div>
-				</div>
+				{{/each}}
 			</div>
 		</div>
 
