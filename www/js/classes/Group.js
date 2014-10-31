@@ -15,9 +15,6 @@ function Group(id, ready)
 		socket.emit('get/group', {id:id}, function(data) {
 			console.log('Group data loaded');
 			
-			// Save to localstorage in case another group was returned
-			localStorage['groupid'] = data._id;
-			
 			// Save to scope
 			for(var key in data)
 			{

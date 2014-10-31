@@ -42,7 +42,7 @@ function App()
 		
 		// Get data that is supplied with jshare
 		scope.user = jshare.user;
-		scope.group = new Group(localStorage['groupid'], function(){	
+		scope.group = new Group(scope.user.lastgroup, function(){	
 			scope.periodLength = scope.group.periodLength;
 			for(var key in scope.readyHandlers)
 			{

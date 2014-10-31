@@ -35,9 +35,9 @@ var apiFunctions = {
 			});
 		}else{
 			// Find a random group this user is a member of
-			Group.findOne({'members':{$in:[this.passport.user._id]}}, function(err, group)
+			Group.findOne({_id: this.passport.user.lastgroup}, function(err, group)
 			{
-				console.log('Group not found, returning random');
+				console.log('Group not found, returning lastgroup');
 				callback(group);
 			});	
 		}
