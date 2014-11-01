@@ -25,25 +25,35 @@
 			</div>
 		</div>
 
-		<div id='period-controls'>
-			<div class='period-control-button prev'><span class='period-previous-button'>&lsaquo;</span></div>
-			<div class='period'><span>07 sept - 13 sept</span></div>
-			<div class='period-control-button next'><span class='period-next-button'>&rsaquo;</span></div>
+		<div id="period">
+			<div id='period-controls'>
+				<div class='period-control-button prev'><span class='period-previous-button'>&lsaquo;</span></div>
+				<div class='period'><span>07 sept - 13 sept</span></div>
+				<div class='period-control-button next'><span class='period-next-button'>&rsaquo;</span></div>
+			</div>
+
+			<div id="periods">
+
+			</div>
 		</div>
 
-		<div id="availability">
-
-		</div>
-
-		<div id="group-info">
-			<h1>In this group:</h1>
+		<div id="group">
+			<h1>Manage</h1>
 			<div id="users">
 				{{#each group.members}}
 				<div class="user">
 					<div class="img"><img src="{{picture}}" /></div>
-					<div class="name">{{username}}</div>
+					<div class="name">{{name.first}}</div>
 				</div>
 				{{/each}}
+				<div id="invite-btn">
+					<div id="icon">+</div>
+					<div id="title">Invite</div>
+				</div>
+			</div>
+			<div id="info">
+				<h2>{{group.name}}</h2>
+				<p>{{group.description}}</p>
 			</div>
 		</div>
 

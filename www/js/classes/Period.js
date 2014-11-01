@@ -156,7 +156,7 @@ function Period(options)
 		var el = $('#'+scope.startDate.format('DDMMYYYY'));
 		el.remove();
 		var html = $(scope.getHTML());
- 		$('#availability').append(html);
+ 		$('#periods').append(html);
 	};
 	
 	/*	
@@ -206,7 +206,7 @@ function Period(options)
 	 */
 	this.activate = function()
 	{
-		$('#availability .period').hide();
+		$('#periods .period').hide();
 		var el = $('#'+scope.startDate.format('DDMMYYYY'));
 		var inDom = el.length !== 0;
 		if(inDom)
@@ -216,7 +216,7 @@ function Period(options)
 			var html = $(scope.getHTML());
 			$('#avail-days .day',html).bind('click tap', scope.dayClicked);
 			$('#avail-plan .go-btn',html).bind('click tap', scope.goClicked);
-			$('#availability').append(html);
+			$('#periods').append(html);
 		}
 	};
 	
@@ -253,7 +253,7 @@ function Period(options)
 					var el = $('#'+scope.startDate.format('DDMMYYYY'));
 					el.remove();
 					var html = $(scope.getHTML());
-					$('#availability').append(html);
+					$('#periods').append(html);
 				}
 			}
 		});
