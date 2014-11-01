@@ -23,24 +23,28 @@ body {
         max-height: 540px; }
     body#index section {
       padding: 1em 2em; }
-  body#login {
+  body #login {
     text-align: center; }
-    body#login #google .btn {
-      background: #dd4b39;
-      border-bottom-color: #bf3625; }
-    body#login #google .btn:hover {
-      background: #e74b37; }
-    body#login #facebook .btn {
-      background: #3B5998;
-      border-bottom-color: #2D4373; }
-    body#login #facebook .btn:hover {
-      background: #2D4373;
-      border-bottom-color: #1e3057; }
-    body#login #twitter .btn {
-      background: #55ACEE;
-      border-bottom-color: #3178ad; }
-    body#login #twitter .btn:hover {
-      background: #2795E9; }
+  body .loginBtn a {
+    padding: 0.3em 0.7em 0.4em 0.7em;
+    font-size: 120%;
+    min-width: 11em; }
+  body #google .btn {
+    background: #dd4b39;
+    border-bottom-color: #bf3625; }
+  body #google .btn:hover {
+    background: #e74b37; }
+  body #facebook .btn {
+    background: #3B5998;
+    border-bottom-color: #2D4373; }
+  body #facebook .btn:hover {
+    background: #2D4373;
+    border-bottom-color: #1e3057; }
+  body #twitter .btn {
+    background: #55ACEE;
+    border-bottom-color: #3178ad; }
+  body #twitter .btn:hover {
+    background: #2795E9; }
   body#create {
     text-align: center; }
     body#create #banner {
@@ -84,6 +88,96 @@ body {
         background-color: #FAFAFA; }
     body#create a {
       margin-bottom: 0.5em; }
+  body#groups {
+    text-align: center; }
+    body#groups #header {
+      height: 2em;
+      padding: 1em;
+      background-color: white;
+      border-bottom: 0.2em #CDBDFF solid; }
+      body#groups #header #logo {
+        float: left;
+        height: 2em;
+        margin: 0 1em 0 0.5em; }
+      body#groups #header #name {
+        float: left;
+        font-size: 140%;
+        font-weight: 500;
+        color: #555; }
+      body#groups #header #settings {
+        position: absolute;
+        top: 0.5em;
+        right: 0.5em;
+        max-height: 0em;
+        width: 3em;
+        height: auto;
+        padding-top: 3em;
+        overflow: hidden;
+        transition: all 0.5s ease;
+        z-index: 20;
+        box-shadow: 0em 0em 0em rgba(0, 0, 0, 0.5); }
+        body#groups #header #settings #icon {
+          position: absolute;
+          top: 0;
+          right: 0;
+          height: 3em;
+          width: 3em;
+          background-color: #FFF;
+          /* Lazy man's icon */
+          padding-top: 0.5em;
+          height: 2.5em;
+          text-align: center; }
+          body#groups #header #settings #icon span {
+            font-size: 200%;
+            line-height: 0.01em; }
+        body#groups #header #settings #user {
+          position: relative;
+          height: 6em;
+          overflow: hidden;
+          margin: 0 0 0.5em 0; }
+          body#groups #header #settings #user img {
+            margin-top: -3em;
+            width: 16em;
+            height: 16em; }
+          body#groups #header #settings #user span {
+            position: absolute;
+            left: 1em;
+            bottom: 0.5em;
+            color: #FFF;
+            font-size: 120%;
+            font-weight: 600; }
+        body#groups #header #settings .btn {
+          margin: 1em;
+          font-size: 110%; }
+        body#groups #header #settings.open {
+          max-height: 120%;
+          width: 16em;
+          padding: 3em 0 0 0;
+          background-color: #FFF;
+          box-shadow: 0.1em 0.1em 1em rgba(0, 0, 0, 0.5); }
+          body#groups #header #settings.open #icon {
+            background-color: #FFF; }
+    body#groups .group {
+      display: block;
+      margin: 1em;
+      border-radius: 0.1em;
+      background-color: #FFF;
+      text-decoration: none;
+      color: #333; }
+      body#groups .group h3 {
+        padding: 0.5em;
+        margin: 0;
+        border-bottom: 0.1em solid #DDD; }
+      body#groups .group .members {
+        padding: 1em; }
+        body#groups .group .members .member {
+          width: 3em;
+          height: 3em;
+          border-radius: 100%;
+          overflow: hidden; }
+          body#groups .group .members .member img {
+            width: 100%;
+            height: 100%; }
   body#planner #header {
     height: 2em;
     padding: 1em;

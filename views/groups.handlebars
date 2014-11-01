@@ -1,0 +1,50 @@
+<html>
+	<head>
+		<title>Grouplanner</title>
+		<meta name="description" content="Grouplanner, plan with groups .. duh!">
+		<meta name="author" content="Joris Griffioen">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width user-scalable=no">
+		<link rel="shortcut icon" href="www/favicon.ico">
+		<link rel="icon" type="www/image/vnd.microsoft.icon" href="www/favicon.png" />
+		<link href="https://fonts.googleapis.com/css?family=Roboto:100,200,300,400,500,600,700" rel="stylesheet" type="text/css">
+		<link href="www/css/grouplanner.css" rel="stylesheet" type="text/css">
+	</head>
+	<body id="groups">
+		<div id="header">
+			<img id="logo" src="../www/img/grouplanner_logo.png">
+			<div id="settings">
+				<div id="icon"><span>-</span><br><span>-</span><br><span>-</span><br></div>
+				<div id="user">
+					<img id="user" src="{{user.picture}}"/>
+					<span>{{user.username}}</span>
+				</div>
+				<a class="btn" href="/logout">Log out</a>
+			</div>
+		</div>
+		
+		<section>
+			<p>
+				<a id="newGroupBtn" class="btn" href="create">Create a group</a>
+			</p>
+		</section>
+		
+		<section>
+			{{#each groups}}
+			<a class="group" href="group/{{_id}}">
+				<h3>{{name}}</h3>
+				<div class="members">
+					{{#each members}}
+					<div class="member"><img src="{{picture}}" /></div>
+					{{/each}}
+				</div>
+			</a>
+			{{/each}}
+		</section>
+	</body>
+	<script>{{{JShare}}}</script>
+	<script src="/socket.io/socket.io.js"></script>
+	<script src="www/lib/jquery-2.1.1.min.js"></script>
+	<script src="www/lib/moment-with-locales.js"></script>
+	<script src="www/js/groups.js"></script>
+</html>

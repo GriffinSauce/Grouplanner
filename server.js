@@ -37,7 +37,8 @@ var routes =
 {
 	main: 		require(__dirname + '/routes/main.js'),
 	passport: 	require(__dirname + '/routes/passport.js'),
-	group: 		require(__dirname + '/routes/group.js')
+	group: 		require(__dirname + '/routes/group.js'),
+	groups: 	require(__dirname + '/routes/groups.js')
 };
 
 // DATABASE CONNECTION
@@ -104,6 +105,7 @@ app.use(function(req, res, next)
 });
 
 // AUTHENTICATED ROUTES
+app.use('/', routes.groups.router);
 app.use('/', routes.group.router);
 
 // START SERVER
