@@ -163,16 +163,20 @@ body {
       border-radius: 0.1em;
       background-color: #FFF;
       text-decoration: none;
-      color: #333; }
+      color: #333;
+      box-shadow: 0 0.1em 0.2em 0 rgba(0, 0, 0, 0.08); }
       body#groups .group h3 {
         padding: 0.5em;
         margin: 0;
-        border-bottom: 0.1em solid #DDD; }
+        font-weight: 400;
+        color: #555;
+        text-align: left;
+        background-color: #F0F0F0; }
       body#groups .group .members {
-        padding: 1em; }
+        padding: 0.5em; }
         body#groups .group .members .member {
-          width: 3em;
-          height: 3em;
+          width: 2em;
+          height: 2em;
           border-radius: 100%;
           overflow: hidden; }
           body#groups .group .members .member img {

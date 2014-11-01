@@ -24,12 +24,6 @@
 		</div>
 		
 		<section>
-			<p>
-				<a id="newGroupBtn" class="btn" href="create">Create a group</a>
-			</p>
-		</section>
-		
-		<section>
 			{{#each groups}}
 			<a class="group" href="group/{{_id}}">
 				<h3>{{name}}</h3>
@@ -40,6 +34,12 @@
 				</div>
 			</a>
 			{{/each}}
+			<p>
+				<a id="newGroupBtn" class="btn" href="create">Create a new group</a>
+			</p>
+			<p>
+				<a id="joinGroupBtn" href="help">Join an existing group</a>
+			</p>
 		</section>
 	</body>
 	<script>{{{JShare}}}</script>
