@@ -6,6 +6,7 @@ var Group = require(__dirname + '/db/group.js');
 var User = require(__dirname + '/db/user.js');
 var io = global.grouplanner.io;
 var moment = require('moment');
+var email = require(__dirname + '/email.js');
 
 /*
  *	Command structure:	'method/resource'
@@ -183,6 +184,17 @@ var apiFunctions = {
 			if(err) { console.log('Error updating'); console.log(err); }
 			callback({success:true});
 		});
+	},
+
+
+	/*
+	 *	Put user, users can only update their own data
+	 *	input.lastgroup = _id of group
+	 */
+	'put/invite' : function(input, callback)
+	{
+		email.sendInvite(this.passport.user, input.group, input.invitedUser);
+		callback({success:true});
 	}
 };
 
