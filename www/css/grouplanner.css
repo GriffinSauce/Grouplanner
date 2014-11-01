@@ -178,7 +178,7 @@ body {
         font-weight: 300;
         color: #333; }
     body#planner #period #periods {
-      padding: 1em; }
+      padding: 0.5em; }
       body#planner #period #periods .period .wrapper {
         border-radius: 0.15em;
         overflow: hidden;
@@ -207,7 +207,7 @@ body {
             color: #9d9d9d; }
           body#planner #period #periods .period.availability #avail-days .day.available {
             color: #FFF;
-            background-color: #46d667; }
+            background-color: #27ED99; }
             body#planner #period #periods .period.availability #avail-days .day.available .day-date {
               color: #FFF !important; }
       body#planner #period #periods .period.availability #avail-plan {
@@ -290,9 +290,9 @@ body {
             display: block;
             opacity: 1;
             color: #FFF;
-            background-color: #46d667; }
+            background-color: #5480DD; }
           body#planner #period #periods .period.availability #avail-plan .day.go .bar-content {
-            background-color: #46d667; }
+            background-color: #27ED99; }
           body#planner #period #periods .period.availability #avail-plan .day:first-child {
             border-top: none !important; }
           body#planner #period #periods .period.availability #avail-plan .day:last-child {
