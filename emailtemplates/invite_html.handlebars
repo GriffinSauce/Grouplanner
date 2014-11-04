@@ -11,7 +11,7 @@
 		* {
 			margin: 0;
 			padding: 0;
-			font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+			font-family: "Roboto", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
 			font-size: 100%;
 			line-height: 1.6;
 		}
@@ -136,7 +136,7 @@
 				TYPOGRAPHY
 		------------------------------------- */
 		h1, h2, h3 {
-			font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+			font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 			line-height: 1.1;
 			margin-bottom: 15px;
 			color: #000;
@@ -197,6 +197,7 @@
 		}
 
 		</style>
+		<link href="https://fonts.googleapis.com/css?family=Roboto:100,200,300,400,500,600,700" rel="stylesheet" type="text/css">
 	</head>
 	<body bgcolor="#f6f6f6">
 
@@ -236,9 +237,8 @@
 						<tr>
 							<td>
 								<p>Hi there,</p>
-								<p>{{invitee}} has invited you to come join planning {{grouptype}} for {{groupname}}.</p>
-								<h2>Don't know Grouplanner yet?</h2>
-								<p>It's really awesome!</p>
+								<p>{{invitee.name.first}} has invited you to come join planning {{group.grouptype}} for {{group.name}}.</p>
+								<p>{{description}}</p>
 								<table>
 									<tr>
 										<td class="padding">
@@ -246,7 +246,9 @@
 										</td>
 									</tr>
 								</table>
-								<p>Thanks, have a lovely day.</p>
+								<h3>Don't know Grouplanner yet?</h3>
+								<p>It's really awesome!</p>
+								<p>Cheers,<br />Grouplanner</p>
 								<p><a href="https://twitter.com/grouplanner">Follow @grouplanner on Twitter</a></p>
 							</td>
 						</tr>
