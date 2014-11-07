@@ -422,11 +422,13 @@ h2 {
   background-color: #19be78;
   text-decoration: none;
   cursor: pointer;
-  border-bottom: 0.2em #16ad6d solid;
   border-radius: 0.2em;
   transition: background-color 0.1s; }
+  .btn i {
+    margin: 0 0.3em 0 -0.1em;
+    vertical-align: middle; }
   .btn:hover {
-    background-color: #00e886; }
+    background-color: #00CB75; }
 
 input {
   margin: 0 0.3em;
@@ -482,14 +484,14 @@ select {
     margin: 0;
     padding: 0.4em 0.6em 0.5em 0.6em;
     color: rgba(255, 255, 255, 0.6);
-    background-color: #697dd3;
-    border-top: none;
-    border-bottom: 0.2em #3f509b solid;
+    color: rgba(69, 88, 168, 0.5);
+    text-decoration: line-through;
+    background-color: transparent;
+    border: 0.1em solid #4558a8;
     transition: background-color 0.1s ease, color 0.1s ease; }
     .radio .option.active {
-      margin: 0.1em 0 0 0;
-      padding: 0.4em 0.6em 0.5em 0.6em;
       color: #FFF;
+      text-decoration: none;
       background-color: #4558a8;
       border-bottom: none; }
     .radio .option:first-child {
