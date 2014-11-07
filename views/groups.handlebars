@@ -8,19 +8,16 @@
 		<link rel="shortcut icon" href="www/favicon.ico">
 		<link rel="icon" type="www/image/vnd.microsoft.icon" href="www/favicon.png" />
 		<link href="https://fonts.googleapis.com/css?family=Roboto:100,200,300,400,500,600,700" rel="stylesheet" type="text/css">
+		<link href="https://fontastic.s3.amazonaws.com/4Wbj9mNbujNrE6yptdhGr5/icons.css" rel="stylesheet">
 		<link href="www/css/grouplanner.css" rel="stylesheet" type="text/css">
 	</head>
 	<body id="groups">
 		<div id="header">
 			<img id="logo" src="../www/img/grouplanner_logo.png">
-			<div id="settings">
-				<div id="icon"><span>-</span><br><span>-</span><br><span>-</span><br></div>
-				<div id="user">
-					<img id="user" src="{{user.picture}}"/>
-					<span>{{user.username}}</span>
-				</div>
-				<a class="btn" href="/logout">Log out</a>
-			</div>
+			<span>Your groups</span>
+			<a id="logout" href="/logout">
+				<i class="icon-sign-out"></i>
+			</a>
 		</div>
 		
 		<section>
