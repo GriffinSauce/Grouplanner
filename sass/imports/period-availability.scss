@@ -105,6 +105,13 @@
 				background-color:#F0F0F0;
 				cursor: pointer;
 				transition: opacity 0.1s ease 1s;
+				border-radius: 0.2em;
+				
+				i
+				{
+					margin: 0 0 0 0.5em;
+					vertical-align: middle;
+				}
 			}
 
 			&.doable,
