@@ -1,12 +1,11 @@
-&#planner
+&#group
 {
 	
 	#header
 	{
 		height:2em;
 		padding:1em;
-		background-color:white;
-		border-bottom: 0.2em #CDBDFF solid;
+		background-color: #2CC282;
 		
 		#logo
 		{
@@ -22,7 +21,7 @@
 			{
 				font-size:140%;
 				font-weight: 500;
-				color:#555;
+				color:#FFF;
 			}
 			i
 			{
@@ -33,6 +32,10 @@
 		{
 			float:right;
 			padding: 0.3em 0 0 0;
+			i
+			{
+				color:rgba(255,255,255,0.5);
+			}
 		}
 		a
 		{
@@ -40,7 +43,7 @@
 		}
 		i
 		{
-			color:#555;
+			color:#FFF;
 			font-size: 150%;
 			vertical-align: middle;
 		}
@@ -48,7 +51,7 @@
 	
 	#period
 	{
-		background-color: #DDD;
+		color: #ADADAD;
 		padding-bottom:2em;
 		
 		#period-controls
@@ -57,8 +60,7 @@
 			justify-content:space-between;
 			text-align: center;
 			height:4em;
-			padding: 0.5em;
-			background-color: #E5E5E5;
+			padding:1em 0.5em 0 0.5em;
 			
 			.period-control-button
 			{	
@@ -72,11 +74,10 @@
 				
 				div
 				{
-					color: #FFF;
-					background-color: #D3D3D3;
+					color: #999;
 					border-radius: 100%;
 					padding: 0.3em;
-					font-size: 105%;
+					font-size: 100%;
 				}
 			}
 			.period
@@ -87,13 +88,13 @@
 				width:60%;
 				font-size: 140%;
 				font-weight: 300;
-				color:#333;
+				color:#999;
 			}
 		}
 
 		#periods
 		{
-			padding: 0.5em;
+			padding: 1em;
 
 			.period
 			{
@@ -123,15 +124,16 @@
 	
 	#group
 	{
+		padding:0 0 1em 0;
 		color:#FFF;
-		background-color: #38CA8C;
+		background-color: #4E37A1;
 
 		h1
 		{	
 			text-align: center;
 			margin:0 0 0.5em 0;
 			padding:0.5em;
-			background-color: #2CC282;
+			background-color: #452D9B;
 			color: #FFF;
 			font-weight: 300;
 		}
@@ -204,11 +206,23 @@
 		
 		#info
 		{
-			padding: 1em;	
+			position: relative;
+			margin: 1em;
+			padding: 1em;
+			border-radius: 0.15em;
+			color:#555;
+			background-color: #FFF;
+			box-shadow: 0 0.1em 0.2em 0 rgba(0, 0, 0, 0.08);
 			
 			h2
 			{
-				color:#FFF;
+				margin:0;
+			}
+			i
+			{
+				position:absolute;
+				top:1em;
+				right:1em;
 			}
 		}
 	}
