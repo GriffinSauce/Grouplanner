@@ -122,7 +122,7 @@
 		}
 	}
 	
-	#group
+	#manage
 	{
 		padding:0 0 1em 0;
 		color:#FFF;
@@ -224,6 +224,35 @@
 				top:1em;
 				right:1em;
 			}
+		}
+	}
+	
+	#invite
+	{
+		display:none;
+		padding:0 0 1em 0;
+		color:#FFF;
+		background-color: #BA8308;
+
+		h1
+		{
+			text-align: center;
+			margin:0 0 0.5em 0;
+			padding:0.5em;
+			background-color: #CA8E06;
+			color: #FFF;
+			font-weight: 300;
+		}
+		
+		p
+		{
+			margin: 1em;
+			padding: 1em;
+		}
+		
+		input
+		{
+			width:3em;
 		}
 	}
 }

@@ -36,7 +36,7 @@ function App()
 	{
 		$('.period-control-button.next').bind('click tap', this.nextPeriod);
 		$('.period-control-button.prev').bind('click tap', this.prevPeriod);
-		
+		$('#invite-btn').bind('click tap', this.invite);
 		// Get data that is supplied with jshare
 		scope.user = jshare.user;
 		scope.group = new Group(jshare.group);
@@ -97,6 +97,16 @@ function App()
 		var endDay = scope.data[scope.activePeriod].endDate.format('D MMM');
 		var periodName = startDay+' - '+endDay;
 		$('#period-controls .period span').text(periodName);
+	};
+	
+	/*	
+	 *	Show invite page
+	 *
+	 */
+	this.invite = function()
+	{
+		$('#manage').slideUp();
+		$('#invite').slideDown();
 	};
 	
 	this.init();

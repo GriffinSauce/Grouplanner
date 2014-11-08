@@ -39,7 +39,7 @@
 			</div>
 		</div>
 
-		<div id="group">
+		<div id="manage">
 			<h1>Manage</h1>
 			<div id="users">
 				{{#each group.members}}
@@ -60,6 +60,14 @@
 			</div>
 		</div>
 
+		<div id="invite">
+			<h1>Invite</h1>
+			<p>
+				Invite <input type="number" value="1" /> new member(s).
+			</p>
+			<div class="btn" id="invitebtn">Send links</div>
+		</div>
+		
 	</body>
 	<script>{{{JShare}}}</script>
 	<script src="/socket.io/socket.io.js"></script>
