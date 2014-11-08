@@ -23,7 +23,7 @@ body {
         max-height: 540px; }
     body#index section {
       padding: 1em 2em; }
-  body #login {
+  body#login {
     text-align: center; }
   body .loginBtn a {
     padding: 0.3em 0.7em 0.4em 0.7em;
