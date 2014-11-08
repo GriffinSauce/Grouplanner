@@ -1,0 +1,229 @@
+&#group
+{
+	
+	#header
+	{
+		height:2em;
+		padding:1em;
+		background-color: #2CC282;
+		
+		#logo
+		{
+			float:left;
+			height:2em;
+			margin:0 1em 0 0.5em;
+		}
+		
+		#back
+		{
+			float:left;
+			span
+			{
+				font-size:140%;
+				font-weight: 500;
+				color:#FFF;
+			}
+			i
+			{
+				font-size:120%;
+			}
+		}
+		#logout
+		{
+			float:right;
+			padding: 0.3em 0 0 0;
+			i
+			{
+				color:rgba(255,255,255,0.5);
+			}
+		}
+		a
+		{
+			text-decoration: none;
+		}
+		i
+		{
+			color:#FFF;
+			font-size: 150%;
+			vertical-align: middle;
+		}
+	}
+	
+	#period
+	{
+		color: #ADADAD;
+		padding-bottom:2em;
+		
+		#period-controls
+		{	
+			display:flex;
+			justify-content:space-between;
+			text-align: center;
+			height:4em;
+			padding:1em 0.5em 0 0.5em;
+			
+			.period-control-button
+			{	
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				width:20%;
+				font-size: 180%;
+				font-weight: 700;
+				color:#333;
+				
+				div
+				{
+					color: #999;
+					border-radius: 100%;
+					padding: 0.3em;
+					font-size: 100%;
+				}
+			}
+			.period
+			{	
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				width:60%;
+				font-size: 140%;
+				font-weight: 300;
+				color:#999;
+			}
+		}
+
+		#periods
+		{
+			padding: 1em;
+
+			.period
+			{
+				.wrapper
+				{
+					border-radius: 0.15em;
+					overflow:hidden;
+					margin-bottom:1em;
+					box-shadow: 0 0.1em 0.2em 0 rgba(0, 0, 0, 0.08);
+				}
+					.header
+					{
+						width:100%;
+						padding: 0.2em 0 0.3em 0;
+						background-color:#F9F9F9;
+						font-size:85%;
+						font-style: italic;
+						text-align:center;
+						color: #9E9E9E;
+					}
+
+				@import 'imports/period-availability';
+				@import 'imports/period-planned';
+			}
+		}
+	}
+	
+	#group
+	{
+		padding:0 0 1em 0;
+		color:#FFF;
+		background-color: #4E37A1;
+
+		h1
+		{	
+			text-align: center;
+			margin:0 0 0.5em 0;
+			padding:0.5em;
+			background-color: #452D9B;
+			color: #FFF;
+			font-weight: 300;
+		}
+
+		#users
+		{
+			display:flex;
+			justify-content: flex-start;
+			flex-wrap: wrap;
+			padding: 0.5em;
+
+			.user
+			{
+				width: 33%;
+				text-align: center;
+				margin: 0em 0 1em 0;
+
+				.img
+				{
+					width: 5em;
+					height: 5em;
+					margin: 0em auto 0.5em auto;
+					background-color: #FFF;
+					border-radius: 100%;
+					overflow:hidden;
+
+					img
+					{
+						width:100%;
+						height:100%;
+					}
+				}
+				.name
+				{
+					font-size: 80%;
+					padding: 0 1em;
+				}
+			}
+			
+			#invite-btn
+			{
+				width: 33%;
+				text-align: center;
+				margin: 0em 0 1em 0;
+				
+				#icon
+				{
+					width: 2em;
+					height: 2em;
+					padding: 1.5em;
+					margin: 0em auto 0.5em auto;
+					background-color: #FFF;
+					border-radius: 100%;
+					overflow:hidden;
+					
+					i
+					{
+						font-size: 2em;
+						color:#DDD;
+					}	
+				}
+				#title
+				{
+					font-size: 80%;
+					padding: 0 1em;
+				}
+			}
+			
+		}
+		
+		#info
+		{
+			position: relative;
+			margin: 1em;
+			padding: 1em;
+			border-radius: 0.15em;
+			color:#555;
+			background-color: #FFF;
+			box-shadow: 0 0.1em 0.2em 0 rgba(0, 0, 0, 0.08);
+			
+			h2
+			{
+				margin:0;
+			}
+			i
+			{
+				position:absolute;
+				top:1em;
+				right:1em;
+			}
+		}
+	}
+}

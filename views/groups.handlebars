@@ -8,38 +8,40 @@
 		<link rel="shortcut icon" href="www/favicon.ico">
 		<link rel="icon" type="www/image/vnd.microsoft.icon" href="www/favicon.png" />
 		<link href="https://fonts.googleapis.com/css?family=Roboto:100,200,300,400,500,600,700" rel="stylesheet" type="text/css">
+		<link href="https://fontastic.s3.amazonaws.com/4Wbj9mNbujNrE6yptdhGr5/icons.css" rel="stylesheet">
 		<link href="www/css/grouplanner.css" rel="stylesheet" type="text/css">
 	</head>
-	<body id="index">
-		<div id="banner">
-			<img src="www/img/grouplanner_logo.png">
-			<h1>Welcome to GrouPlanner</h1>
+	<body id="groups">
+		<div id="header">
+			<img id="logo" src="../www/img/grouplanner_logo.png">
+			<span>Your groups</span>
+			<a id="logout" href="/logout">
+				<i class="icon-sign-out"></i>
+			</a>
 		</div>
-
-		<section>
-			<p>Getting a everyone in a room regularly is hard. Grouplanner is here to help!</p>
-			<p>Invite everybody, tap the days that you are available, pick a day. That's it.</p>
-			<p>Let's create a group!</p>
-		</section>
 		
 		<section>
-			<h2>Please sign in to continue</h2>
-			<div id="loginBtns">
-				<p class="loginBtn" id="google">
-					<a class="btn" href="/auth/google">Sign in with Google</a>
-				</p>
-				<p class="loginBtn" id="facebook">
-					<a class="btn" href="/auth/facebook">Sign in with Facebook</a>
-				</p>
-				<p class="loginBtn" id="twitter">
-					<a class="btn" href="/auth/twitter">Sign in with Twitter</a>
-				</p>
-			</div>
+			{{#each groups}}
+			<a class="group" href="group/{{_id}}">
+				<h3>{{name}}<i class="icon-arrow-right-1"></i></h3>
+				<div class="members">
+					{{#each members}}
+					<div class="member"><img src="{{picture}}" /></div>
+					{{/each}}
+				</div>
+			</a>
+			{{/each}}
+			<p>
+				<a id="newGroupBtn" class="btn" href="create"><i class="icon-plus"></i>Create a new group</a>
+			</p>
+			<p>
+				<a id="joinGroupBtn" href="help">Join an existing group</a>
+			</p>
 		</section>
 	</body>
 	<script>{{{JShare}}}</script>
 	<script src="/socket.io/socket.io.js"></script>
 	<script src="www/lib/jquery-2.1.1.min.js"></script>
 	<script src="www/lib/moment-with-locales.js"></script>
-	<script src="www/js/index.js"></script>
+	<script src="www/js/groups.js"></script>
 </html>

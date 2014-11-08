@@ -1,33 +1,40 @@
 &#login
 {
 	text-align: center;
-	
-	#google .btn
-	{
-		background: #dd4b39;
-		border-bottom-color: #bf3625;
-	}
-	#google .btn:hover
-	{
-		background: #e74b37;
-	}
-	#facebook .btn
-	{
-		background: #3B5998;
-		border-bottom-color: #2D4373;
-	}
-	#facebook .btn:hover
-	{
-		background: #2D4373;
-		border-bottom-color: #1e3057;
-	}
-	#twitter .btn
-	{
-		background: #55ACEE;
-		border-bottom-color: #3178ad;
-	}
-	#twitter .btn:hover
-	{
-		background: #2795E9;
-	}
+}
+
+.loginBtn a
+{
+	padding: 0.3em 0.7em 0.4em 0.7em;
+	font-size: 120%;
+	min-width: 11em;
+}
+
+#google .btn
+{
+	background: #dd4b39;
+	border-bottom-color: #bf3625;
+}
+#google .btn:hover
+{
+	background: #e74b37;
+}
+#facebook .btn
+{
+	background: #3B5998;
+	border-bottom-color: #2D4373;
+}
+#facebook .btn:hover
+{
+	background: #2D4373;
+	border-bottom-color: #1e3057;
+}
+#twitter .btn
+{
+	background: #55ACEE;
+	border-bottom-color: #3178ad;
+}
+#twitter .btn:hover
+{
+	background: #2795E9;
 }

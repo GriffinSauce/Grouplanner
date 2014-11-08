@@ -47,14 +47,16 @@
 			flex-direction: row;
 			align-items: stretch;
 			width:100%;
-			height: 1.6em;
+			height: 3.3em;
 			padding: 0;
 			background-color:#F2F0F2;
-
+			border-top: 0.1em solid #F2F0F2;
+			border-bottom: 0.1em solid #F2F0F2;
+			
 			.label
 			{
 				height:100%;
-				padding:0 0.5em;
+				padding:0.4em 0.5em;
 				width:3em;
 				flex-basis: 3em;
 				flex-shrink: 0;
@@ -77,9 +79,9 @@
 
 			.bar
 			{
-				height:0.5em;
+				height:1em;
 				width: 100%;
-				margin:0.5em 0.5em 0.5em 0;
+				margin:0.7em 0.5em 0.5em 0;
 				background-color:#EEE;
 
 				.bar-content
@@ -95,59 +97,43 @@
 
 			.go-btn
 			{
-				display:none;
-				opacity: 0;
-				position:absolute;
-				bottom:0.5em;
-				right:0.5em;
-				padding: 0.2em 0.7em 0.3em 0.7em;
+				height: 1.5em;
+				width: 5em;
+				margin: 0.7em 0.5em 0.5em 0;
+				padding: 0.2em 0.7em 0.2em 0.7em;
+				opacity:0.5;
 				color:#888;
-				background-color:#F0F0F0;
+				background-color:#DADADA;
 				cursor: pointer;
-				transition: opacity 0.1s ease 1s;
+				transition: background-color 0.2s ease, color 0.2s ease, opacity 0.2s ease;
+				border-radius: 0.2em;
+				
+				i
+				{
+					margin: 0 0 0 0.5em;
+					vertical-align: middle;
+				}
 			}
 
 			&.doable,
 			&.go
 			{
-				height: 4.5em;
-				border-top: 0.15em solid #F2F0F2;
-				border-bottom: 0.15em solid #F2F0F2;
-				margin:-0.15em 0 0 0;
 				background-color:#FFF;
 				transition:height 0.2s ease;
 
-				.label
+				.label .day-name
 				{
-					padding:0.5em;
-
-					.day-name
-					{
-						display: block;
-						font-size: 110%;
-						font-weight: 400;
-						color:#555;
-					}
-					.day-date
-					{
-						display: block;
-						font-size: 110%;
-					}
+					font-weight: 400;
+					color:#555;
 				}
-
-				.bar
+				.go-btn
 				{
-					height:1em;
+					opacity:1;
 				}
 			}
 
 			&.doable
 			{
-				.go-btn
-				{
-					display:block;
-					opacity: 1;
-				}
 				.bar-content
 				{
 					background-color:#a2e3b1;
@@ -157,8 +143,6 @@
 			{
 				.go-btn
 				{
-					display:block;
-					opacity: 1;
 					color:#FFF;
 					background-color:#5480DD;
 				}
