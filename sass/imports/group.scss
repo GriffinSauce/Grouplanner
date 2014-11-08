@@ -230,29 +230,67 @@
 	#invite
 	{
 		display:none;
-		padding:0 0 1em 0;
+		padding:0 0 2em 0;
 		color:#FFF;
-		background-color: #BA8308;
+		background-color: #CD8E00;
 
 		h1
 		{
 			text-align: center;
 			margin:0 0 0.5em 0;
 			padding:0.5em;
-			background-color: #CA8E06;
+			background-color: #e09d06;
 			color: #FFF;
 			font-weight: 300;
 		}
-		
-		p
+		#form
 		{
+			position: relative;
 			margin: 1em;
 			padding: 1em;
+			color:#FFF;
+			
+			p
+			{
+				margin:0;
+			}
+			input
+			{
+				margin:2em 0.5em 1em 0;
+				width:100%;
+				text-align: center;
+				font-size: 110%;
+				padding: 0.5em 0 0.5em 0.4em;
+				background-color:#FFF;
+			}
+			.btn
+			{
+				display:inline-block;
+				margin:0;
+				width: 100%;
+				padding: 0.4em 0em 0.5em 0em;
+				text-align: center;
+				font-size: 110%;
+				color:#777;
+				background-color:#F0F0F0;
+				
+				&:hover
+				{
+					background-color: #FFF;
+				}
+			}
 		}
-		
-		input
+		#confirm
 		{
-			width:3em;
+			display: none;
+			position: absolute;
+			width: 100%;
+			padding: 0.2em 0;
+			top: 0;
+			left: 0;
+			background-color: #CD8E00;
+			text-align: center;
+			font-size: 700%;
 		}
 	}
 }
