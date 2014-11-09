@@ -31,7 +31,7 @@ function sendInvite(user, group, invitedUser)
 
 	var data = {
 		subject: 'Invitation from grouplanner',
-		invitee: user.name.first,
+		inviter: user.name.first,
 		grouptype: group.eventtype,
 		groupname: group.name,
 		acceptinvitelink: ''

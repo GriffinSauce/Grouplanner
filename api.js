@@ -188,11 +188,14 @@ var apiFunctions = {
 
 
 	/*
-	 *	Put user, users can only update their own data
-	 *	input.lastgroup = _id of group
+	 *	Put invite, sends an invite and saves token to db
+	 *	input.group = _id of group
+	 *	input.invitedUser = ..seriously?
 	 */
 	'put/invite' : function(input, callback)
 	{
+		// TODO: Save token to db and pass to e-mail
+		
 		email.sendInvite(this.passport.user, input.group, input.invitedUser);
 		callback({success:true});
 	}
