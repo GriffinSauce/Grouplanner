@@ -11,9 +11,8 @@ router.get('/groups/', function(req, res)
 	{
 		res.jshare.user = req.user;
 		res.jshare.groups = groups;
-		res.render('groups', {user:req.user, groups:groups});
+		res.render('groups', {page:'groups', user:req.user, groups:groups});
 	});
 });
-
 
 module.exports.router = router;

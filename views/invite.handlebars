@@ -1,16 +1,6 @@
 <html>
-	<head>
-		<title>Grouplanner</title>
-		<meta name="description" content="Grouplanner, plan with groups .. duh!">
-		<meta name="author" content="Joris Griffioen">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-		<meta name="viewport" content="width=device-width user-scalable=no">
-		<link rel="shortcut icon" href="/www/favicon.ico">
-		<link rel="icon" type="/www/image/vnd.microsoft.icon" href="/www/favicon.png" />
-		<link href="https://fonts.googleapis.com/css?family=Roboto:100,200,300,400,500,600,700" rel="stylesheet" type="text/css">
-		<link href="/www/css/grouplanner.css" rel="stylesheet" type="text/css">
-	</head>
-	<body id="invite">
+	{{> header}}
+	<body id="{{page}}">
 		<div id="banner">
 			<img src="/www/img/grouplanner_logo.png">
 			<h1>Welcome to GrouPlanner</h1>
@@ -56,5 +46,5 @@
 	<script src="/socket.io/socket.io.js"></script>
 	<script src="/www/lib/jquery-2.1.1.min.js"></script>
 	<script src="/www/lib/moment-with-locales.js"></script>
-	<script src="/www/js/invite.js"></script>
+	<script src="/www/js/{{page}}.js"></script>
 </html>

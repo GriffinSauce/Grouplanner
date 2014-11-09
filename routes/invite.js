@@ -12,7 +12,7 @@ router.get('/invite/:groupid', function(req, res)
 	Group.findOne({_id: req.params.groupid}).populate('members').exec(function(err, group)
 	{
 		res.jshare.group = group;
-		res.render('invite', {group:group});
+		res.render('invite', {page:'invite', group:group});
 	});
 });
 
