@@ -31,9 +31,8 @@ function sendInvite(user, group, invitedUser)
 
 	var data = {
 		subject: 'Invitation from grouplanner',
-		inviter: user.name.first,
-		grouptype: group.eventtype,
-		groupname: group.name,
+		inviter: user,
+		group: group,
 		acceptinvitelink: ''
 	};
 	var body_text = template_text(data);
