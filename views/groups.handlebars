@@ -1,0 +1,36 @@
+<html>
+	{{> header}}
+	<body id="{{page}}">
+		<div id="header">
+			<img id="logo" src="/www/img/grouplanner_logo.png">
+			<span>Your groups</span>
+			<a id="logout" href="/logout">
+				<i class="icon-sign-out"></i>
+			</a>
+		</div>
+		
+		<section>
+			{{#each groups}}
+			<a class="group" href="group/{{_id}}">
+				<h3>{{name}}<i class="icon-arrow-right-1"></i></h3>
+				<div class="members">
+					{{#each members}}
+					<div class="member"><img src="{{picture}}" /></div>
+					{{/each}}
+				</div>
+			</a>
+			{{/each}}
+			<p>
+				<a id="newGroupBtn" class="btn" href="create"><i class="icon-plus"></i>Create a new group</a>
+			</p>
+			<p>
+				<a id="joinGroupBtn" href="help">Join an existing group</a>
+			</p>
+		</section>
+	</body>
+	<script>{{{JShare}}}</script>
+	<script src="/socket.io/socket.io.js"></script>
+	<script src="/www/lib/jquery-2.1.1.min.js"></script>
+	<script src="/www/lib/moment-with-locales.js"></script>
+	<script src="/www/js/{{page}}.js"></script>
+</html>

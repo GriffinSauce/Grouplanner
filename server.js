@@ -37,7 +37,9 @@ var routes =
 {
 	main: 		require(__dirname + '/routes/main.js'),
 	passport: 	require(__dirname + '/routes/passport.js'),
-	group: 		require(__dirname + '/routes/group.js')
+	group: 		require(__dirname + '/routes/group.js'),
+	groups: 	require(__dirname + '/routes/groups.js'),
+	invite: 	require(__dirname + '/routes/invite.js')
 };
 
 // DATABASE CONNECTION
@@ -89,6 +91,7 @@ app.set('view engine', 'handlebars');
 
 app.use("/www", serveStatic(__dirname + '/www'));
 app.use('/', routes.main.router);
+app.use('/', routes.invite.router);
 app.use('/', routes.passport.router);
 
 app.use(function(req, res, next)
@@ -104,6 +107,7 @@ app.use(function(req, res, next)
 });
 
 // AUTHENTICATED ROUTES
+app.use('/', routes.groups.router);
 app.use('/', routes.group.router);
 
 // START SERVER

@@ -1,0 +1,165 @@
+&.availability
+{
+	#avail-days
+	{
+		display: flex;
+		justify-content: space-between;
+		width:100%;
+		text-align: center;
+		overflow: hidden;
+
+		.day
+		{
+			width:100%;
+			padding: 0.6em 0em 0.6em 0em;
+			background-color:#FFF;
+
+			.day-name{}
+			.day-date
+			{
+				font-size: 70%;
+				color: #9d9d9d;
+			}
+
+			&.available
+			{
+				color:#FFF;
+				background-color:#27ED99;
+
+				.day-date
+				{
+					color: #FFF !important;
+				}
+			}
+		}
+	}
+
+	#avail-plan
+	{
+		width:100%;
+		text-align: center;
+		overflow: hidden;
+
+		.day
+		{
+			position: relative;
+			display:flex;
+			flex-direction: row;
+			align-items: stretch;
+			width:100%;
+			height: 3.3em;
+			padding: 0;
+			background-color:#F2F0F2;
+			border-top: 0.1em solid #F2F0F2;
+			border-bottom: 0.1em solid #F2F0F2;
+			
+			.label
+			{
+				height:100%;
+				padding:0.4em 0.5em;
+				width:3em;
+				flex-basis: 3em;
+				flex-shrink: 0;
+				flex-grow: 0;
+
+				.day-date
+				{
+					font-weight: 300;
+					display: inline-block;
+					font-size: 80%;
+					color:#AAA;
+				}
+				.day-name
+				{
+					display: inline-block;
+					font-size: 80%;
+					color:#AAA;	
+				}
+			}
+
+			.bar
+			{
+				height:1em;
+				width: 100%;
+				margin:0.7em 0.5em 0.5em 0;
+				background-color:#EEE;
+
+				.bar-content
+				{
+					position: relative;
+					background-color: #e0e0e0;
+					height:100%;
+					width:0%;
+					border-radius: 0.2em;
+					transition:width 0.2s ease, background-color 0.2s ease;
+				}
+			}
+
+			.go-btn
+			{
+				height: 1.5em;
+				width: 5em;
+				margin: 0.7em 0.5em 0.5em 0;
+				padding: 0.2em 0.7em 0.2em 0.7em;
+				opacity:0.5;
+				color:#888;
+				background-color:#DADADA;
+				cursor: pointer;
+				transition: background-color 0.2s ease, color 0.2s ease, opacity 0.2s ease;
+				border-radius: 0.2em;
+				
+				i
+				{
+					margin: 0 0 0 0.5em;
+					vertical-align: middle;
+				}
+			}
+
+			&.doable,
+			&.go
+			{
+				background-color:#FFF;
+				transition:height 0.2s ease;
+
+				.label .day-name
+				{
+					font-weight: 400;
+					color:#555;
+				}
+				.go-btn
+				{
+					opacity:1;
+				}
+			}
+
+			&.doable
+			{
+				.bar-content
+				{
+					background-color:#a2e3b1;
+				}
+			}
+			&.go
+			{
+				.go-btn
+				{
+					color:#FFF;
+					background-color:#5480DD;
+				}
+				.bar-content
+				{
+					background-color:#27ED99;
+				}
+			}
+
+			&:first-child
+			{
+				border-top: none !important;
+			}
+			&:last-child
+			{
+				border-bottom: none !important;
+			}
+		}
+	}
+}

@@ -1,0 +1,52 @@
+&.planned
+{
+
+
+	#plannedDate
+	{
+		text-align: center; 
+
+		#day
+		{
+			padding:1em;
+			background-color:#FFF;
+
+			.name
+			{
+				color:#333;
+				font-size:140%;
+				width:4em;
+				margin:0 auto 0.5em auto;
+				padding-bottom: 0.5em;
+				border-bottom: 0.2em solid #5ed963;
+			}
+			.date
+			{
+				display: inline-block;
+				color:#c1c1c1;
+				font-size:220%;
+			}
+			.month
+			{
+				display: inline-block;
+				color:#c1c1c1;
+				font-size:180%;
+			}
+		}	
+	}
+
+	#available
+	{
+		margin: -1em 0 1em 0;
+		color:#999;
+		padding:0.5em;
+	}
+
+	#notes
+	{
+		padding:2em;
+		min-height:10em;
+		color:#333;
+		background-color:#e7ef85;
+	}
+}
