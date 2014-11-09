@@ -55,20 +55,16 @@ var apiFunctions = {
 		var group = new Group(input.group);
 		group.creator = this.passport.user._id;
 		group.members.push(this.passport.user._id);
-		require('crypto').randomBytes(48, function(ex, buf)
+		group.save(function(err)
 		{
-			group.token = buf.toString('hex');
-			group.save(function(err)
+			if(err) { console.log('Error saving group %s to the database', group.name); }
+			else { console.log('Group %s saved to the database', group.name); }
+			callback({success:true, id:group._id, message: 'saved as: ' + group._id + '\n'});
+
+			User.update({_id:group.creator}, {lastgroup:group._id}, function(err)
 			{
-				if(err) { console.log('Error saving group %s to the database', group.name); }
-				else { console.log('Group %s saved to the database', group.name); }
-				callback({success:true, id:group._id, message: 'saved as: ' + group._id + '\n'});
-				
-				User.update({_id:group.creator}, {lastgroup:group._id}, function(err)
-				{
-					if(err) { console.log('Error updating'); console.log(err); }
-					console.log('Saved to user as lastgroup');
-				});
+				if(err) { console.log('Error updating'); console.log(err); }
+				console.log('Saved to user as lastgroup');
 			});
 		});
 	},
@@ -195,9 +191,27 @@ var apiFunctions = {
 	'put/invite' : function(input, callback)
 	{
 		// TODO: Save token to db and pass to e-mail
-		
-		email.sendInvite(this.passport.user, input.group, input.invitedUser);
-		callback({success:true});
+		var scope = this;
+		require('crypto').randomBytes(48, function(ex, buf)
+		{
+			var token = buf.toString('hex');
+			var update = {};
+			update.$addToSet = {
+				invites:{
+					token:token,
+					open:true,
+					email:input.invitedUser.email
+				}
+			};
+			Group.findOneAndUpdate({_id: input.group}, update, function(err, group)
+			{
+				if(err) { console.log('Error creating invite');
+				}else{
+					email.sendInvite(scope.passport.user, group, input.invitedUser);
+					callback({success:true});
+				}	
+			});
+		});
 	}
 };
 

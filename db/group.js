@@ -18,7 +18,8 @@ var groupSchema = new Schema(
 	invites:
 	{
 		token: {type: String},
-		open: {type: Number}
+		open: {type: Boolean},
+		email: {type: String}
 	}
 }, { autoIndex: false });
 
