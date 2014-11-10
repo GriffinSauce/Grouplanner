@@ -1,49 +1,67 @@
 <html>
-	<head>
-		<title>Grouplanner</title>
-		<meta name="description" content="Grouplanner, plan with groups .. duh!">
-		<meta name="author" content="Joris Griffioen">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-		<meta name="viewport" content="width=device-width user-scalable=no">
-		<link rel="shortcut icon" href="www/favicon.ico">
-		<link rel="icon" type="image/vnd.microsoft.icon" href="www/favicon.png" />
-		<link href="https://fonts.googleapis.com/css?family=Roboto:100,200,300,400,500,600,700" rel="stylesheet" type="text/css">
-		<link href="/www/css/grouplanner.css" rel="stylesheet" type="text/css">
-	</head>
-	<body id="planner">
+	{{> header}}
+	<body id="{{page}}">
 
 		<div id="header">
-			<img id="logo" src="../www/img/grouplanner_logo.png">
-			<div id="name">{{group.name}}</div>
-			<div id="settings">
-				<div id="icon"><span>-</span><br><span>-</span><br><span>-</span><br></div>
-				<div id="user">
-					<img id="user" src="{{user.picture}}"/>
-					<span>{{user.username}}</span>
+			<a id="back" href="/groups">
+				<i class="icon-left-open-big"></i>
+				<span>{{group.name}}</span>
+			</a>
+			<a id="logout" href="/logout">
+				<i class="icon-sign-out"></i>
+			</a>
+		</div>
+
+		<div id="period">
+			<div id='period-controls'>
+				<div class='period-control-button prev'>
+					<div><i class="icon-chevron-left"></i></div>
 				</div>
-				<a class="btn" href="/logout">Log out</a>
+				<div class='period'><span>07 sept - 13 sept</span></div>
+				<div class='period-control-button next'>
+					<div><i class="icon-chevron-right"></i></div>
+				</div>
+			</div>
+
+			<div id="periods">
+
 			</div>
 		</div>
 
-		<div id='period-controls'>
-			<div class='period-control-button prev'><span class='period-previous-button'>&lsaquo;</span></div>
-			<div class='period'><span>07 sept - 13 sept</span></div>
-			<div class='period-control-button next'><span class='period-next-button'>&rsaquo;</span></div>
-		</div>
-
-		<div id="availability">
-
-		</div>
-
-		<div id="group-info">
-			<h1>In this group:</h1>
+		<div id="manage">
+			<h1>Manage</h1>
 			<div id="users">
 				{{#each group.members}}
 				<div class="user">
 					<div class="img"><img src="{{picture}}" /></div>
-					<div class="name">{{username}}</div>
+					<div class="name">{{name.first}}</div>
 				</div>
 				{{/each}}
+				<div id="invite-btn">
+					<div id="icon"><i class="icon-plus"></i></div>
+					<div id="title">Invite</div>
+				</div>
+			</div>
+			<div id="info">
+				<i class="icon-pencil"></i>
+				<h2>{{group.name}}</h2>
+				<p>{{group.description}}</p>
+			</div>
+		</div>
+
+		<div id="invite">
+			<h1>Invite</h1>
+			<div id="form">
+				<p>
+					Input an e-mail address and we'll send him/her a link to join the group.
+				</p>
+				<p>
+					<input type="email" placeholder="email@something.com">
+					<span class="btn" id="send"><i class="icon-mail"></i> Send invite link</span>
+				</p>
+				<div id="confirm">
+					<i class="icon-check"></i>
+				</div>
 			</div>
 		</div>
 
@@ -57,5 +75,5 @@
 	<script src="/www/js/classes/App.js"></script>
 	<script src="/www/js/classes/Group.js"></script>
 	<script src="/www/js/classes/Period.js"></script>
-	<script src="/www/js/planner.js"></script>
+	<script src="/www/js/{{page}}.js"></script>
 </html>

@@ -36,7 +36,9 @@ function App()
 	{
 		$('.period-control-button.next').bind('click tap', this.nextPeriod);
 		$('.period-control-button.prev').bind('click tap', this.prevPeriod);
-		
+		$('#manage #invite-btn').bind('click tap', this.showInvite);
+		$('#invite #send').bind('click tap', this.sendInvite);
+
 		// Get data that is supplied with jshare
 		scope.user = jshare.user;
 		scope.group = new Group(jshare.group);
@@ -99,5 +101,32 @@ function App()
 		$('#period-controls .period span').text(periodName);
 	};
 	
+	/*
+	 *	Show invite page
+	 *
+	 */
+	this.showInvite = function()
+	{
+		$('#manage').slideUp();
+		$('#invite').slideDown();
+	};
+
+	/*
+	 *	Show invite page
+	 *
+	 */
+	this.sendInvite = function()
+	{
+		// TODO: Actually send invite
+
+		$('#invite #confirm').fadeIn(300, function(){
+			// Reset
+			$('#manage').slideDown();
+			$('#invite').slideUp(function(){
+				$('#invite #confirm').hide();
+			});
+		});
+	};
+
 	this.init();
 }

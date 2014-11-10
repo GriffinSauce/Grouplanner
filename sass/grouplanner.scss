@@ -1,3 +1,6 @@
+/*
+ *	Pages
+ */
 html
 {
 	width:100%;
@@ -10,6 +13,7 @@ body
 {
 	padding: 0;
 	margin: 0;
+	text-align: center;
 	
 	#banner
 	{
@@ -24,12 +28,23 @@ body
 		}
 	}
 	
-	@import 'imports/index';
-	@import 'imports/login';
+	&#index,
+	&#login
+	{
+		section
+		{
+			padding:1em 2em;
+		}
+	}
 	@import 'imports/create';
 	@import 'imports/group';
-	@import 'imports/planner';
+	@import 'imports/groups';
+	@import 'imports/invite';
 }
+
+/*
+ *	Elements
+ */
 h1,h2,h3,h4,h5,h6
 {
 	font-weight: 300;
@@ -44,40 +59,106 @@ h2
 	font-style: italic;
 	color:#666;
 }
-
+hr
+{
+	border-top:none;
+	border-left:none;
+	border-right:none;
+	border-bottom-color: #D0D0D0;
+}
+i
+{
+	vertical-align: middle;
+}
 .btn
 {
 	display: inline-block;
 	padding: 0.4em 0.7em 0.5em 0.7em;
-	font-size: 140%;
+	font-size: 120%;
 	color:#FFF;
 	background-color:#19be78;
 	text-decoration:none;
 	cursor:pointer;
-	border-bottom:0.2em #16ad6d solid;
 	border-radius:0.2em;
 	transition:background-color 0.1s;
 	
+	i
+	{
+		margin: 0 0.3em 0 -0.1em;
+	}
 	&:hover
 	{
-		background-color:#00e886;
+		background-color: #00CB75;
 	}
 }
 
+/*
+ *	Login buttons
+ */
+.loginBtn
+{
+	a
+	{
+		padding: 0.3em 0.7em 0.4em 0.7em;
+		font-size: 120%;
+		min-width: 11em;
+	}
+	&#google a
+	{
+		background: #dd4b39;
+		border-bottom-color: #bf3625;
+		&:hover
+		{
+			background: #e74b37;
+		}
+	}
+	&#facebook a
+	{
+		background: #3B5998;
+		border-bottom-color: #2D4373;
+		&:hover
+		{
+			background: #2D4373;
+			border-bottom-color: #1e3057;
+		}
+	}
+	&#twitter a
+	{
+		background: #55ACEE;
+		border-bottom-color: #3178ad;
+		&:hover
+		{
+			background: #2795E9;
+		}
+	}
+}
+
+/*
+ *	Input elements
+ */
+select,
 input
 {
 	margin: 0 0.3em;
-	color:#333;
-	background-color: rgba(207, 207, 207, 0.80);
 	padding: 0.4em 0.3em 0.4em 0.4em;
-	font-size:100%;
+	font-size: 100%;
 	border-width: 0;
 	border-radius: 0.2em;
+}
+
+select
+{
+	background-color: rgba(255, 255, 255, 0.4);
+}
+input
+{
+	color: #333;
+	background-color: rgba(207, 207, 207, 0.80);
 	
 	&.number
 	{
 		margin: 0;
-		width:3em;
+		width: 3em;
 		text-align: center;
 		border: none;
 		background-color: rgba(255, 255, 255, 0.4);
@@ -91,63 +172,51 @@ input
 	width:1em;
 	padding: 0.3em 0.5em 0.4em 0.5em;
 	font-weight: 900;
-	color:#666;
-	background-color:#FFF;
+	color: #666;
+	background-color: #FFF;
 	text-align: center;
-	z-index:2;
+	z-index: 2;
 	
 	&#plus
 	{
-		margin:0 0.3em 0 -0.3em;
+		margin: 0 0.3em 0 -0.3em;
 		border-left: 0.1em solid #DDD;
 		border-bottom-right-radius: 0.2em;
 		border-top-right-radius: 0.2em;
 	}
 	&#minus
 	{
-		margin:0 -0.3em 0 0.3em;
+		margin: 0 -0.3em 0 0.3em;
 		border-right: 0.1em solid #DDD;
 		border-bottom-left-radius: 0.2em;
 		border-top-left-radius: 0.2em;
 	}
 }
-
-select
-{
-	margin: 0 0.3em;
-	padding: 0.4em 0.3em 0.4em 0.4em;
-	font-size:100%;
-	background-color: rgba(255, 255, 255, 0.4);
-	border-width: 0;
-	border-radius: 0.2em;
-}
-
 .radio
 {
 	display: inline-flex;
-	margin:0 0.5em 0 0;
+	margin: 0 0.5em 0 0;
 	vertical-align: middle;
-	cursor:pointer;
+	cursor: pointer;
 	
 	.option
 	{
-		margin:0;
-		padding:0.4em 0.6em 0.5em 0.6em;
-		color:rgba(255,255,255,0.6);
-		background-color: #697dd3;
-		border-top:none;
-		border-bottom: 0.2em #3f509b solid;
+		margin: 0;
+		padding: 0.4em 0.6em 0.5em 0.6em;
+		color: rgba(255,255,255,0.6);
+		color: rgba(69, 88, 168, 0.5);
+		text-decoration: line-through;
+		background-color: transparent;
+		border:0.1em solid #4558a8;
 		transition: background-color 0.1s ease, color 0.1s ease;
 		
 		&.active
 		{
-			margin:0.1em 0 0 0;
-			padding: 0.4em 0.6em 0.5em 0.6em;
 			color:#FFF;
+			text-decoration: none;
 			background-color: #4558a8;
 			border-bottom: none;
 		}
-		
 		&:first-child
 		{
 			border-top-left-radius: 0.3em;
@@ -159,12 +228,4 @@ select
 			border-bottom-right-radius: 0.3em;
 		}
 	}
-}
-
-hr
-{
-	border-top:none;
-	border-left:none;
-	border-right:none;
-	border-bottom-color: #D0D0D0;
 }

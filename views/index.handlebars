@@ -1,37 +1,20 @@
 <html>
-	<head>
-		<title>Grouplanner</title>
-		<meta name="description" content="Grouplanner, plan with groups .. duh!">
-		<meta name="author" content="Joris Griffioen">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-		<meta name="viewport" content="width=device-width user-scalable=no">
-		<link rel="shortcut icon" href="www/favicon.ico">
-		<link rel="icon" type="www/image/vnd.microsoft.icon" href="www/favicon.png" />
-		<link href="https://fonts.googleapis.com/css?family=Roboto:100,200,300,400,500,600,700" rel="stylesheet" type="text/css">
-		<link href="www/css/grouplanner.css" rel="stylesheet" type="text/css">
-	</head>
-	<body id="index">
+	{{> header}}
+	<body id="{{page}}">
 		<div id="banner">
-			<img src="www/img/grouplanner_logo.png">
+			<img src="/www/img/grouplanner_logo.png">
 			<h1>Welcome to GrouPlanner</h1>
 		</div>
 
 		<section>
-			<h2>New here?</h2>
-			<a id="newGroupBtn" class="btn" href="create">Create a group</a>
-			<p>
-				<a id="joinGroupBtn" href="help">Join an existing group</a>
-			</p>
+			<p>Getting a everyone in a room regularly is hard. Grouplanner is here to help!</p>
+			<p>Invite everybody, tap the days that you are available, pick a day. That's it.</p>
+			<p>Let's create a group!</p>
 		</section>
 
 		<section>
-			<h2>Been here before?</h2>
-			<a id="joinGroupBtn" class="btn" href="group">Go to group</a>
+			<h2>Please sign in to continue</h2>
+			{{> loginButtons}}
 		</section>
 	</body>
-	<script>{{{JShare}}}</script>
-	<script src="/socket.io/socket.io.js"></script>
-	<script src="www/lib/jquery-2.1.1.min.js"></script>
-	<script src="www/lib/moment-with-locales.js"></script>
-	<script src="www/js/index.js"></script>
 </html>
