@@ -196,6 +196,7 @@ var apiFunctions = {
 		{
 			var token = buf.toString('hex');
 			var update = {};
+			input.invitedUser.token = token;
 			update.$addToSet = {
 				invites:{
 					token:token,
