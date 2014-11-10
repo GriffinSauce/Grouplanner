@@ -37,7 +37,7 @@ function sendInvite(user, group, invitedUser)
 	var source_html = fs.readFileSync(templates.invite.html, "utf8");
 	var template_text = handlebars.compile(source_text);
 	var template_html = handlebars.compile(source_html);
-	var acceptinvitelink = global.grouplanner.environment == 'local' ? 'http://' + global.grouplanner.ipaddress : 'http://www.grouplanner.nl';
+	var acceptinvitelink = global.grouplanner.environment == 'local' ? 'http://' + global.grouplanner.ipaddress + ':' + global.grouplanner.port : 'http://www.grouplanner.nl';
 	acceptinvitelink += '/invite/' + invitedUser.token;
 
 	var data = {
