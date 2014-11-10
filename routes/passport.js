@@ -2,6 +2,7 @@
 
 var express = require('express');
 var router = express.Router();
+var Group = require(__dirname + '/../db/group.js');
 
 var passport = require('passport');
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
@@ -14,6 +15,17 @@ router.get('/oauth2callback', passport.authenticate('google', { successRedirect:
 router.get('/login', function(req, res) { res.render('login', {page:'login'}); });
 router.get('/loginSuccess', function(req, res)
 {
+	// If user came from invite link, we'll add him to the group and remove the invite token
+	if(req.session.invitetoken)
+	{
+		Group.findOne({'invites.token': req.params.token}).exec(function(err, group)
+		{
+			group.update({$pull:{'invites':{'token':req.params.token}}, $push:{'members':req.user}}, function(err, group) {
+				delete req.session.invitetoken;
+			});
+		});
+	}
+
 	var redirect_to = req.session.redirect_to ? req.session.redirect_to : '/';
 	delete req.session.redirect_to;
 	res.redirect(redirect_to);

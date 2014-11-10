@@ -11,6 +11,7 @@ router.get('/invite/:token', function(req, res)
 {
 	Group.findOne({'invites.token': req.params.token}).populate('members').exec(function(err, group)
 	{
+		req.session.invitetoken = req.params.token;
 		res.jshare.group = group;
 		res.render('invite', {page:'invite', group:group});
 	});
