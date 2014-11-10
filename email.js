@@ -17,7 +17,7 @@ var transporter = nodemailer.createTransport(
 {
     service: 'Gmail',
     auth: {
-        user: '',
+        user: 'grouplanner@gmail.com',
         pass: ''
     }
 });
@@ -31,7 +31,7 @@ function sendInvite(user, group, invitedUser)
 
 	var data = {
 		subject: 'Invitation from grouplanner',
-		invitee: user,
+		inviter: user,
 		group: group,
 		acceptinvitelink: ''
 	};
