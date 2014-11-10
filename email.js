@@ -3,6 +3,7 @@
 var nodemailer = require('nodemailer');
 var fs = require('fs');
 var handlebars = require('handlebars');
+var gmailAuth = {};
 
 var templates =
 {
@@ -13,13 +14,21 @@ var templates =
 	}
 };
 
+if(global.grouplanner.environment == 'local')
+{
+	var settingsJson = require(__dirname + '/../google-secret.json');
+	gmailAuth.user = settingsJson.gmail.username;
+	gmailAuth.pass = settingsJson.gmail.password;
+} else
+{
+	gmailAuth.user = process.env.GMAIL_USERNAME;
+	gmailAuth.pass = process.env.GMAIL_PASSWORD;
+}
+
 var transporter = nodemailer.createTransport(
 {
     service: 'Gmail',
-    auth: {
-        user: 'grouplanner@gmail.com',
-        pass: ''
-    }
+    auth: gmailAuth
 });
 
 function sendInvite(user, group, invitedUser)
