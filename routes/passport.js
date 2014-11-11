@@ -63,43 +63,42 @@ passport.use(new GoogleStrategy
 	function(accessToken, refreshToken, profile, done)
 	{
 		User.findOrCreate(
-			{
-				googleId: profile.id
-			},
-			{
-				email: profile.emails[0].value,
-				username: profile.displayName,
-				name:
-				{
-					first: profile.name.givenName,
-					last: profile.name.familyName
-				},
-				gender: profile._json.gender,
-				picture: profile._json.picture
-			}, function (){});
-		process.nextTick(function()
 		{
-			return done(null, profile);
+			googleId: profile.id
+		},
+		{
+			email: profile.emails[0].value,
+			username: profile.displayName,
+			name:
+			{
+				first: profile.name.givenName,
+				last: profile.name.familyName
+			},
+			gender: profile._json.gender,
+			picture: profile._json.picture
+		}, function ()
+		{
+			process.nextTick(function()
+			{
+				return done(null, profile);
+			});
 		});
 	}
 ));
 
 passport.serializeUser(function(user, done)
 {
-	var grouplannerUser = {};
 	switch(user.provider)
 	{
 		case 'google':
-			User.findOne({googleId: user.id}, function(err, dbUser)
+			User.findOne({googleId: user.id.toString()}, function(err, dbUser)
 			{
-				if(err) { console.warn(err); grouplannerUser = user; }
-				else { grouplannerUser = dbUser; }
-				done(null, grouplannerUser);
+				if(err) { console.warn(err); }
+				done(null, dbUser);
 			});
 			break;
 		default:
-			grouplannerUser = user;
-			done(null, grouplannerUser);
+			done(null, user);
 			break;
 	}
 });
