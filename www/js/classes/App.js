@@ -101,7 +101,7 @@ function App()
 		$('#period-controls .period span').text(periodName);
 	};
 	
-	/*	
+	/*
 	 *	Show invite page
 	 *
 	 */
@@ -110,22 +110,41 @@ function App()
 		$('#manage').slideUp();
 		$('#invite').slideDown();
 	};
-	
-	/*	
+
+	/*
 	 *	Show invite page
 	 *
 	 */
 	this.sendInvite = function()
 	{
-		// TODO: Actually send invite
-		
-		$('#invite #confirm').fadeIn(300, function(){
-			// Reset
-			$('#manage').slideDown();
-			$('#invite').slideUp(function(){
-				$('#invite #confirm').hide();
+		var email = $('#invite #form input').val();
+		var re = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+		if(re.test(email))
+		{
+			var data = {
+				invitedUser:{email:email},
+				group:scope.group._id
+			};
+			socket.emit('put/invite', data, function(rtnData) {
+				if(rtnData.success)
+				{
+					$('#invite #confirm').fadeIn(300, function(){
+						// Reset
+						$('#manage').slideDown();
+						$('#invite').slideUp(function(){
+							$('#invite #confirm').hide();
+						});
+					});
+				}else{
+					alert('An error occured, please try again later.');
+					// Reset
+					$('#manage').slideDown();
+					$('#invite').slideUp();
+				}
 			});
-		});
+		}else{
+			alert("Please provide a valid e-mail address");
+		}
 	};
 
 	this.init();

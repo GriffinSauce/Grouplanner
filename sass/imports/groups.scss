@@ -1,26 +1,26 @@
 &#groups
-{	
+{
 	#header
 	{
 		height:2em;
 		padding:1em;
 		background-color:white;
 		border-bottom: 0.2em #CDBDFF solid;
-		
+
 		#logo
 		{
 			float:left;
 			height:2em;
 			margin:0 0 0 0.5em;
 		}
-		
+
 		span
 		{
 			font-size:140%;
 			font-weight: 500;
 			color:#555;
 		}
-		
+
 		#logout
 		{
 			float:right;
@@ -41,7 +41,7 @@
 			vertical-align: middle;
 		}
 	}
-	
+
 	.group
 	{
 		display:block;
@@ -51,7 +51,7 @@
 		text-decoration: none;
 		color:#333;
 		box-shadow: 0 0.1em 0.2em 0 rgba(0, 0, 0, 0.08);
-		
+
 		h3
 		{
 			position: relative;
@@ -61,7 +61,7 @@
 			color:#FFF;
 			text-align: left;
 			background-color:#2CC282;
-			
+
 			i
 			{
 				position: absolute;
@@ -70,11 +70,11 @@
 				color: #FFF;
 			}
 		}
-		
+
 		.members
 		{
 			padding:0.5em;
-			
+
 			.member
 			{
 				width:2em;

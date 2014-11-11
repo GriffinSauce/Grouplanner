@@ -3,7 +3,7 @@
 var express = require('express');
 var router = express.Router();
 
-router.get('/', function(req, res) { 
+router.get('/', function(req, res) {
 	if(req.user === undefined)
 	{
 		req.session.redirect_to = req.url;
@@ -12,7 +12,7 @@ router.get('/', function(req, res) {
 	{
 		res.redirect('/groups');
 	}
-	
+
 });
 
 router.get('/help', function(req, res) {

@@ -7,14 +7,14 @@
 		height:2em;
 		padding:1em;
 		background-color: #2CC282;
-		
+
 		#logo
 		{
 			float:left;
 			height:2em;
 			margin:0 1em 0 0.5em;
 		}
-		
+
 		#back
 		{
 			float:left;
@@ -49,22 +49,22 @@
 			vertical-align: middle;
 		}
 	}
-	
+
 	#period
 	{
 		color: #ADADAD;
 		padding-bottom:2em;
-		
+
 		#period-controls
-		{	
+		{
 			display:flex;
 			justify-content:space-between;
 			text-align: center;
 			height:4em;
 			padding:1em 0.5em 0 0.5em;
-			
+
 			.period-control-button
-			{	
+			{
 				display: flex;
 				justify-content: center;
 				align-items: center;
@@ -72,7 +72,7 @@
 				font-size: 180%;
 				font-weight: 700;
 				color:#333;
-				
+
 				div
 				{
 					color: #999;
@@ -82,7 +82,7 @@
 				}
 			}
 			.period
-			{	
+			{
 				display: flex;
 				justify-content: center;
 				align-items: center;
@@ -122,7 +122,7 @@
 			}
 		}
 	}
-	
+
 	#manage
 	{
 		padding:0 0 1em 0;
@@ -130,7 +130,7 @@
 		background-color: #4E37A1;
 
 		h1
-		{	
+		{
 			text-align: center;
 			margin:0 0 0.5em 0;
 			padding:0.5em;
@@ -179,7 +179,7 @@
 				width: 33%;
 				text-align: center;
 				margin: 0em 0 1em 0;
-				
+
 				#icon
 				{
 					width: 2em;
@@ -189,12 +189,12 @@
 					background-color: #FFF;
 					border-radius: 100%;
 					overflow:hidden;
-					
+
 					i
 					{
 						font-size: 2em;
 						color:#DDD;
-					}	
+					}
 				}
 				#title
 				{
@@ -202,9 +202,9 @@
 					padding: 0 1em;
 				}
 			}
-			
+
 		}
-		
+
 		#info
 		{
 			position: relative;
@@ -214,7 +214,7 @@
 			color:#555;
 			background-color: #FFF;
 			box-shadow: 0 0.1em 0.2em 0 rgba(0, 0, 0, 0.08);
-			
+
 			h2
 			{
 				margin:0;
@@ -227,7 +227,7 @@
 			}
 		}
 	}
-	
+
 	#invite
 	{
 		display:none;
@@ -250,7 +250,7 @@
 			margin: 1em;
 			padding: 1em;
 			color:#FFF;
-			
+
 			p
 			{
 				margin:0;
@@ -274,7 +274,7 @@
 				font-size: 110%;
 				color:#777;
 				background-color:#F0F0F0;
-				
+
 				&:hover
 				{
 					background-color: #FFF;

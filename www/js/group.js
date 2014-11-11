@@ -9,5 +9,5 @@ app.loadPeriod(thisWeek);
 
 // header
 $(document).ready(function(){
-	
+
 });
