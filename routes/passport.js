@@ -18,9 +18,9 @@ router.get('/loginSuccess', function(req, res)
 	// If user came from invite link, we'll add him to the group and remove the invite token
 	if(req.session.invitetoken)
 	{
-		Group.findOne({'invites.token': req.params.token}).exec(function(err, group)
+		Group.findOne({'invites.token': req.session.invitetoken}).exec(function(err, group)
 		{
-			group.update({$pull:{'invites':{'token':req.params.token}}, $push:{'members':req.user}}, function(err, group) {
+			group.update({$pull:{'invites':{'token':req.session.invitetoken}}, $push:{'members':req.user}}, function(err, group) {
 				delete req.session.invitetoken;
 			});
 		});
