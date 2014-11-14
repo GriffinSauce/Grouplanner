@@ -34,6 +34,7 @@ router.get('/loginSuccess', function(req, res)
 router.get('/logout', function(req, res)
 {
 	req.logout();
+	req.session.destroy();
 	res.redirect('/');
 });
 
@@ -104,7 +105,7 @@ passport.serializeUser(function(user, done)
 });
 
 passport.deserializeUser(function(obj, done) {
-	User.findOne(obj._id, function (err, user) {
+	User.findOne({_id:obj._id}, function (err, user) {
 		done(err, user);
 	});
 });

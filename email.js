@@ -1,9 +1,10 @@
 #!/bin/env node
 
 var nodemailer = require('nodemailer');
+var smtpTransport = require('nodemailer-smtp-transport');
 var fs = require('fs');
 var handlebars = require('handlebars');
-var gmailAuth = {};
+var mailAuth = {};
 
 var templates =
 {
@@ -17,19 +18,24 @@ var templates =
 if(global.grouplanner.environment == 'local')
 {
 	var settingsJson = require(__dirname + '/google-secret.json');
-	gmailAuth.user = settingsJson.gmail.username;
-	gmailAuth.pass = settingsJson.gmail.password;
+	mailAuth.user = settingsJson.mail.username;
+	mailAuth.pass = settingsJson.mail.password;
 } else
 {
-	gmailAuth.user = process.env.GMAIL_USERNAME;
-	gmailAuth.pass = process.env.GMAIL_PASSWORD;
+	mailAuth.user = process.env.MAIL_USERNAME;
+	mailAuth.pass = process.env.MAIL_PASSWORD;
 }
+console.log(mailAuth);
 
-var transporter = nodemailer.createTransport(
+var transporter = nodemailer.createTransport(smtpTransport(
 {
-    service: 'Gmail',
-    auth: gmailAuth
-});
+    debug: true,
+	host: 'mail.antagonist.nl',
+    port: 25,
+	secure: false,
+    auth: mailAuth,
+	authMethod: "PLAIN"
+}));
 
 function sendInvite(user, group, invitedUser)
 {
@@ -50,7 +56,7 @@ function sendInvite(user, group, invitedUser)
 	var body_html = template_html(data);
 
 	var mailOptions = {
-		from: 'Grouplanner invite <invites@grouplanner.com>',
+		from: 'Grouplanner invite <invite@grouplanner.nl>',
 		to: invitedUser.email,
 		subject: 'Grouplanner invite for ' + group.name,
 		text: body_text,
