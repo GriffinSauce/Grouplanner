@@ -418,6 +418,8 @@ body {
     body#groups .group .members {
       padding: 0.5em; }
       body#groups .group .members .member {
+        float: left;
+        margin: 0 0.5em 0 0;
         width: 2em;
         height: 2em;
         border-radius: 100%;
@@ -426,6 +428,10 @@ body {
         body#groups .group .members .member img {
           width: 100%;
           height: 100%; }
+      body#groups .group .members:after {
+        display: block;
+        content: "";
+        clear: both; }
   body#invite {
     text-align: center; }
     body#invite #info {
