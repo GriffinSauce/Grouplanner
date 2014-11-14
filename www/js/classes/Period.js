@@ -1,4 +1,4 @@
-/* global $,moment,App,Group,Period */
+/* global $,moment,App,Group,Period,Handlebars */
 
 /*
  *	Period class
@@ -60,6 +60,7 @@ function Period(options)
 	 */
 	this.getHTML = function()
 	{
+		var html;
 		if(!scope.plannedDate)
 		{
 			var data = {id:this.startDate.format('DDMMYYYY'),days:[]};
@@ -74,7 +75,7 @@ function Period(options)
 				});
 			}
 			var compiledTemplate = Handlebars.getTemplate('availability');
-			return compiledTemplate(data);
+			html = $(compiledTemplate(data));
 		}else{
 			var date = moment(scope.plannedDate, 'DDMMYYYY');
 			var data = {
@@ -86,8 +87,16 @@ function Period(options)
 				notes:''
 			};
 			var compiledTemplate = Handlebars.getTemplate('planned');
-			return compiledTemplate(data);
+			html = $(compiledTemplate(data));
 		}
+
+		// Attach events
+		$('#avail-days .day',html).bind('click tap', scope.dayClicked);
+		$('#avail-plan .go-btn',html).bind('click tap', scope.goClicked);
+		$('.buttons .btn#replan',html).bind('click tap', scope.unPlan);
+		$('.buttons .btn#addToCalendar',html).bind('click tap', scope.addToCalendar);
+
+		return html;
 	}
 	
 	/*
@@ -177,8 +186,7 @@ function Period(options)
 				// Update UI
 				var el = $('#'+scope.startDate.format('DDMMYYYY'));
 				el.remove();
-				var html = $(scope.getHTML());
-				$('#periods').append(html);
+				$('#periods').append(scope.getHTML());
 			}
 		}else{
 			alert("No can't do. \nYou need more than 50% available to plan a date.");
@@ -186,6 +194,47 @@ function Period(options)
 	};
 	
 	/*	
+	 *	Clickhandler for replan button
+	 *
+	 */
+	this.unPlan = function()
+	{
+		if(confirm("Replanning the date \nYou sure about that?"))
+		{
+			if(confirm("Really? Because this is a major pain in the butt. Last chance."))
+			{
+				// Update data to db
+				var data = {
+					periodid:scope.id,
+					date:false,
+					planned:false
+				}
+				socket.emit('put/planned', data, function(err) {
+					console.log(err);
+				});
+
+				// Update data
+				scope.days[scope.plannedDate].planned = false;
+				scope.plannedDate = false;
+
+				// Update UI
+				var el = $('#'+scope.startDate.format('DDMMYYYY'));
+				el.remove();
+				$('#periods').append(scope.getHTML());
+			}
+		}
+	};
+
+	/*
+	 *	Clickhandler for addToCalendar button
+	 *
+	 */
+	this.addToCalendar = function()
+	{
+		alert("Sorry, under construction.");
+	};
+
+	/*
 	 *	Update day availability UI
 	 *
 	 */
@@ -239,10 +288,7 @@ function Period(options)
 		{
 			el.show();
 		}else{
-			var html = $(scope.getHTML());
-			$('#avail-days .day',html).bind('click tap', scope.dayClicked);
-			$('#avail-plan .go-btn',html).bind('click tap', scope.goClicked);
-			$('#periods').append(html);
+			$('#periods').append(scope.getHTML());
 		}
 	};
 	
