@@ -105,7 +105,7 @@ passport.serializeUser(function(user, done)
 });
 
 passport.deserializeUser(function(obj, done) {
-	User.findOne(obj._id, function (err, user) {
+	User.findOne({_id:obj._id}, function (err, user) {
 		done(err, user);
 	});
 });
