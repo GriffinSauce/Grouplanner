@@ -1,27 +1,23 @@
 <div class="period planned"  id="{{id}}">
-	<div class="wrapper">
+	<div class="plannedDate">
 		<div class="header">
 			It's gonna happen on
 		</div>
-		<div id="plannedDate">
-			<div id="day">
-				<div class="name">{{day}}</div>
-				<div class="date">{{date}}</div>
-				<div class="month">{{month}}</div>
+		<div class="day">
+			<div class="name">{{day}}<i class="icon icon-rocket"></i></div>
+			<div class="date">{{date}} of {{month}}</div>
+		</div>
+		<div class="available">
+			{{#each available}}
+			<div class="user">
+				<div class="img"><img src="{{picture}}" /></div>
+				<div class="name">{{name.first}}</div>
 			</div>
+			{{/each}}
 		</div>
-	</div>
-
-	<div id="available">
-		<span>{{available}}</span> will be joining you.
-	</div>
-	
-	<div class="wrapper">
-		<div class="header">
-			Notes
-		</div>
-		<div id="notes">
-			{{notes}}
+		<div class="notes">
+			<h3>Notes</h3>
+			<textarea placeholder="..." class="content">{{notes}}</textarea>
 		</div>
 	</div>
 </div>

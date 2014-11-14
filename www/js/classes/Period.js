@@ -80,16 +80,33 @@ function Period(options)
 			var data = {
 				id:this.startDate.format('DDMMYYYY'),
 				day:date.format('dddd'),
-				date:date.format('DD'),
+				date:date.format('Do'),
 				month:date.format('MMMM'),
-				available:'Frits, Joey and Klaas', // TODO: Use real data
-				notes:'...'
+				available:scope.getAvailableUsers(scope.plannedDate),
+				notes:''
 			};
 			var compiledTemplate = Handlebars.getTemplate('planned');
 			return compiledTemplate(data);
 		}
 	}
 	
+	/*
+	 *	Get available users for a certain day
+	 *
+	 */
+	this.getAvailableUsers = function(date)
+	{
+		var users = [];
+		for(var key in app.group.members)
+		{
+			if(scope.days[date].available.indexOf(app.group.members[key]._id) !== -1)
+			{
+				users.push(app.group.members[key]);
+			}
+		}
+		return users;
+	};
+	 
 	/*	
 	 *	Clickhandler for days
 	 *
@@ -136,27 +153,36 @@ function Period(options)
 	{
 		var el = $(this);
 		var date = el.parent().attr('id');
-		console.log('Planning date: '+date);
 		
-		// Update data
-		scope.plannedDate = date;
-		scope.days[date].planned = true;
-		
-		// Update data to db
-		var data = {
-			periodid:scope.id,
-			date:date,
-			planned:true
+		if(el.parent().hasClass('doable'))
+		{
+			if(confirm("Planning the date! \nYou sure about that?"))
+			{		
+				console.log('Planning date: '+date);
+
+				// Update data
+				scope.plannedDate = date;
+				scope.days[date].planned = true;
+
+				// Update data to db
+				var data = {
+					periodid:scope.id,
+					date:date,
+					planned:true
+				}
+				socket.emit('put/planned', data, function(err) {
+					console.log(err);
+				});
+
+				// Update UI
+				var el = $('#'+scope.startDate.format('DDMMYYYY'));
+				el.remove();
+				var html = $(scope.getHTML());
+				$('#periods').append(html);
+			}
+		}else{
+			alert("No can't do. \nYou need more than 50% available to plan a date.");
 		}
-		socket.emit('put/planned', data, function(err) {
-			console.log(err);
-		});
-		
-		// Update UI
-		var el = $('#'+scope.startDate.format('DDMMYYYY'));
-		el.remove();
-		var html = $(scope.getHTML());
- 		$('#periods').append(html);
 	};
 	
 	/*	
