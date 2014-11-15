@@ -122,16 +122,11 @@ function sendInvite(user, group, invitedUser)
 function sendNotification(type, to, from, group, data)
 {
 	// Vars
-	var source_text = fs.readFileSync(templates['notification_'+type].text, "utf8");
-	var source_html = fs.readFileSync(templates['notification_'+type].html, "utf8");
-	var template_text = handlebars.compile(source_text);
-	var template_html = handlebars.compile(source_html);
-	
 	var groupObj = {};	// TODO: get group from db
 	var fromObj = {};	// TODO: get from user obj from group
 	var toEmails = '';	// TODO: get emails from to users from groupObj
 	
-	// Set up template data and buil
+	// Set up template data
 	var unknownType = false;
 	var mailData = {};
 	switch(type)
@@ -145,18 +140,29 @@ function sendNotification(type, to, from, group, data)
 		default: unknownType = true;
 		break;
 	}
-	var body_text = template_text(mailData);
-	var body_html = template_html(mailData);
+	
+	if(!unknownType)
+	{
+		// Get and build template
+		var source_text = fs.readFileSync(templates['notification_'+type].text, "utf8");
+		var source_html = fs.readFileSync(templates['notification_'+type].html, "utf8");
+		var template_text = handlebars.compile(source_text);
+		var template_html = handlebars.compile(source_html);
+		var body_text = template_text(mailData);
+		var body_html = template_html(mailData);
 
-	// Set up mail options and send
-	var mailOptions = {
-		from: group.name+' at Grouplanner <groups@grouplanner.nl>',
-		to: toEmails,
-		subject: groupObj.name+' '+groupObj.type+'planned on '+data.date,
-		text: body_text,
-		html: body_html
-	};
-	sendMail(mailOptions, transporters.invite);
+		// Set up mail options and send
+		var mailOptions = {
+			from: group.name+' at Grouplanner <groups@grouplanner.nl>',
+			to: toEmails,
+			subject: groupObj.name+' '+groupObj.type+'planned on '+data.date,
+			text: body_text,
+			html: body_html
+		};
+		sendMail(mailOptions, transporters.invite);
+	}else{
+		console.log('Unknown type of notification requested.');
+	}
 }
 
 module.exports.sendInvite = sendInvite;
