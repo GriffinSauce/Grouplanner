@@ -104,10 +104,22 @@
 	{
 		padding:1em 0 0 0;
 		
+		.btn
+		{
+			display:block;
+			margin:0 0 0.5em 0;
+			font-size: 100%;
+		}
+		#mail
+		{
+			background-color: #35969f;
+			&:hover
+			{
+				background-color: #02afbf;
+			}
+		}
 		#addToCalendar
 		{
-			margin:0 0.2em 0 0;
-			font-size: 105%;
 			background-color: #555596;
 			&:hover
 			{
@@ -116,7 +128,6 @@
 		}
 		#replan
 		{
-			font-size: 105%;
 			background-color: #DA504A;
 			&:hover
 			{

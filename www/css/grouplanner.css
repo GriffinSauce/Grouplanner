@@ -295,14 +295,19 @@ body {
             color: #6E6E6E; }
         body#group #period #periods .period.planned .buttons {
           padding: 1em 0 0 0; }
+          body#group #period #periods .period.planned .buttons .btn {
+            display: block;
+            margin: 0 0 0.5em 0;
+            font-size: 100%; }
+          body#group #period #periods .period.planned .buttons #mail {
+            background-color: #35969f; }
+            body#group #period #periods .period.planned .buttons #mail:hover {
+              background-color: #02afbf; }
           body#group #period #periods .period.planned .buttons #addToCalendar {
-            margin: 0 0.2em 0 0;
-            font-size: 105%;
             background-color: #555596; }
             body#group #period #periods .period.planned .buttons #addToCalendar:hover {
               background-color: #4a4aaa; }
           body#group #period #periods .period.planned .buttons #replan {
-            font-size: 105%;
             background-color: #DA504A; }
             body#group #period #periods .period.planned .buttons #replan:hover {
               background-color: #f8362d; }

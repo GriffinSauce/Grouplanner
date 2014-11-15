@@ -95,6 +95,7 @@ function Period(options)
 		$('#avail-plan .go-btn',html).bind('click tap', scope.goClicked);
 		$('.buttons .btn#replan',html).bind('click tap', scope.unPlan);
 		$('.buttons .btn#addToCalendar',html).bind('click tap', scope.addToCalendar);
+		$('.buttons .btn#mail',html).bind('click tap', scope.sendMail);
 
 		return html;
 	}
@@ -206,7 +207,7 @@ function Period(options)
 				// Update data to db
 				var data = {
 					periodid:scope.id,
-					date:false,
+					date:scope.plannedDate,
 					planned:false
 				}
 				socket.emit('put/planned', data, function(err) {
@@ -221,7 +222,36 @@ function Period(options)
 				var el = $('#'+scope.startDate.format('DDMMYYYY'));
 				el.remove();
 				$('#periods').append(scope.getHTML());
+				scope.updatePicker(); // TODO: This shouldn't be necessary
 			}
+		}
+	};
+
+	/*
+	 *	Clickhandler for addToCalendar button
+	 *
+	 */
+	this.sendMail = function()
+	{
+		if(confirm("You sure? Don't be a spammer!"))
+		{
+			var data = {
+				type: 'plannedDate',
+				to: scope.days[scope.plannedDate].available,
+				from: app.user._id,
+				group: app.group._id,
+				data:
+				{
+					date:moment(scope.plannedDate,'DDMMYYYY').format("dddd, MMMM Do"),
+					notes:''
+				}
+			}
+			socket.emit('put/notification', data, function(err) {
+				console.log(err);
+				var html = $('#'+scope.startDate.format('DDMMYYYY'));
+				$('.buttons .btn#mail',html).html("<i class='icon-check'></i>Mailed!");
+				$('.buttons .btn#mail',html).unbind('click tap');
+			});
 		}
 	};
 
@@ -309,7 +339,7 @@ function Period(options)
 				// Save data
 				scope.days = data.days;
 				scope.id = data._id;
-				if(typeof data.plannedDate !== 'undefined')
+				if(typeof data.plannedDate !== 'undefined' && data.plannedDate !== 'false')
 				{
 					scope.plannedDate = data.plannedDate;
 				}else{
