@@ -111,4 +111,33 @@ function sendInvite(user, group, invitedUser)
 	sendMail(mailOptions, transporters.invite);
 }
 
+function sendNotification(to, planner, group, date, notes)
+{
+	var source_text = fs.readFileSync(templates.notification_plannedDate.text, "utf8");
+	var source_html = fs.readFileSync(templates.notification_plannedDate.html, "utf8");
+	var template_text = handlebars.compile(source_text);
+	var template_html = handlebars.compile(source_html);
+
+	var data = {
+		subject: 'Invitation from grouplanner',
+		group: group,
+		planner: planner,
+		date: date,
+		notes: notes
+	};
+	var body_text = template_text(data);
+	var body_html = template_html(data);
+
+	var mailOptions = {
+		from: group.name+' at Grouplanner <groups@grouplanner.nl>',
+		to: to,
+		subject: group.name+' '+group.type+'planned on '+date,
+		text: body_text,
+		html: body_html
+	};
+	
+	sendMail(mailOptions, transporters.invite);
+}
+
 module.exports.sendInvite = sendInvite;
+module.exports.sendNotification = sendNotification;
