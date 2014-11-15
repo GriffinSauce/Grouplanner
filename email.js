@@ -111,31 +111,51 @@ function sendInvite(user, group, invitedUser)
 	sendMail(mailOptions, transporters.invite);
 }
 
-function sendNotification(to, planner, group, date, notes)
+/*
+ *	sendNotification, sends an e-mail notification to users
+ *	type = notification type
+ *	to = an array of user id's
+ *	from = user id of sender
+ *	group = id of the group this is pertaining to
+ *	data = extra data that goes in the notification
+ */
+function sendNotification(type, to, from, group, data)
 {
-	var source_text = fs.readFileSync(templates.notification_plannedDate.text, "utf8");
-	var source_html = fs.readFileSync(templates.notification_plannedDate.html, "utf8");
+	// Vars
+	var source_text = fs.readFileSync(templates['notification_'+type].text, "utf8");
+	var source_html = fs.readFileSync(templates['notification_'+type].html, "utf8");
 	var template_text = handlebars.compile(source_text);
 	var template_html = handlebars.compile(source_html);
+	
+	var groupObj = {};	// TODO: get group from db
+	var fromObj = {};	// TODO: get from user obj from group
+	var toEmails = '';	// TODO: get emails from to users from groupObj
+	
+	// Set up template data and buil
+	var unknownType = false;
+	var mailData = {};
+	switch(type)
+	{
+		case 'plannedDate':
+			mailData.subject = groupObj.name+' '+groupObj.type+'planned on '+data.date; // SparkPlug rehearsal planned on 10/11/2014
+			mailData.group = groupObj;
+			mailData.from = fromObj;
+			mailData.data = data; // date and notes
+		break;
+		default: unknownType = true;
+		break;
+	}
+	var body_text = template_text(mailData);
+	var body_html = template_html(mailData);
 
-	var data = {
-		subject: 'Invitation from grouplanner',
-		group: group,
-		planner: planner,
-		date: date,
-		notes: notes
-	};
-	var body_text = template_text(data);
-	var body_html = template_html(data);
-
+	// Set up mail options and send
 	var mailOptions = {
 		from: group.name+' at Grouplanner <groups@grouplanner.nl>',
-		to: to,
-		subject: group.name+' '+group.type+'planned on '+date,
+		to: toEmails,
+		subject: groupObj.name+' '+groupObj.type+'planned on '+data.date,
 		text: body_text,
 		html: body_html
 	};
-	
 	sendMail(mailOptions, transporters.invite);
 }
 
