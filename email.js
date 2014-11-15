@@ -114,27 +114,22 @@ function sendInvite(user, group, invitedUser)
 /*
  *	sendNotification, sends an e-mail notification to users
  *	type = notification type
- *	to = an array of user id's
- *	from = user id of sender
- *	group = id of the group this is pertaining to
- *	data = extra data that goes in the notification
+ *	to = mail addresses
+ *	from = sender user data
+ *	group = the group this is pertaining to
+ *	data = extra data that goes in the mail
  */
 function sendNotification(type, to, from, group, data)
 {
-	// Vars
-	var groupObj = {};	// TODO: get group from db
-	var fromObj = {};	// TODO: get from user obj from group
-	var toEmails = '';	// TODO: get emails from to users from groupObj
-	
 	// Set up template data
 	var unknownType = false;
 	var mailData = {};
 	switch(type)
 	{
 		case 'plannedDate':
-			mailData.subject = groupObj.name+' '+groupObj.type+'planned on '+data.date; // SparkPlug rehearsal planned on 10/11/2014
-			mailData.group = groupObj;
-			mailData.from = fromObj;
+			mailData.subject = group.eventtype+'planned on '+data.date; // "SparkPlug rehearsal planned on 10/11/2014"
+			mailData.group = group;
+			mailData.from = from;
 			mailData.data = data; // date and notes
 		break;
 		default: unknownType = true;
@@ -154,8 +149,8 @@ function sendNotification(type, to, from, group, data)
 		// Set up mail options and send
 		var mailOptions = {
 			from: group.name+' at Grouplanner <groups@grouplanner.nl>',
-			to: toEmails,
-			subject: groupObj.name+' '+groupObj.type+'planned on '+data.date,
+			to: to,
+			subject: group.name+' '+group.eventtype+'planned on '+data.date,
 			text: body_text,
 			html: body_html
 		};

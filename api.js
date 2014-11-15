@@ -213,6 +213,26 @@ var apiFunctions = {
 				}
 			});
 		});
+	},
+	
+	/*
+	 *	Put notification, sends an email notification
+	 *	input.group = _id of group
+	 */
+	'put/notification' : function(input, callback)
+	{
+		Group.findOne({_id: input.group}, update, function(err, group)
+		{
+			var to = '';
+			var from = {};			
+			
+			
+			if(err) { console.log('Error creating invite');
+			}else{
+				email.sendInvite(input.type, to, from, group, input.data);
+				callback({success:true});
+			}
+		});
 	}
 };
 
