@@ -127,7 +127,7 @@ function sendNotification(type, to, from, group, data)
 	switch(type)
 	{
 		case 'plannedDate':
-			mailData.subject = group.eventtype+'planned on '+data.date; // "SparkPlug rehearsal planned on 10/11/2014"
+			mailData.subject = group.eventtype.slice(0,-1)+' planned on '+data.date; // "SparkPlug rehearsal planned on 10/11/2014"
 			mailData.group = group;
 			mailData.from = from;
 			mailData.data = data; // date and notes
@@ -150,7 +150,7 @@ function sendNotification(type, to, from, group, data)
 		var mailOptions = {
 			from: group.name+' at Grouplanner <groups@grouplanner.nl>',
 			to: to,
-			subject: group.name+' '+group.eventtype+'planned on '+data.date,
+			subject: group.name+' '+group.eventtype.slice(0,-1)+' planned on '+data.date,
 			text: body_text,
 			html: body_html
 		};

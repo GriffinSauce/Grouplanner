@@ -242,7 +242,7 @@ var apiFunctions = {
 					}
 				}
 			
-				email.sendInvite(input.type, to, from, group, input.data);
+				email.sendNotification(input.type, to, from, group, input.data);
 				callback({success:true});
 			}
 		});
