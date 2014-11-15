@@ -221,14 +221,27 @@ var apiFunctions = {
 	 */
 	'put/notification' : function(input, callback)
 	{
-		Group.findOne({_id: input.group}, update, function(err, group)
+		Group.findOne({_id: input.group}).populate('members').exec(function(err, group)
 		{
-			var to = '';
-			var from = {};			
-			
-			
-			if(err) { console.log('Error creating invite');
+			if(err) { console.log('Error finding group');
 			}else{
+				var to = '';
+				var from = {};
+				
+				console.log(input.from);
+				for(var i=0; i<group.members.length; i++)
+				{	
+					group.members[i].id = String(group.members[i]._id); // Fuck you, Mongo, just .. fuck you.
+					if(input.to.indexOf(group.members[i].id) !== -1)
+					{
+						to += group.members[i].email+', ';
+					}
+					if(group.members[i].id === input.from)
+					{
+						from = group.members[i];
+					}
+				}
+			
 				email.sendInvite(input.type, to, from, group, input.data);
 				callback({success:true});
 			}
