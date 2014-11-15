@@ -4,7 +4,11 @@ var nodemailer = require('nodemailer');
 var smtpTransport = require('nodemailer-smtp-transport');
 var fs = require('fs');
 var handlebars = require('handlebars');
-var mailAuth = {};
+var mailAuth = {
+	invite:{},
+	groups:{},
+	support:{}
+};
 
 var templates =
 {
@@ -12,30 +16,71 @@ var templates =
 	{
 		text: __dirname + '/emailtemplates/invite_text.handlebars',
 		html: __dirname + '/emailtemplates/invite_html.handlebars'
+	},
+	notification_plannedDate:
+	{
+		text: __dirname + '/emailtemplates/notification_plannedDate_text.handlebars',
+		html: __dirname + '/emailtemplates/notification_plannedDate_html.handlebars'
 	}
 };
 
 if(global.grouplanner.environment == 'local')
 {
 	var settingsJson = require(__dirname + '/google-secret.json');
-	mailAuth.user = settingsJson.mail.username;
-	mailAuth.pass = settingsJson.mail.password;
+	mailAuth.invite.user = settingsJson.mail.invite.username;
+	mailAuth.invite.pass = settingsJson.mail.invite.password;
+	mailAuth.groups.user = settingsJson.mail.groups.username;
+	mailAuth.groups.pass = settingsJson.mail.groups.password;
+	mailAuth.support.user = settingsJson.mail.support.username;
+	mailAuth.support.pass = settingsJson.mail.support.password;
 } else
 {
-	mailAuth.user = process.env.MAIL_USERNAME;
-	mailAuth.pass = process.env.MAIL_PASSWORD;
+	mailAuth.invite.user = process.env.MAIL_INVITE_USERNAME;
+	mailAuth.invite.pass = process.env.MAIL_INVITE_PASSWORD;
+	mailAuth.groups.user = process.env.MAIL_GROUPS_USERNAME;
+	mailAuth.groups.pass = process.env.MAIL_GROUPS_PASSWORD;
+	mailAuth.support.user = process.env.MAIL_SUPPORT_USERNAME;
+	mailAuth.support.pass = process.env.MAIL_SUPPORT_PASSWORD;
 }
-console.log(mailAuth);
 
-var transporter = nodemailer.createTransport(smtpTransport(
+var transporters = 
 {
-    debug: true,
-	host: 'mail.antagonist.nl',
-    port: 25,
-	secure: false,
-    auth: mailAuth,
-	authMethod: "PLAIN"
-}));
+	invite : nodemailer.createTransport(smtpTransport(
+	{
+		debug: true,
+		host: 'mail.antagonist.nl',
+		port: 25,
+		secure: false,
+		auth: mailAuth.invite,
+		authMethod: "PLAIN"
+	})),
+	groups : nodemailer.createTransport(smtpTransport(
+	{
+		debug: true,
+		host: 'mail.antagonist.nl',
+		port: 25,
+		secure: false,
+		auth: mailAuth.groups,
+		authMethod: "PLAIN"
+	})),
+	support : nodemailer.createTransport(smtpTransport(
+	{
+		debug: true,
+		host: 'mail.antagonist.nl',
+		port: 25,
+		secure: false,
+		auth: mailAuth.support,
+		authMethod: "PLAIN"
+	}))
+};
+
+function sendMail(mailOptions, transporter)
+{
+	transporter.sendMail(mailOptions, function(error, info)
+	{
+		if(error) { console.log(error); } else { console.log('Message sent: ' + info.response); }
+	});
+}
 
 function sendInvite(user, group, invitedUser)
 {
@@ -62,17 +107,8 @@ function sendInvite(user, group, invitedUser)
 		text: body_text,
 		html: body_html
 	};
-
-	sendMail(mailOptions);
+	
+	sendMail(mailOptions, transporters.invite);
 }
-
-function sendMail(mailOptions)
-{
-	transporter.sendMail(mailOptions, function(error, info)
-	{
-		if(error) { console.log(error); } else { console.log('Message sent: ' + info.response); }
-	});
-}
-
 
 module.exports.sendInvite = sendInvite;
