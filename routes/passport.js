@@ -13,6 +13,7 @@ var User = require(__dirname + '/../db/user.js');
 // Passport routes
 router.get('/auth/google', passport.authenticate('google', {scope: 'https://www.googleapis.com/auth/userinfo.email'}));
 router.get('/oauth2callback', passport.authenticate('google', { successRedirect:'loginSuccess', failureRedirect: '/login' }));
+router.get('/auth/facebook', passport.authenticate('facebook', {scope: 'email'}));
 router.get('/oauth2callback-facebook', passport.authenticate('facebook', { successRedirect:'loginSuccess', failureRedirect: '/login' }));
 
 
