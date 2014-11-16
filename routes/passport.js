@@ -135,7 +135,7 @@ passport.use(new FacebookStrategy(
 				last: profile.name.familyName
 			},
 			gender: profile._json.gender,
-			picture: profile._json.picture
+			//picture: profile._json.picture
 		}, function ()
 		{
 			process.nextTick(function()

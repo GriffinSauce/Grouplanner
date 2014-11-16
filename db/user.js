@@ -18,6 +18,7 @@ var userSchema = new Schema(
 		loggedin: { type: Date, default: Date.now },
 	},
 	googleId: {type: String},
+	facebookId: {type: String},
 	picture: {type: String},
 	gender: {type: String},
 	lastgroup: {type: Schema.Types.ObjectId},
