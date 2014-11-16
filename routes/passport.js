@@ -57,8 +57,8 @@ if(global.grouplanner.environment == 'local')
 	googleStrategySettings.client_secret = SecretSettingsFile.google.client_secret;
 	googleStrategySettings.callbackURL = 'http://' + global.grouplanner.ipaddress + ':' + global.grouplanner.port + '/oauth2callback';
 
-	facebookStrategySettings.client_id = SecretSettingsFile.facebook.client_id;
-	facebookStrategySettings.client_secret = SecretSettingsFile.facebook.client_secret;
+	facebookStrategySettings.client_id = SecretSettingsFile.facebook.app_id;
+	facebookStrategySettings.client_secret = SecretSettingsFile.facebook.app_secret;
 	facebookStrategySettings.callbackURL = 'http://' + global.grouplanner.ipaddress + ':' + global.grouplanner.port + '/oauth2callback-facebook';
 } else
 {
