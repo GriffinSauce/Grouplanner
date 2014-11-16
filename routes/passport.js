@@ -6,11 +6,17 @@ var Group = require(__dirname + '/../db/group.js');
 
 var passport = require('passport');
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+var FacebookStrategy = require('passport-facebook').Strategy;
+
 var User = require(__dirname + '/../db/user.js');
 
 // Passport routes
 router.get('/auth/google', passport.authenticate('google', {scope: 'https://www.googleapis.com/auth/userinfo.email'}));
 router.get('/oauth2callback', passport.authenticate('google', { successRedirect:'loginSuccess', failureRedirect: '/login' }));
+router.get('/oauth2callback-facebook', passport.authenticate('facebook', { successRedirect:'loginSuccess', failureRedirect: '/login' }));
+
+
+
 
 router.get('/login', function(req, res) { res.render('login', {page:'login'}); });
 router.get('/loginSuccess', function(req, res)
@@ -40,20 +46,33 @@ router.get('/logout', function(req, res)
 
 
 var googleStrategySettings = {};
+var facebookStrategySettings = {}
 
 if(global.grouplanner.environment == 'local')
 {
-	var googleStrategySettingsFile = require(__dirname + '/../google-secret.json');
-	googleStrategySettings.client_id = googleStrategySettingsFile.web.client_id;
-	googleStrategySettings.client_secret = googleStrategySettingsFile.web.client_secret;
+	var SecretSettingsFile = require(__dirname + '/../secrets.json');
+
+	googleStrategySettings.client_id = SecretSettingsFile.google.client_id;
+	googleStrategySettings.client_secret = SecretSettingsFile.google.client_secret;
 	googleStrategySettings.callbackURL = 'http://' + global.grouplanner.ipaddress + ':' + global.grouplanner.port + '/oauth2callback';
+
+	facebookStrategySettings.client_id = SecretSettingsFile.facebook.client_id;
+	facebookStrategySettings.client_secret = SecretSettingsFile.facebook.client_secret;
+	facebookStrategySettings.callbackURL = 'http://' + global.grouplanner.ipaddress + ':' + global.grouplanner.port + '/oauth2callback-facebook';
 } else
 {
 	googleStrategySettings.client_id = process.env.GOOGLE_CLIENT_ID;
 	googleStrategySettings.client_secret = process.env.GOOGLE_CLIENT_SECRET;
 	googleStrategySettings.callbackURL = 'http://www.grouplanner.nl/oauth2callback';
+
+	facebookStrategySettings.client_id = FACEBOOK_APP_ID;
+	facebookStrategySettings.client_secret = FACEBOOK_APP_SECRET;
+	facebookStrategySettings.callbackURL = 'http://www.grouplanner.nl/oauth2callback-facebook';
 }
 
+/**
+* GOOGLE STRATEGY
+**/
 passport.use(new GoogleStrategy
 (
 	{
@@ -87,12 +106,58 @@ passport.use(new GoogleStrategy
 	}
 ));
 
+/**
+* FACEBOOK STRATEGY
+**/
+
+passport.use(new FacebookStrategy(
+	{
+		clientID: facebookStrategySettings.client_id,
+		clientSecret: facebookStrategySettings.client_secret,
+		callbackURL: facebookStrategySettings.callbackURL
+	},
+	function(accessToken, refreshToken, profile, done)
+	{
+		console.log("Facebook login success");
+		console.log(profile);
+
+		User.findOrCreate(
+		{
+			facebookId: profile.id
+		},
+		{
+			email: profile.emails[0].value,
+			username: profile.displayName,
+			name:
+			{
+				first: profile.name.givenName,
+				last: profile.name.familyName
+			},
+			gender: profile._json.gender,
+			picture: profile._json.picture
+		}, function ()
+		{
+			process.nextTick(function()
+			{
+				return done(null, profile);
+			});
+		});
+	}
+));
+
 passport.serializeUser(function(user, done)
 {
 	switch(user.provider)
 	{
 		case 'google':
 			User.findOne({googleId: user.id.toString()}, function(err, dbUser)
+			{
+				if(err) { console.warn(err); }
+				done(null, dbUser);
+			});
+			break;
+		case 'facebook':
+			User.findOne({facebookId: user.id.toString()}, function(err, dbUser)
 			{
 				if(err) { console.warn(err); }
 				done(null, dbUser);

@@ -17,7 +17,7 @@ var templates =
 
 if(global.grouplanner.environment == 'local')
 {
-	var settingsJson = require(__dirname + '/google-secret.json');
+	var settingsJson = require(__dirname + '/secrets.json');
 	mailAuth.user = settingsJson.mail.username;
 	mailAuth.pass = settingsJson.mail.password;
 } else

@@ -21,4 +21,4 @@ $RECYCLE.BIN/
 #############
 
 node_modules/
-/google-secret.json
+/secrets.json
