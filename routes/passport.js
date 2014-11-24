@@ -7,6 +7,7 @@ var Group = require(__dirname + '/../db/group.js');
 var passport = require('passport');
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 var FacebookStrategy = require('passport-facebook').Strategy;
+var TwitterStrategy = require('passport-twitter').Strategy;
 
 var User = require(__dirname + '/../db/user.js');
 
@@ -15,9 +16,8 @@ router.get('/auth/google', passport.authenticate('google', {scope: 'https://www.
 router.get('/oauth2callback', passport.authenticate('google', { successRedirect:'loginSuccess', failureRedirect: '/login' }));
 router.get('/auth/facebook', passport.authenticate('facebook', {scope: 'email'}));
 router.get('/oauth2callback-facebook', passport.authenticate('facebook', { successRedirect:'loginSuccess', failureRedirect: '/login' }));
-
-
-
+router.get('/auth/twitter', passport.authenticate('twitter', {scope: 'email'}));
+router.get('/oauth2callback-twitter', passport.authenticate('twitter', { successRedirect:'loginSuccess', failureRedirect: '/login' }));
 
 router.get('/login', function(req, res) { res.render('login', {page:'login'}); });
 router.get('/loginSuccess', function(req, res)
@@ -47,7 +47,8 @@ router.get('/logout', function(req, res)
 
 
 var googleStrategySettings = {};
-var facebookStrategySettings = {}
+var facebookStrategySettings = {};
+var twitterStrategySettings = {};
 
 if(global.grouplanner.environment == 'local')
 {
@@ -60,6 +61,10 @@ if(global.grouplanner.environment == 'local')
 	facebookStrategySettings.client_id = SecretSettingsFile.facebook.app_id;
 	facebookStrategySettings.client_secret = SecretSettingsFile.facebook.app_secret;
 	facebookStrategySettings.callbackURL = 'http://' + global.grouplanner.ipaddress + ':' + global.grouplanner.port + '/oauth2callback-facebook';
+
+	twitterStrategySettings.client_id = SecretSettingsFile.twitter.api_key;
+	twitterStrategySettings.client_secret = SecretSettingsFile.twitter.api_secret;
+	twitterStrategySettings.callbackURL = 'http://' + global.grouplanner.ipaddress + ':' + global.grouplanner.port + '/oauth2callback-twitter';
 } else
 {
 	googleStrategySettings.client_id = process.env.GOOGLE_CLIENT_ID;
@@ -69,6 +74,10 @@ if(global.grouplanner.environment == 'local')
 	facebookStrategySettings.client_id = process.env.FACEBOOK_APP_ID;
 	facebookStrategySettings.client_secret = process.env.FACEBOOK_APP_SECRET;
 	facebookStrategySettings.callbackURL = 'http://www.grouplanner.nl/oauth2callback-facebook';
+
+	twitterStrategySettings.client_id = process.env.TWITTER_API_KEY;
+	twitterStrategySettings.client_secret = process.env.TWITTER_API_SECRET;
+	twitterStrategySettings.callbackURL = 'http://www.grouplanner.nl/oauth2callback-twitter';
 }
 
 /**
@@ -146,6 +155,45 @@ passport.use(new FacebookStrategy(
 	}
 ));
 
+/**
+* TWITTER STRATEGY
+**/
+console.log(twitterStrategySettings);
+passport.use(new TwitterStrategy(
+	{
+		consumerKey: twitterStrategySettings.client_id,
+		consumerSecret: twitterStrategySettings.client_secret,
+		callbackURL: twitterStrategySettings.callbackURL
+	},
+	function(accessToken, refreshToken, profile, done)
+	{
+		console.log("Twitter login success");
+		console.log(profile);
+
+		User.findOrCreate(
+		{
+			twitterId: profile.id
+		},
+		{
+			email: profile.emails[0].value,
+			username: profile.displayName,
+			name:
+			{
+				first: profile.name.givenName,
+				last: profile.name.familyName
+			},
+			gender: profile._json.gender,
+			picture: profile.photos[0].value
+		}, function ()
+		{
+			process.nextTick(function()
+			{
+				return done(null, profile);
+			});
+		});
+	}
+));
+
 passport.serializeUser(function(user, done)
 {
 	switch(user.provider)
@@ -159,6 +207,13 @@ passport.serializeUser(function(user, done)
 			break;
 		case 'facebook':
 			User.findOne({facebookId: user.id.toString()}, function(err, dbUser)
+			{
+				if(err) { console.warn(err); }
+				done(null, dbUser);
+			});
+			break;
+		case 'twitter':
+			User.findOne({twitterId: user.id.toString()}, function(err, dbUser)
 			{
 				if(err) { console.warn(err); }
 				done(null, dbUser);

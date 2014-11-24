@@ -19,6 +19,7 @@ var userSchema = new Schema(
 	},
 	googleId: {type: String},
 	facebookId: {type: String},
+	twitterId: {type: String},
 	picture: {type: String},
 	gender: {type: String},
 	lastgroup: {type: Schema.Types.ObjectId},
