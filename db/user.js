@@ -17,9 +17,11 @@ var userSchema = new Schema(
 		created: { type: Date, default: Date.now },
 		loggedin: { type: Date, default: Date.now },
 	},
-	googleId: {type: String},
-	facebookId: {type: String},
-	twitterId: {type: String},
+	auth:
+	{
+		provider: {type: String},
+		id: {type: String}
+	},
 	picture: {type: String},
 	gender: {type: String},
 	lastgroup: {type: Schema.Types.ObjectId},

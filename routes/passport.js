@@ -94,7 +94,11 @@ passport.use(new GoogleStrategy
 	{
 		User.findOrCreate(
 		{
-			googleId: profile.id
+			auth:
+			{
+				provider: 'google',
+				id: profile.id
+			}
 		},
 		{
 			email: profile.emails[0].value,
@@ -133,7 +137,11 @@ passport.use(new FacebookStrategy(
 
 		User.findOrCreate(
 		{
-			facebookId: profile.id
+			auth:
+			{
+				provider: 'facebook',
+				id: profile.id
+			}
 		},
 		{
 			email: profile.emails[0].value,
@@ -172,7 +180,11 @@ passport.use(new TwitterStrategy(
 
 		User.findOrCreate(
 		{
-			twitterId: profile.id
+			auth:
+			{
+				provider: 'twitter',
+				id: profile.id
+			}
 		},
 		{
 			email: profile.emails[0].value,
@@ -196,33 +208,11 @@ passport.use(new TwitterStrategy(
 
 passport.serializeUser(function(user, done)
 {
-	switch(user.provider)
+	User.findOne({'auth.provider': user.provider, 'auth.id': user.id.toString()}, function(err, dbUser)
 	{
-		case 'google':
-			User.findOne({googleId: user.id.toString()}, function(err, dbUser)
-			{
-				if(err) { console.warn(err); }
-				done(null, dbUser);
-			});
-			break;
-		case 'facebook':
-			User.findOne({facebookId: user.id.toString()}, function(err, dbUser)
-			{
-				if(err) { console.warn(err); }
-				done(null, dbUser);
-			});
-			break;
-		case 'twitter':
-			User.findOne({twitterId: user.id.toString()}, function(err, dbUser)
-			{
-				if(err) { console.warn(err); }
-				done(null, dbUser);
-			});
-			break;
-		default:
-			done(null, user);
-			break;
-	}
+		if(err) { console.warn(err); }
+		done(null, dbUser);
+	});
 });
 
 passport.deserializeUser(function(obj, done) {
