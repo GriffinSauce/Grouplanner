@@ -13,14 +13,14 @@ var User = require(__dirname + '/../db/user.js');
 
 // Passport routes
 router.get('/auth/google', passport.authenticate('google', {scope: 'https://www.googleapis.com/auth/userinfo.email'}));
-router.get('/oauth2callback', passport.authenticate('google', { successRedirect:'loginSuccess', failureRedirect: '/login' }));
+router.get('/oauth2callback', passport.authenticate('google', { successRedirect:'/login/success', failureRedirect: '/login' }));
 router.get('/auth/facebook', passport.authenticate('facebook', {scope: 'email'}));
-router.get('/auth/facebook/callback', passport.authenticate('facebook', { successRedirect:'loginSuccess', failureRedirect: '/login' }));
+router.get('/auth/facebook/callback', passport.authenticate('facebook', { successRedirect:'/login/success', failureRedirect: '/login' }));
 router.get('/auth/twitter', passport.authenticate('twitter', {scope: 'email'}));
-router.get('/oauth2callback-twitter', passport.authenticate('twitter', { successRedirect:'loginSuccess', failureRedirect: '/login' }));
+router.get('/oauth2callback-twitter', passport.authenticate('twitter', { successRedirect:'/login/success', failureRedirect: '/login' }));
 
 router.get('/login', function(req, res) { res.render('login', {page:'login'}); });
-router.get('/loginSuccess', function(req, res)
+router.get('/login/success', function(req, res)
 {
 	// If user came from invite link, we'll add him to the group and remove the invite token
 	if(req.session.invitetoken)
