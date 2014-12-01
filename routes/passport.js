@@ -128,7 +128,8 @@ passport.use(new FacebookStrategy(
 	{
 		clientID: facebookStrategySettings.client_id,
 		clientSecret: facebookStrategySettings.client_secret,
-		callbackURL: facebookStrategySettings.callbackURL
+		callbackURL: facebookStrategySettings.callbackURL,
+		authorizationURL: "https://www.facebook.com/v2.0/dialog/oauth"
 	},
 	function(accessToken, refreshToken, profile, done)
 	{
