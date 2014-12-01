@@ -15,7 +15,7 @@ var User = require(__dirname + '/../db/user.js');
 router.get('/auth/google', passport.authenticate('google', {scope: 'https://www.googleapis.com/auth/userinfo.email'}));
 router.get('/oauth2callback', passport.authenticate('google', { successRedirect:'loginSuccess', failureRedirect: '/login' }));
 router.get('/auth/facebook', passport.authenticate('facebook', {scope: 'email'}));
-router.get('/auth/callback/facebook', passport.authenticate('facebook', { successRedirect:'loginSuccess', failureRedirect: '/login' }));
+router.get('/auth/facebook/callback', passport.authenticate('facebook', { successRedirect:'loginSuccess', failureRedirect: '/login' }));
 router.get('/auth/twitter', passport.authenticate('twitter', {scope: 'email'}));
 router.get('/oauth2callback-twitter', passport.authenticate('twitter', { successRedirect:'loginSuccess', failureRedirect: '/login' }));
 
@@ -60,7 +60,7 @@ if(global.grouplanner.environment == 'local')
 
 	facebookStrategySettings.client_id = SecretSettingsFile.facebook.app_id;
 	facebookStrategySettings.client_secret = SecretSettingsFile.facebook.app_secret;
-	facebookStrategySettings.callbackURL = 'http://' + global.grouplanner.ipaddress + ':' + global.grouplanner.port + '/oauth2callback-facebook';
+	facebookStrategySettings.callbackURL = 'http://' + global.grouplanner.ipaddress + ':' + global.grouplanner.port + '/auth/facebook/callback';
 
 	twitterStrategySettings.client_id = SecretSettingsFile.twitter.api_key;
 	twitterStrategySettings.client_secret = SecretSettingsFile.twitter.api_secret;
@@ -73,7 +73,7 @@ if(global.grouplanner.environment == 'local')
 
 	facebookStrategySettings.client_id = process.env.FACEBOOK_APP_ID;
 	facebookStrategySettings.client_secret = process.env.FACEBOOK_APP_SECRET;
-	facebookStrategySettings.callbackURL = 'http://www.grouplanner.nl/oauth2callback-facebook';
+	facebookStrategySettings.callbackURL = 'http://www.grouplanner.nl/auth/facebook/callback';
 
 	twitterStrategySettings.client_id = process.env.TWITTER_API_KEY;
 	twitterStrategySettings.client_secret = process.env.TWITTER_API_SECRET;
