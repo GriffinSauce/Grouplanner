@@ -109,6 +109,18 @@ function App()
 	{
 		$('#manage').slideUp();
 		$('#invite').slideDown();
+		$('#invite .button-close').bind('click tap', scope.hideInvite);
+	};
+
+	/*
+	 * Hide invite page
+	 *
+	 */
+	this.hideInvite = function()
+	{
+		$('#manage').slideDown();
+		$('#invite').slideUp();
+		$('#invite .button-close').unbind('click tap');
 	};
 
 	/*
@@ -133,13 +145,13 @@ function App()
 						$('#manage').slideDown();
 						$('#invite').slideUp(function(){
 							$('#invite #confirm').hide();
+							this.hideInvite();
 						});
 					});
 				}else{
 					alert('An error occured, please try again later.');
 					// Reset
-					$('#manage').slideDown();
-					$('#invite').slideUp();
+					this.hideInvite()
 				}
 			});
 		}else{

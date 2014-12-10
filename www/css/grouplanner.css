@@ -335,6 +335,11 @@ body {
         background-color: #e09d06;
         color: #FFF;
         font-weight: 300; }
+        body#group #invite h1 .button-close {
+          cursor: pointer;
+          float: right; }
+          body#group #invite h1 .button-close i {
+            display: flex; }
       body#group #invite #form {
         position: relative;
         margin: 1em;
