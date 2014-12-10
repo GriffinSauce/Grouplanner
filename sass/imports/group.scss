@@ -243,6 +243,15 @@
 			background-color: #e09d06;
 			color: #FFF;
 			font-weight: 300;
+			.button-close
+			{
+				cursor: pointer;
+				float: right;
+				i
+				{
+					display: flex;
+				}
+			}
 		}
 		#form
 		{
