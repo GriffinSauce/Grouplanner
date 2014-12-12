@@ -26,7 +26,7 @@ var templates =
 
 if(global.grouplanner.environment == 'local')
 {
-	var settingsJson = require(__dirname + '/google-secret.json');
+	var settingsJson = require(__dirname + '/secrets.json');
 	mailAuth.invite.user = settingsJson.mail.invite.username;
 	mailAuth.invite.pass = settingsJson.mail.invite.password;
 	mailAuth.groups.user = settingsJson.mail.groups.username;

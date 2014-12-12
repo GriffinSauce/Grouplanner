@@ -6,14 +6,21 @@ var Group = require(__dirname + '/../db/group.js');
 
 var passport = require('passport');
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+var FacebookStrategy = require('passport-facebook').Strategy;
+var TwitterStrategy = require('passport-twitter').Strategy;
+
 var User = require(__dirname + '/../db/user.js');
 
 // Passport routes
 router.get('/auth/google', passport.authenticate('google', {scope: 'https://www.googleapis.com/auth/userinfo.email'}));
-router.get('/oauth2callback', passport.authenticate('google', { successRedirect:'loginSuccess', failureRedirect: '/login' }));
+router.get('/oauth2callback', passport.authenticate('google', { successRedirect:'/login/success', failureRedirect: '/login' }));
+router.get('/auth/facebook', passport.authenticate('facebook', {scope: 'email'}));
+router.get('/auth/facebook/callback', passport.authenticate('facebook', { successRedirect:'/login/success', failureRedirect: '/login' }));
+router.get('/auth/twitter', passport.authenticate('twitter', {scope: 'email'}));
+router.get('/oauth2callback-twitter', passport.authenticate('twitter', { successRedirect:'/login/success', failureRedirect: '/login' }));
 
 router.get('/login', function(req, res) { res.render('login', {page:'login'}); });
-router.get('/loginSuccess', function(req, res)
+router.get('/login/success', function(req, res)
 {
 	// If user came from invite link, we'll add him to the group and remove the invite token
 	if(req.session.invitetoken)
@@ -40,20 +47,42 @@ router.get('/logout', function(req, res)
 
 
 var googleStrategySettings = {};
+var facebookStrategySettings = {};
+var twitterStrategySettings = {};
 
 if(global.grouplanner.environment == 'local')
 {
-	var googleStrategySettingsFile = require(__dirname + '/../google-secret.json');
-	googleStrategySettings.client_id = googleStrategySettingsFile.web.client_id;
-	googleStrategySettings.client_secret = googleStrategySettingsFile.web.client_secret;
+	var SecretSettingsFile = require(__dirname + '/../secrets.json');
+
+	googleStrategySettings.client_id = SecretSettingsFile.google.client_id;
+	googleStrategySettings.client_secret = SecretSettingsFile.google.client_secret;
 	googleStrategySettings.callbackURL = 'http://' + global.grouplanner.ipaddress + ':' + global.grouplanner.port + '/oauth2callback';
+
+	facebookStrategySettings.client_id = SecretSettingsFile.facebook.app_id;
+	facebookStrategySettings.client_secret = SecretSettingsFile.facebook.app_secret;
+	facebookStrategySettings.callbackURL = 'http://' + global.grouplanner.ipaddress + ':' + global.grouplanner.port + '/auth/facebook/callback';
+
+	twitterStrategySettings.client_id = SecretSettingsFile.twitter.api_key;
+	twitterStrategySettings.client_secret = SecretSettingsFile.twitter.api_secret;
+	twitterStrategySettings.callbackURL = 'http://' + global.grouplanner.ipaddress + ':' + global.grouplanner.port + '/oauth2callback-twitter';
 } else
 {
 	googleStrategySettings.client_id = process.env.GOOGLE_CLIENT_ID;
 	googleStrategySettings.client_secret = process.env.GOOGLE_CLIENT_SECRET;
 	googleStrategySettings.callbackURL = 'http://www.grouplanner.nl/oauth2callback';
+
+	facebookStrategySettings.client_id = process.env.FACEBOOK_APP_ID;
+	facebookStrategySettings.client_secret = process.env.FACEBOOK_APP_SECRET;
+	facebookStrategySettings.callbackURL = 'http://www.grouplanner.nl/auth/facebook/callback';
+
+	twitterStrategySettings.client_id = process.env.TWITTER_API_KEY;
+	twitterStrategySettings.client_secret = process.env.TWITTER_API_SECRET;
+	twitterStrategySettings.callbackURL = 'http://www.grouplanner.nl/oauth2callback-twitter';
 }
 
+/**
+* GOOGLE STRATEGY
+**/
 passport.use(new GoogleStrategy
 (
 	{
@@ -65,7 +94,11 @@ passport.use(new GoogleStrategy
 	{
 		User.findOrCreate(
 		{
-			googleId: profile.id
+			auth:
+			{
+				provider: 'google',
+				id: profile.id
+			}
 		},
 		{
 			email: profile.emails[0].value,
@@ -87,21 +120,100 @@ passport.use(new GoogleStrategy
 	}
 ));
 
+/**
+* FACEBOOK STRATEGY
+**/
+
+passport.use(new FacebookStrategy(
+	{
+		clientID: facebookStrategySettings.client_id,
+		clientSecret: facebookStrategySettings.client_secret,
+		callbackURL: facebookStrategySettings.callbackURL,
+		authorizationURL: "https://www.facebook.com/v2.0/dialog/oauth"
+	},
+	function(accessToken, refreshToken, profile, done)
+	{
+		console.log("Facebook login success");
+		console.log(profile);
+
+		User.findOrCreate(
+		{
+			auth:
+			{
+				provider: 'facebook',
+				id: profile.id
+			}
+		},
+		{
+			email: profile.emails[0].value,
+			username: profile.displayName,
+			name:
+			{
+				first: profile.name.givenName,
+				last: profile.name.familyName
+			},
+			gender: profile._json.gender,
+			picture: 'https://graph.facebook.com/' + profile.id + '/picture?type=large'
+		}, function ()
+		{
+			process.nextTick(function()
+			{
+				return done(null, profile);
+			});
+		});
+	}
+));
+
+/**
+* TWITTER STRATEGY
+**/
+console.log(twitterStrategySettings);
+passport.use(new TwitterStrategy(
+	{
+		consumerKey: twitterStrategySettings.client_id,
+		consumerSecret: twitterStrategySettings.client_secret,
+		callbackURL: twitterStrategySettings.callbackURL
+	},
+	function(accessToken, refreshToken, profile, done)
+	{
+		console.log("Twitter login success");
+		console.log(profile);
+
+		User.findOrCreate(
+		{
+			auth:
+			{
+				provider: 'twitter',
+				id: profile.id
+			}
+		},
+		{
+			email: profile.emails[0].value,
+			username: profile.displayName,
+			name:
+			{
+				first: profile.name.givenName,
+				last: profile.name.familyName
+			},
+			gender: profile._json.gender,
+			picture: profile.photos[0].value
+		}, function ()
+		{
+			process.nextTick(function()
+			{
+				return done(null, profile);
+			});
+		});
+	}
+));
+
 passport.serializeUser(function(user, done)
 {
-	switch(user.provider)
+	User.findOne({'auth.provider': user.provider, 'auth.id': user.id.toString()}, function(err, dbUser)
 	{
-		case 'google':
-			User.findOne({googleId: user.id.toString()}, function(err, dbUser)
-			{
-				if(err) { console.warn(err); }
-				done(null, dbUser);
-			});
-			break;
-		default:
-			done(null, user);
-			break;
-	}
+		if(err) { console.warn(err); }
+		done(null, dbUser);
+	});
 });
 
 passport.deserializeUser(function(obj, done) {
