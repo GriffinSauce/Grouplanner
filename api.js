@@ -227,8 +227,8 @@ var apiFunctions = {
 			}else{
 				var to = '';
 				var from = {};
-				
 				console.log(input.from);
+				// Find group
 				for(var i=0; i<group.members.length; i++)
 				{	
 					group.members[i].id = String(group.members[i]._id); // Fuck you, Mongo, just .. fuck you.
@@ -241,8 +241,17 @@ var apiFunctions = {
 						from = group.members[i];
 					}
 				}
-			
+				// Email
 				email.sendNotification(input.type, to, from, group, input.data);
+				// Save
+				if(input.type == 'plannedDate')
+				{
+					console.log('date: '+input.data.date);
+					Period.update({plannedDate: input.data.date}, {mailed:true}, function(err)
+					{
+						if(err) { console.log('Error saving mailed status');}
+					});
+				}
 				callback({success:true});
 			}
 		});

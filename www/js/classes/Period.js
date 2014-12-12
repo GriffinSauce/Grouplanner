@@ -242,7 +242,7 @@ function Period(options)
 				group: app.group._id,
 				data:
 				{
-					date:moment(scope.plannedDate,'DDMMYYYY').format("dddd, MMMM Do"),
+					date:scope.plannedDate,
 					notes:''
 				}
 			}

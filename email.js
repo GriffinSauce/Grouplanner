@@ -4,6 +4,7 @@ var nodemailer = require('nodemailer');
 var smtpTransport = require('nodemailer-smtp-transport');
 var fs = require('fs');
 var handlebars = require('handlebars');
+var moment = require('moment');
 var mailAuth = {
 	invite:{},
 	groups:{},
@@ -131,6 +132,7 @@ function sendNotification(type, to, from, group, data)
 			mailData.group = group;
 			mailData.from = from;
 			mailData.data = data; // date and notes
+			mailData.data.displayDate = moment(mailData.data.date,'DDMMYYYY').format("dddd, MMMM Do");
 		break;
 		default: unknownType = true;
 		break;
@@ -150,7 +152,7 @@ function sendNotification(type, to, from, group, data)
 		var mailOptions = {
 			from: group.name+' at Grouplanner <groups@grouplanner.nl>',
 			to: to,
-			subject: group.name+' '+group.eventtype.slice(0,-1)+' planned on '+data.date,
+			subject: group.name+' '+group.eventtype.slice(0,-1)+' planned on '+data.displayDate,
 			text: body_text,
 			html: body_html
 		};
