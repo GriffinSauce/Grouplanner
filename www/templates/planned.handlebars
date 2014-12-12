@@ -21,7 +21,11 @@
 		</div>
 	</div>
 	<div class="buttons">
+		{{#unless mailed}}
 		<a id="mail" class="btn"><i class="icon-mail"></i>E-mail it</a>
+		{{else}}
+		<a id="mail" class="btn"><i class="icon-check"></i>Mailed!</a>
+		{{/unless}}
 		<a id="addToCalendar" class="btn"><i class="icon-calendar"></i>Add to calendar</a>
 		<a id="replan" class="btn"><i class="icon-undo"></i>Replan</a>
 	</div>

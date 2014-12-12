@@ -37,6 +37,9 @@ function Period(options)
 	// Planned date, false or moment
 	this.plannedDate = false;
 	
+	// Mailed state, boolean
+	this.mailed = false;
+	
 	/*	
 	 *	Generate day objects
 	 */
@@ -84,7 +87,8 @@ function Period(options)
 				date:date.format('Do'),
 				month:date.format('MMMM'),
 				available:scope.getAvailableUsers(scope.plannedDate),
-				notes:''
+				notes:'',
+				mailed:scope.mailed
 			};
 			var compiledTemplate = Handlebars.getTemplate('planned');
 			html = $(compiledTemplate(data));
@@ -208,7 +212,8 @@ function Period(options)
 				var data = {
 					periodid:scope.id,
 					date:scope.plannedDate,
-					planned:false
+					planned:false,
+					mailed:false
 				}
 				socket.emit('put/planned', data, function(err) {
 					console.log(err);
@@ -217,6 +222,7 @@ function Period(options)
 				// Update data
 				scope.days[scope.plannedDate].planned = false;
 				scope.plannedDate = false;
+				scope.mailed = false;
 
 				// Update UI
 				var el = $('#'+scope.startDate.format('DDMMYYYY'));
@@ -233,25 +239,30 @@ function Period(options)
 	 */
 	this.sendMail = function()
 	{
-		if(confirm("You sure? Don't be a spammer!"))
+		if(!scope.mailed)
 		{
-			var data = {
-				type: 'plannedDate',
-				to: scope.days[scope.plannedDate].available,
-				from: app.user._id,
-				group: app.group._id,
-				data:
-				{
-					date:scope.plannedDate,
-					notes:''
+			if(confirm("You sure? Don't be a spammer!"))
+			{
+				var data = {
+					type: 'plannedDate',
+					to: scope.days[scope.plannedDate].available,
+					from: app.user._id,
+					group: app.group._id,
+					data:
+					{
+						date:scope.plannedDate,
+						notes:''
+					}
 				}
+				socket.emit('put/notification', data, function(err) {
+					console.log(err);
+					var html = $('#'+scope.startDate.format('DDMMYYYY'));
+					$('.buttons .btn#mail',html).html("<i class='icon-check'></i>Mailed!");
+					$('.buttons .btn#mail',html).unbind('click tap');
+				});
 			}
-			socket.emit('put/notification', data, function(err) {
-				console.log(err);
-				var html = $('#'+scope.startDate.format('DDMMYYYY'));
-				$('.buttons .btn#mail',html).html("<i class='icon-check'></i>Mailed!");
-				$('.buttons .btn#mail',html).unbind('click tap');
-			});
+		}else{
+			$('.buttons .btn#mail',html).unbind('click tap');
 		}
 	};
 
@@ -342,6 +353,7 @@ function Period(options)
 				if(typeof data.plannedDate !== 'undefined' && data.plannedDate !== 'false')
 				{
 					scope.plannedDate = data.plannedDate;
+					scope.mailed = data.mailed;
 				}else{
 					scope.plannedDate = false;
 				}

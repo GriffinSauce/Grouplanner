@@ -158,6 +158,10 @@ var apiFunctions = {
 		var update = {};
 		update['days.'+input.date+'.planned'] = input.planned;
 		update.plannedDate = input.planned ? input.date : false;
+		if(input.mailed !== undefined)
+		{
+			update.mailed = input.mailed;
+		}
 		Period.update({_id: input.periodid}, update, function(err)
 		{
 			if(err) { console.log('Error updating'); console.log(err); }
