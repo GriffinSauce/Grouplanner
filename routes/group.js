@@ -13,7 +13,12 @@ router.get('/create', function(req, res)
 
 router.get('/group/', function(req, res)
 {
-	res.redirect('/group/'+req.user.lastgroup);
+	if(req.user.lastgroup !== undefined)
+	{
+		res.redirect('/group/'+req.user.lastgroup);
+	}else{
+		res.redirect('/groups/');
+	}
 });
 
 router.get('/group/:groupid', function(req, res)
