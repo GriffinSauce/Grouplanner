@@ -229,35 +229,88 @@ body {
               border-top: none !important; }
             body#group #period #periods .period.availability #avail-plan .day:last-child {
               border-bottom: none !important; }
-        body#group #period #periods .period.planned #plannedDate {
-          text-align: center; }
-          body#group #period #periods .period.planned #plannedDate #day {
-            padding: 1em;
-            background-color: #FFF; }
-            body#group #period #periods .period.planned #plannedDate #day .name {
-              color: #333;
-              font-size: 140%;
-              width: 4em;
-              margin: 0 auto 0.5em auto;
-              padding-bottom: 0.5em;
-              border-bottom: 0.2em solid #5ed963; }
-            body#group #period #periods .period.planned #plannedDate #day .date {
-              display: inline-block;
+        body#group #period #periods .period.planned .plannedDate {
+          text-align: center;
+          background-color: #FFF;
+          border-radius: 0.2em;
+          overflow: hidden;
+          box-shadow: 0 0.1em 0.2em 0 rgba(0, 0, 0, 0.08); }
+          body#group #period #periods .period.planned .plannedDate .day {
+            padding: 1em; }
+            body#group #period #periods .period.planned .plannedDate .day .name {
               color: #c1c1c1;
-              font-size: 220%; }
-            body#group #period #periods .period.planned #plannedDate #day .month {
+              font-size: 220%;
+              margin: 0 0 0.5em 0.5em; }
+              body#group #period #periods .period.planned .plannedDate .day .name .icon {
+                display: inline-block;
+                margin: 0 0 0 0.2em;
+                font-size: 90%;
+                vertical-align: middle; }
+            body#group #period #periods .period.planned .plannedDate .day .date {
               display: inline-block;
-              color: #c1c1c1;
-              font-size: 180%; }
-        body#group #period #periods .period.planned #available {
-          margin: -1em 0 1em 0;
-          color: #999;
-          padding: 0.5em; }
-        body#group #period #periods .period.planned #notes {
-          padding: 2em;
-          min-height: 10em;
+              padding: 0.3em 0.5em 0.3em 0.5em;
+              font-size: 150%;
+              color: #FFF;
+              background-color: #2CC282;
+              border-radius: 0.2em; }
+          body#group #period #periods .period.planned .plannedDate .available {
+            padding: 1em; }
+            body#group #period #periods .period.planned .plannedDate .available .user {
+              display: inline-block;
+              margin: 0 0.5em; }
+              body#group #period #periods .period.planned .plannedDate .available .user .img {
+                margin: 0 0.5em 0.6em 0.5em;
+                width: 2em;
+                height: 2em;
+                border-radius: 100%;
+                overflow: hidden;
+                box-shadow: 0 0.05em 0.1em 0.1em rgba(0, 0, 0, 0.2); }
+                body#group #period #periods .period.planned .plannedDate .available .user .img img {
+                  width: 100%;
+                  height: 100%; }
+              body#group #period #periods .period.planned .plannedDate .available .user .name {
+                font-size: 60%;
+                color: #888; }
+            body#group #period #periods .period.planned .plannedDate .available:after {
+              display: block;
+              content: "";
+              clear: both; }
+        body#group #period #periods .period.planned .notes {
           color: #333;
-          background-color: #e7ef85; }
+          background-color: #F2FA8D; }
+          body#group #period #periods .period.planned .notes h3 {
+            margin: 0;
+            padding: 0.5em;
+            font-size: 100%;
+            text-align: center;
+            background-color: #f5ff82; }
+          body#group #period #periods .period.planned .notes .content {
+            width: 100%;
+            min-height: 10em;
+            padding: 1em 2em;
+            border: none;
+            background-color: transparent;
+            font-family: inherit;
+            font-size: 105%;
+            color: #6E6E6E; }
+        body#group #period #periods .period.planned .buttons {
+          padding: 1em 0 0 0; }
+          body#group #period #periods .period.planned .buttons .btn {
+            display: block;
+            margin: 0 0 0.5em 0;
+            font-size: 100%; }
+          body#group #period #periods .period.planned .buttons #mail {
+            background-color: #35969f; }
+            body#group #period #periods .period.planned .buttons #mail:hover {
+              background-color: #02afbf; }
+          body#group #period #periods .period.planned .buttons #addToCalendar {
+            background-color: #555596; }
+            body#group #period #periods .period.planned .buttons #addToCalendar:hover {
+              background-color: #4a4aaa; }
+          body#group #period #periods .period.planned .buttons #replan {
+            background-color: #DA504A; }
+            body#group #period #periods .period.planned .buttons #replan:hover {
+              background-color: #f8362d; }
     body#group #manage {
       padding: 0 0 1em 0;
       color: #FFF;
@@ -429,7 +482,7 @@ body {
         height: 2em;
         border-radius: 100%;
         overflow: hidden;
-        opacity: 0.5; }
+        opacity: 0.8; }
         body#groups .group .members .member img {
           width: 100%;
           height: 100%; }

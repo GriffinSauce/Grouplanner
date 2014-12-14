@@ -1,4 +1,4 @@
-/* global $,moment,App,Group,Period */
+/* global $,moment,App,Group,Period,Handlebars */
 
 /*
  *	Period class
@@ -37,6 +37,9 @@ function Period(options)
 	// Planned date, false or moment
 	this.plannedDate = false;
 	
+	// Mailed state, boolean
+	this.mailed = false;
+	
 	/*	
 	 *	Generate day objects
 	 */
@@ -60,6 +63,7 @@ function Period(options)
 	 */
 	this.getHTML = function()
 	{
+		var html;
 		if(!scope.plannedDate)
 		{
 			var data = {id:this.startDate.format('DDMMYYYY'),days:[]};
@@ -74,22 +78,49 @@ function Period(options)
 				});
 			}
 			var compiledTemplate = Handlebars.getTemplate('availability');
-			return compiledTemplate(data);
+			html = $(compiledTemplate(data));
 		}else{
 			var date = moment(scope.plannedDate, 'DDMMYYYY');
 			var data = {
 				id:this.startDate.format('DDMMYYYY'),
 				day:date.format('dddd'),
-				date:date.format('DD'),
+				date:date.format('Do'),
 				month:date.format('MMMM'),
-				available:'Frits, Joey and Klaas', // TODO: Use real data
-				notes:'...'
+				available:scope.getAvailableUsers(scope.plannedDate),
+				notes:'',
+				mailed:scope.mailed
 			};
 			var compiledTemplate = Handlebars.getTemplate('planned');
-			return compiledTemplate(data);
+			html = $(compiledTemplate(data));
 		}
+
+		// Attach events
+		$('#avail-days .day',html).bind('click tap', scope.dayClicked);
+		$('#avail-plan .go-btn',html).bind('click tap', scope.goClicked);
+		$('.buttons .btn#replan',html).bind('click tap', scope.unPlan);
+		$('.buttons .btn#addToCalendar',html).bind('click tap', scope.addToCalendar);
+		$('.buttons .btn#mail',html).bind('click tap', scope.sendMail);
+
+		return html;
 	}
 	
+	/*
+	 *	Get available users for a certain day
+	 *
+	 */
+	this.getAvailableUsers = function(date)
+	{
+		var users = [];
+		for(var key in app.group.members)
+		{
+			if(scope.days[date].available.indexOf(app.group.members[key]._id) !== -1)
+			{
+				users.push(app.group.members[key]);
+			}
+		}
+		return users;
+	};
+	 
 	/*	
 	 *	Clickhandler for days
 	 *
@@ -136,30 +167,115 @@ function Period(options)
 	{
 		var el = $(this);
 		var date = el.parent().attr('id');
-		console.log('Planning date: '+date);
 		
-		// Update data
-		scope.plannedDate = date;
-		scope.days[date].planned = true;
-		
-		// Update data to db
-		var data = {
-			periodid:scope.id,
-			date:date,
-			planned:true
+		if(el.parent().hasClass('doable'))
+		{
+			if(confirm("Planning the date! \nYou sure about that?"))
+			{		
+				console.log('Planning date: '+date);
+
+				// Update data
+				scope.plannedDate = date;
+				scope.days[date].planned = true;
+
+				// Update data to db
+				var data = {
+					periodid:scope.id,
+					date:date,
+					planned:true
+				}
+				socket.emit('put/planned', data, function(err) {
+					console.log(err);
+				});
+
+				// Update UI
+				var el = $('#'+scope.startDate.format('DDMMYYYY'));
+				el.remove();
+				$('#periods').append(scope.getHTML());
+			}
+		}else{
+			alert("No can't do. \nYou need more than 50% available to plan a date.");
 		}
-		socket.emit('put/planned', data, function(err) {
-			console.log(err);
-		});
-		
-		// Update UI
-		var el = $('#'+scope.startDate.format('DDMMYYYY'));
-		el.remove();
-		var html = $(scope.getHTML());
- 		$('#periods').append(html);
 	};
 	
 	/*	
+	 *	Clickhandler for replan button
+	 *
+	 */
+	this.unPlan = function()
+	{
+		if(confirm("Replanning the date \nYou sure about that?"))
+		{
+			if(confirm("Really? Because this is a major pain in the butt. Last chance."))
+			{
+				// Update data to db
+				var data = {
+					periodid:scope.id,
+					date:scope.plannedDate,
+					planned:false,
+					mailed:false
+				}
+				socket.emit('put/planned', data, function(err) {
+					console.log(err);
+				});
+
+				// Update data
+				scope.days[scope.plannedDate].planned = false;
+				scope.plannedDate = false;
+				scope.mailed = false;
+
+				// Update UI
+				var el = $('#'+scope.startDate.format('DDMMYYYY'));
+				el.remove();
+				$('#periods').append(scope.getHTML());
+				scope.updatePicker(); // TODO: This shouldn't be necessary
+			}
+		}
+	};
+
+	/*
+	 *	Clickhandler for addToCalendar button
+	 *
+	 */
+	this.sendMail = function()
+	{
+		if(!scope.mailed)
+		{
+			if(confirm("You sure? Don't be a spammer!"))
+			{
+				var data = {
+					type: 'plannedDate',
+					to: scope.days[scope.plannedDate].available,
+					from: app.user._id,
+					group: app.group._id,
+					data:
+					{
+						date:scope.plannedDate,
+						notes:''
+					}
+				}
+				socket.emit('put/notification', data, function(err) {
+					console.log(err);
+					var html = $('#'+scope.startDate.format('DDMMYYYY'));
+					$('.buttons .btn#mail',html).html("<i class='icon-check'></i>Mailed!");
+					$('.buttons .btn#mail',html).unbind('click tap');
+				});
+			}
+		}else{
+			$('.buttons .btn#mail',html).unbind('click tap');
+		}
+	};
+
+	/*
+	 *	Clickhandler for addToCalendar button
+	 *
+	 */
+	this.addToCalendar = function()
+	{
+		alert("Sorry, under construction.");
+	};
+
+	/*
 	 *	Update day availability UI
 	 *
 	 */
@@ -213,10 +329,7 @@ function Period(options)
 		{
 			el.show();
 		}else{
-			var html = $(scope.getHTML());
-			$('#avail-days .day',html).bind('click tap', scope.dayClicked);
-			$('#avail-plan .go-btn',html).bind('click tap', scope.goClicked);
-			$('#periods').append(html);
+			$('#periods').append(scope.getHTML());
 		}
 	};
 	
@@ -237,9 +350,10 @@ function Period(options)
 				// Save data
 				scope.days = data.days;
 				scope.id = data._id;
-				if(typeof data.plannedDate !== 'undefined')
+				if(typeof data.plannedDate !== 'undefined' && data.plannedDate !== 'false')
 				{
 					scope.plannedDate = data.plannedDate;
+					scope.mailed = data.mailed;
 				}else{
 					scope.plannedDate = false;
 				}

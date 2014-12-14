@@ -8,8 +8,9 @@ var periodSchema = new Schema(
 	groupid: {type: Schema.Types.ObjectId},
 	startDate: {type: String},
 	endDate: {type: String},
-	plannedDate: {type: String},
+	plannedDate: {type: String, default: 'false'},
 	days: {type: Object, default: {}},
+	mailed: {type: Boolean, default: false},
 }, { autoIndex: false });
 
 periodSchema.plugin(findOrCreate);

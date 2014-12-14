@@ -1,52 +1,138 @@
 &.planned
 {
-
-
-	#plannedDate
+	.plannedDate
 	{
 		text-align: center;
-
-		#day
+		background-color:#FFF;
+		border-radius:0.2em;
+		overflow:hidden;
+		box-shadow: 0 0.1em 0.2em 0 rgba(0, 0, 0, 0.08);
+		
+		.day
 		{
 			padding:1em;
-			background-color:#FFF;
-
+		
 			.name
 			{
-				color:#333;
-				font-size:140%;
-				width:4em;
-				margin:0 auto 0.5em auto;
-				padding-bottom: 0.5em;
-				border-bottom: 0.2em solid #5ed963;
+				.icon
+				{
+					display:inline-block;
+					margin:0 0 0 0.2em;
+					font-size:90%;
+					vertical-align: middle;
+				}
+				color:#c1c1c1;
+				font-size:220%;
+				margin:0 0 0.5em 0.5em;
 			}
 			.date
 			{
 				display: inline-block;
-				color:#c1c1c1;
-				font-size:220%;
+				padding: 0.3em 0.5em 0.3em 0.5em;
+				font-size: 150%;
+				color: #FFF;
+				background-color: #2CC282;
+				border-radius:0.2em;
 			}
-			.month
+		}
+
+		.available
+		{
+			padding:1em;
+			
+			.user
 			{
-				display: inline-block;
-				color:#c1c1c1;
-				font-size:180%;
+				display:inline-block;
+				margin: 0 0.5em;
+				
+				.img
+				{
+					margin:0 0.5em 0.6em 0.5em;
+					width:2em;
+					height:2em;
+					border-radius:100%;
+					overflow:hidden;
+					box-shadow: 0 0.05em 0.1em 0.1em rgba(0, 0, 0, 0.2);
+					img
+					{
+						width:100%;
+						height:100%;
+					}
+				}
+				.name
+				{
+					font-size:60%;
+					color: #888;
+				}
+			}
+			&:after
+			{
+				display: block;
+				content: "";
+				clear: both;
 			}
 		}
 	}
 
-	#available
+	.notes
 	{
-		margin: -1em 0 1em 0;
-		color:#999;
-		padding:0.5em;
-	}
-
-	#notes
-	{
-		padding:2em;
-		min-height:10em;
 		color:#333;
-		background-color:#e7ef85;
+		background-color: #F2FA8D;
+		
+		h3
+		{
+			margin:0;
+			padding:0.5em;
+			font-size:100%;
+			text-align:center;
+			background-color: #f5ff82;
+		}
+		.content
+		{
+			width:100%;
+			min-height:10em;
+			padding:1em 2em;
+			border:none;
+			background-color: transparent;
+			font-family: inherit;
+			font-size:105%;
+			color: #6E6E6E;
+		}
+	}
+	
+	.buttons
+	{
+		padding:1em 0 0 0;
+		
+		.btn
+		{
+			display:block;
+			margin:0 0 0.5em 0;
+			font-size: 100%;
+		}
+		#mail
+		{
+			background-color: #35969f;
+			&:hover
+			{
+				background-color: #02afbf;
+			}
+		}
+		#addToCalendar
+		{
+			background-color: #555596;
+			&:hover
+			{
+				background-color: #4a4aaa;
+			}
+		}
+		#replan
+		{
+			background-color: #DA504A;
+			&:hover
+			{
+				background-color: #f8362d;
+			}
+		}
 	}
 }

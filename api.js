@@ -158,6 +158,10 @@ var apiFunctions = {
 		var update = {};
 		update['days.'+input.date+'.planned'] = input.planned;
 		update.plannedDate = input.planned ? input.date : false;
+		if(input.mailed !== undefined)
+		{
+			update.mailed = input.mailed;
+		}
 		Period.update({_id: input.periodid}, update, function(err)
 		{
 			if(err) { console.log('Error updating'); console.log(err); }
@@ -212,6 +216,48 @@ var apiFunctions = {
 					callback({success:true});
 				}
 			});
+		});
+	},
+	
+	/*
+	 *	Put notification, sends an email notification
+	 *	input.group = _id of group
+	 */
+	'put/notification' : function(input, callback)
+	{
+		Group.findOne({_id: input.group}).populate('members').exec(function(err, group)
+		{
+			if(err) { console.log('Error finding group');
+			}else{
+				var to = '';
+				var from = {};
+				console.log(input.from);
+				// Find group
+				for(var i=0; i<group.members.length; i++)
+				{	
+					group.members[i].id = String(group.members[i]._id); // Fuck you, Mongo, just .. fuck you.
+					if(input.to.indexOf(group.members[i].id) !== -1)
+					{
+						to += group.members[i].email+', ';
+					}
+					if(group.members[i].id === input.from)
+					{
+						from = group.members[i];
+					}
+				}
+				// Email
+				email.sendNotification(input.type, to, from, group, input.data);
+				// Save
+				if(input.type == 'plannedDate')
+				{
+					console.log('date: '+input.data.date);
+					Period.update({plannedDate: input.data.date}, {mailed:true}, function(err)
+					{
+						if(err) { console.log('Error saving mailed status');}
+					});
+				}
+				callback({success:true});
+			}
 		});
 	}
 };
