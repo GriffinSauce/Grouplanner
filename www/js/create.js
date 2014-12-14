@@ -6,18 +6,18 @@ var socket = io();
  */
 $(document).ready(function(){
 	
-	$('.numberBtn#minus').click(function(){
+	$('.numberBtn#minus').bind('click tap',function(){
 		var val = parseInt($('#form #length').val());
 		val -= val !== 0 ? 1 : 0;
 		$('#form #length').val(val);
 	});
-	$('.numberBtn#plus').click(function(){
+	$('.numberBtn#plus').bind('click tap',function(){
 		var val = parseInt($('#form #length').val());
 		val++;
 		$('#form #length').val(val);
 	});
 		
-	$('#createGroupBtn').click(function(){
+	$('#createGroupBtn').bind('click tap',function(){
 		
 		if(validate())
 		{
@@ -45,7 +45,7 @@ $(document).ready(function(){
 		}
 	});
 	
-	$('.radio .option').click(function(){
+	$('.radio .option').bind('click tap',function(){
 		if(!$(this).hasClass('active'))
 		{
 			$(this).siblings('.active').toggleClass('active');
