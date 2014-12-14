@@ -4,3 +4,6 @@
 
 Grouplanner
 ===========
+
+This is a webapp for planning with groups.
+Readme will be updated...
