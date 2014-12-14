@@ -29,7 +29,7 @@ $(document).ready(function(){
 			var data = {
 				name:name,
 				eventtype:type,
-				lenght:length,
+				periodLength:length,
 				description:description,
 				startDate:moment().weekday(1).toDate()
 			}
