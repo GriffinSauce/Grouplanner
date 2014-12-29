@@ -121,9 +121,6 @@ passport.use(new FacebookStrategy(
 	},
 	function(accessToken, refreshToken, profile, done)
 	{
-		console.log("Facebook login success");
-		console.log(profile);
-
 		User.findOrCreate(
 		{
 			auth:
