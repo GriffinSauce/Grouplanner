@@ -48,7 +48,8 @@ if(global.grouplanner.environment == 'local')
 	mongoose.connect('mongodb://' + (process.env.OPENSHIFT_MONGODB_DB_HOST || global.grouplanner.ipaddress) + '/grouplanner');
 } else
 {
-	mongoose.connect('mongodb://' + process.env.MONGODB_USER + ':' + process.env.MONGODB_PASS + '@' + (process.env.OPENSHIFT_MONGODB_DB_HOST || global.grouplanner.ipaddress) + '/grouplanner');
+	var db = process.env.MONGODB_DB || '/grouplanner';
+	mongoose.connect('mongodb://' + process.env.MONGODB_USER + ':' + process.env.MONGODB_PASS + '@' + (process.env.OPENSHIFT_MONGODB_DB_HOST || global.grouplanner.ipaddress) + db);
 }
 var db = mongoose.connection;
 db.once('open', function callback() { console.log('Connected to the database'); });
