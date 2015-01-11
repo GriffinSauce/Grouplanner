@@ -61,7 +61,9 @@ var sessionMiddleware = session(
 	store: new MongoStore({
 		mongoose_connection:mongoose.connections[0],
 		db:mongoose.connection.db
-	})
+	}),
+	resave: true,
+    saveUninitialized: true
 });
 
 // EXPRESS SETUP
