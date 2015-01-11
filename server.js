@@ -90,7 +90,15 @@ app.use(routes.passport.passport.initialize());
 app.use(routes.passport.passport.session());
 
 // Add templating engine
-app.engine('handlebars', handlebars());
+var hbs = handlebars.create(
+{
+	helpers:
+	{
+		environmentLabel: environmentLabel
+	}
+});
+
+app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 
 app.use("/www", serveStatic(__dirname + '/www'));
@@ -119,6 +127,19 @@ http.listen(global.grouplanner.port, global.grouplanner.ipaddress, function()
 {
 	console.log('%s: Node server started on %s:%d ...', Date(Date.now() ), global.grouplanner.ipaddress, global.grouplanner.port);
 });
+
+
+function environmentLabel()
+{
+	if(global.grouplanner.environment === 'local')
+	{
+		return '<div class=\'environment-label local\'>LOCAL</div>';
+	} else if(process.env.APP_URL === 'dev.grouplanner.nl')
+	{
+		return '<div class=\'environment-label development\'>DEVELOPMENT</div>';
+	}
+	return null;
+}
 
 /**
  *  terminator === the termination handler
