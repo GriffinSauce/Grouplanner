@@ -49,7 +49,7 @@ if(global.grouplanner.environment == 'local')
 } else
 {
 	var dbname = process.env.MONGODB_DB || 'grouplanner';
-	mongoose.connect('mongodb://' + process.env.MONGODB_USER + ':' + process.env.MONGODB_PASS + '@' + (process.env.OPENSHIFT_MONGODB_DB_HOST || global.grouplanner.ipaddress) + '/' + dbname);
+	mongoose.connect(process.env.OPENSHIFT_MONGODB_DB_URL + dbname);
 }
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
