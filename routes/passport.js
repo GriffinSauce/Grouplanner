@@ -69,15 +69,15 @@ if(global.grouplanner.environment == 'local')
 {
 	googleStrategySettings.client_id = process.env.GOOGLE_CLIENT_ID;
 	googleStrategySettings.client_secret = process.env.GOOGLE_CLIENT_SECRET;
-	googleStrategySettings.callbackURL = 'http://www.grouplanner.nl/oauth2callback';
+	googleStrategySettings.callbackURL = 'http://'+process.env.APP_URL+'/oauth2callback';
 
 	facebookStrategySettings.client_id = process.env.FACEBOOK_APP_ID;
 	facebookStrategySettings.client_secret = process.env.FACEBOOK_APP_SECRET;
-	facebookStrategySettings.callbackURL = 'http://www.grouplanner.nl/auth/facebook/callback';
+	facebookStrategySettings.callbackURL = 'http://'+process.env.APP_URL+'/auth/facebook/callback';
 
 	twitterStrategySettings.client_id = process.env.TWITTER_API_KEY;
 	twitterStrategySettings.client_secret = process.env.TWITTER_API_SECRET;
-	twitterStrategySettings.callbackURL = 'http://www.grouplanner.nl/oauth2callback-twitter';
+	twitterStrategySettings.callbackURL = 'http://'+process.env.APP_URL+'/oauth2callback-twitter';
 }
 
 /**
