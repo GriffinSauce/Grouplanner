@@ -563,6 +563,19 @@ i {
   .btn:hover {
     background-color: #00CB75; }
 
+.environment-label {
+  width: 100%;
+  font-size: 70%;
+  padding: 2px 0px; }
+
+.environment-label.development {
+  background-color: #E1D4E7;
+  color: #551A8B; }
+
+.environment-label.local {
+  background-color: #B9C0E0;
+  color: #4558A8; }
+
 /*
  *	Login buttons
  */

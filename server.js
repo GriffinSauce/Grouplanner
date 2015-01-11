@@ -48,9 +48,11 @@ if(global.grouplanner.environment == 'local')
 	mongoose.connect('mongodb://' + (process.env.OPENSHIFT_MONGODB_DB_HOST || global.grouplanner.ipaddress) + '/grouplanner');
 } else
 {
-	mongoose.connect('mongodb://' + process.env.MONGODB_USER + ':' + process.env.MONGODB_PASS + '@' + (process.env.OPENSHIFT_MONGODB_DB_HOST || global.grouplanner.ipaddress) + '/grouplanner');
+	var dbname = process.env.MONGODB_DB || 'grouplanner';
+	mongoose.connect(process.env.OPENSHIFT_MONGODB_DB_URL + dbname);
 }
 var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function callback() { console.log('Connected to the database'); });
 
 
@@ -60,7 +62,9 @@ var sessionMiddleware = session(
 	store: new MongoStore({
 		mongoose_connection:mongoose.connections[0],
 		db:mongoose.connection.db
-	})
+	}),
+	resave: true,
+    saveUninitialized: true
 });
 
 // EXPRESS SETUP
@@ -86,7 +90,15 @@ app.use(routes.passport.passport.initialize());
 app.use(routes.passport.passport.session());
 
 // Add templating engine
-app.engine('handlebars', handlebars());
+var hbs = handlebars.create(
+{
+	helpers:
+	{
+		environmentLabel: environmentLabel
+	}
+});
+
+app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 
 app.use("/www", serveStatic(__dirname + '/www'));
@@ -115,6 +127,19 @@ http.listen(global.grouplanner.port, global.grouplanner.ipaddress, function()
 {
 	console.log('%s: Node server started on %s:%d ...', Date(Date.now() ), global.grouplanner.ipaddress, global.grouplanner.port);
 });
+
+
+function environmentLabel()
+{
+	if(global.grouplanner.environment === 'local')
+	{
+		return '<div class=\'environment-label local\'>LOCAL</div>';
+	} else if(process.env.APP_URL === 'dev.grouplanner.nl')
+	{
+		return '<div class=\'environment-label development\'>DEVELOPMENT</div>';
+	}
+	return null;
+}
 
 /**
  *  terminator === the termination handler
