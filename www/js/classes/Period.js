@@ -199,6 +199,7 @@ function Period(options)
 				var el = $('#'+scope.startDate.format('DDMMYYYY'));
 				el.remove();
 				$('#periods').append(scope.getHTML());
+				addthisevent.refresh();
 			}
 		}else{
 			alert("No can't do. \nYou need more than 50% available to plan a date.");
@@ -337,6 +338,7 @@ function Period(options)
 			el.show();
 		}else{
 			$('#periods').append(scope.getHTML());
+			addthisevent.refresh();
 		}
 	};
 	
@@ -375,6 +377,7 @@ function Period(options)
 					el.remove();
 					var html = $(scope.getHTML());
 					$('#periods').append(html);
+					addthisevent.refresh();
 				}
 			}
 		});
