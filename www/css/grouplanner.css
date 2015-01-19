@@ -303,9 +303,20 @@ body {
             background-color: #35969f; }
             body#group #period #periods .period.planned .buttons #mail:hover {
               background-color: #02afbf; }
-          body#group #period #periods .period.planned .buttons #addToCalendar {
-            background-color: #555596; }
-            body#group #period #periods .period.planned .buttons #addToCalendar:hover {
+          body#group #period #periods .period.planned .buttons .addthisevent-drop {
+            display: block;
+            margin: 0 0 0.5em 0;
+            padding: 0.4em 0.7em 0.5em 0.7em;
+            background-color: #555596;
+            background-image: none;
+            color: #FFF !important;
+            font-size: 100%;
+            font-weight: 400;
+            font-family: inherit;
+            cursor: pointer;
+            border-radius: 0.2em;
+            border: none; }
+            body#group #period #periods .period.planned .buttons .addthisevent-drop:hover {
               background-color: #4a4aaa; }
           body#group #period #periods .period.planned .buttons #replan {
             background-color: #DA504A; }

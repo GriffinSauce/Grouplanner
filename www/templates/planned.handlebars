@@ -26,7 +26,19 @@
 		{{else}}
 		<a id="mail" class="btn"><i class="icon-check"></i>Mailed!</a>
 		{{/unless}}
-		<a id="addToCalendar" class="btn"><i class="icon-calendar"></i>Add to calendar</a>
+		<a href="" title="Add to Calendar" class="addthisevent" id="addToCalendar">
+			<i class="icon-calendar"></i> Add to Calendar
+			<span class="_start">{{cal.startDate}}</span>
+			<span class="_end">{{cal.endDate}}</span>
+			<span class="_zonecode">38</span>
+			<span class="_summary">{{cal.description}}</span>
+			<span class="_description">{{notes}}</span>
+			<span class="_location"></span>
+			<span class="_organizer"></span>
+			<span class="_organizer_email"></span>
+			<span class="_all_day_event">false</span>
+			<span class="_date_format">DD/MM/YYYY</span>
+		</a>
 		<a id="replan" class="btn"><i class="icon-undo"></i>Replan</a>
 	</div>
 </div>

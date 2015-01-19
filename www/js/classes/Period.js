@@ -88,7 +88,14 @@ function Period(options)
 				month:date.format('MMMM'),
 				available:scope.getAvailableUsers(scope.plannedDate),
 				notes:'',
-				mailed:scope.mailed
+				mailed:scope.mailed,
+				cal:
+				{
+					planner:app.user.name.first,
+					description:app.group.name+' '+app.group.eventtype.slice(0, - 1),
+					startDate:date.format('DD/MM/YYYY'),
+					endDate:date.format('DD/MM/YYYY')
+				}
 			};
 			var compiledTemplate = Handlebars.getTemplate('planned');
 			html = $(compiledTemplate(data));

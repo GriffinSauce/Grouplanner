@@ -118,9 +118,21 @@
 				background-color: #02afbf;
 			}
 		}
-		#addToCalendar
+		.addthisevent-drop
 		{
+			display: block;
+			margin: 0 0 0.5em 0;
+			padding: 0.4em 0.7em 0.5em 0.7em;
 			background-color: #555596;
+			background-image: none;
+			color: #FFF !important;
+			font-size: 100%;
+			font-weight: 400;
+			font-family: inherit;
+			cursor: pointer;
+			border-radius: 0.2em;
+			border: none;
+		
 			&:hover
 			{
 				background-color: #4a4aaa;
