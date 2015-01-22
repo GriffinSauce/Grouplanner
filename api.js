@@ -189,19 +189,23 @@ var apiFunctions = {
 	/*
 	 *	Delete user from group
 	 *	input.group = _id of group
-	 *	input.user = _id of user
+	 *	input.member = _id of user
 	 */
-	'delete/group/user' : function(input, callback)
+	'delete/group/member' : function(input, callback)
 	{
-		if(this.passport.user._id !== input.user)
+		if(this.passport.user._id !== input.member)
 		{
 			// The user is removing someone else from the group, does he have the power?
 		}
 
 		Group.findOne({_id: input.group}).populate('members').exec(function(err, group)
 		{
-			group.members.remove(input.user);
-			group.save(callback);
+			if(err) { console.log("Error: " + err);	}
+			else
+			{
+				group.members.remove(input.member);
+				group.save(callback);
+			}
 		});
 	},
 
