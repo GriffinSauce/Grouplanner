@@ -61,7 +61,6 @@ if(global.grouplanner.environment == 'local')
 	googleStrategySettings.client_id = process.env.GOOGLE_CLIENT_ID;
 	googleStrategySettings.client_secret = process.env.GOOGLE_CLIENT_SECRET;
 	googleStrategySettings.callbackURL = 'http://'+process.env.APP_URL+'/auth/google/callback';
-
 	facebookStrategySettings.client_id = process.env.FACEBOOK_APP_ID;
 	facebookStrategySettings.client_secret = process.env.FACEBOOK_APP_SECRET;
 	facebookStrategySettings.callbackURL = 'http://'+process.env.APP_URL+'/auth/facebook/callback';
