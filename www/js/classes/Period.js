@@ -69,14 +69,19 @@ function Period(options)
 			var data = {id:this.startDate.format('DDMMYYYY'),days:[]};
 			for(var date in scope.days)
 			{
+				var m = moment(date,'DDMMYYYY');
 				data.days.push({
-					day:moment(date,'DDMMYYYY').format('dd'),
-					date:moment(date,'DDMMYYYY').format('DD'),
+					moment:m,
+					day:m.format('dd'),
+					date:m.format('DD'),
 					dateFull:date,
 					available:scope.days[date].available.indexOf(app.user._id) !== -1,
 					percent:(scope.days[date].available.length / app.group.members.length) * 100
 				});
 			}
+			data.days.sort(function(a,b){
+				if(a.moment.isBefore(b.moment)){ return -1; }else{ return 1; }
+			});
 			var compiledTemplate = Handlebars.getTemplate('availability');
 			html = $(compiledTemplate(data));
 		}else{
