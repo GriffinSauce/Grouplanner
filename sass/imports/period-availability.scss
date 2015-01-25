@@ -2,36 +2,44 @@
 {
 	#avail-days
 	{
-		display: flex;
-		justify-content: space-between;
 		width:100%;
 		text-align: center;
 		overflow: hidden;
 
-		.day
+		table
 		{
 			width:100%;
-			padding: 0.6em 0em 0.6em 0em;
-			background-color:#FFF;
-
-			.day-name{}
-			.day-date
+			border-collapse: collapse;
+			table-layout: fixed;
+			background-color:#F0F0F0;
+		}
+			.day
 			{
-				font-size: 70%;
-				color: #9d9d9d;
-			}
+				color: #ADADAD;
+				border:none;
+				text-align: center;
+				padding: 0.6em 0em 0.6em 0em;
+				background-color:#FFF;
 
-			&.available
-			{
-				color:#FFF;
-				background-color:#27ED99;
-
+				.day-name{}
 				.day-date
 				{
-					color: #FFF !important;
+					font-size: 70%;
+					color: #9d9d9d;
+				}
+
+				&.available
+				{
+					color:#FFF;
+					background-color:#27ED99;
+
+					.day-date
+					{
+						color: #FFF !important;
+					}
 				}
 			}
-		}
+		
 	}
 
 	#avail-plan

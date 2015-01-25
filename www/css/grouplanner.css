@@ -136,13 +136,18 @@ body {
           text-align: center;
           color: #9E9E9E; }
         body#group #period #periods .period.availability #avail-days {
-          display: flex;
-          justify-content: space-between;
           width: 100%;
           text-align: center;
           overflow: hidden; }
-          body#group #period #periods .period.availability #avail-days .day {
+          body#group #period #periods .period.availability #avail-days table {
             width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+            background-color: #F0F0F0; }
+          body#group #period #periods .period.availability #avail-days .day {
+            color: #ADADAD;
+            border: none;
+            text-align: center;
             padding: 0.6em 0em 0.6em 0em;
             background-color: #FFF; }
             body#group #period #periods .period.availability #avail-days .day .day-date {
@@ -557,7 +562,13 @@ i {
   text-decoration: none;
   cursor: pointer;
   border-radius: 0.2em;
-  transition: background-color 0.1s; }
+  transition: background-color 0.1s;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none; }
   .btn i {
     margin: 0 0.3em 0 -0.1em; }
   .btn:hover {
@@ -633,7 +644,14 @@ input {
   color: #666;
   background-color: #FFF;
   text-align: center;
-  z-index: 2; }
+  cursor: pointer;
+  z-index: 2;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none; }
   .numberBtn#plus {
     margin: 0 0.3em 0 -0.3em;
     border-left: 0.1em solid #DDD;

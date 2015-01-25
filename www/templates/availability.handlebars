@@ -3,13 +3,22 @@
 		<div class="header">
 			I'm available on
 		</div>
+		
 		<div id="avail-days">
-			{{#each days}}
-			<div class="day {{#if available}}available{{/if}}" id="{{dateFull}}">
-				<div class="day-name">{{day}}</div>
-				<div class="day-date">{{date}}</div>
-			</div>
-			{{/each}}
+			<table>
+				<tr>
+				{{#each days}}	
+					<td class="day {{#if available}}available{{/if}}" id="{{dateFull}}">
+						<div class="day-name">{{day}}</div>
+						<div class="day-date">{{date}}</div>
+					</td>
+				{{#everyOther @index 7 }}
+				</tr>
+				<tr>
+				{{/everyOther}}
+				{{/each}}
+				</tr>
+			</table>
 		</div>
 	</div>
 
