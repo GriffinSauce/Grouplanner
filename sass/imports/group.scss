@@ -171,6 +171,7 @@
 			{
 				display:flex;
 				padding:0 0 1em 0;
+				margin:0 0 1em 0;
 				border-bottom: 1px solid #F0F0F0;
 
 				.img
@@ -194,12 +195,19 @@
 					font-size: 110%;
 					padding:0.2em 0.5em;
 				}
+				.icon-x
+				{
+					font-size: 1.4em;
+					color: #BBB;
+					width: 2em;
+					text-align: right;
+				}
 			}
 			#invite
 			{
 				display: flex;
 				position: relative;
-				margin:1em 0 0 0;
+				margin:0;
 				width: 100%;
 
 				input

@@ -370,6 +370,7 @@ body {
           display: -ms-flexbox;
           display: flex;
           padding: 0 0 1em 0;
+          margin: 0 0 1em 0;
           border-bottom: 1px solid #F0F0F0; }
           body#group #manage #users .user .img {
             width: 2em;
@@ -387,12 +388,17 @@ body {
             flex-grow: 2;
             font-size: 110%;
             padding: 0.2em 0.5em; }
+          body#group #manage #users .user .icon-x {
+            font-size: 1.4em;
+            color: #BBB;
+            width: 2em;
+            text-align: right; }
         body#group #manage #users #invite {
           display: -webkit-flex;
           display: -ms-flexbox;
           display: flex;
           position: relative;
-          margin: 1em 0 0 0;
+          margin: 0;
           width: 100%; }
           body#group #manage #users #invite input {
             -webkit-flex-grow: 2;
