@@ -9,5 +9,15 @@ app.loadPeriod(thisWeek);
 
 // header
 $(document).ready(function(){
+	$('nav .tab').bind('click tap', function(e){
+		var t = $(this)
 
+		// Tabs
+		$('nav .tab').removeClass('active');
+		t.addClass('active');
+
+		// Sections
+		$('section').removeClass('active');
+		$('section#'+t.data('target')).addClass('active');
+	});
 });

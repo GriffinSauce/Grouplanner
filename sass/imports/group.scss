@@ -50,7 +50,16 @@
 		}
 	}
 
-	#period
+	section
+	{
+		display:none;
+		&.active
+		{
+			display:block;
+		}
+	}
+
+	#plan
 	{
 		color: #ADADAD;
 		padding-bottom:2em;
@@ -306,10 +315,9 @@
 
 	nav
 	{
-		position:fixed;
-		bottom:0;
 		width:100%;
-		background-color: #452D9B;
+		background-color: #4BCD96;
+		overflow: hidden;
 
 		.tab
 		{
@@ -317,17 +325,23 @@
 			width:33%;
 			color:#FFF;
 			text-align: center;
-			padding: 0.6rem 0;
+			padding: 0.3rem 0 0.5rem 0;
+			border-top:0.3rem solid transparent;
 
 			div
 			{
 				font-size: 1rem;
-				margin-bottom: 0.2em;
+				margin-bottom: 0.3em;
 			}
 			span
 			{
 				font-weight: 300;
 				font-size: 0.8rem;
+			}
+
+			&.active
+			{
+				border-top-color:#FFF;
 			}
 		}
 	}

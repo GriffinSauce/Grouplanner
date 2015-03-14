@@ -90,10 +90,14 @@ body {
         color: #FFF;
         font-size: 150%;
         vertical-align: middle; }
-    body#group #period {
+    body#group section {
+      display: none; }
+      body#group section.active {
+        display: block; }
+    body#group #plan {
       color: #ADADAD;
       padding-bottom: 2em; }
-      body#group #period #period-controls {
+      body#group #plan #period-controls {
         display: -webkit-flex;
         display: -ms-flexbox;
         display: flex;
@@ -103,7 +107,7 @@ body {
         text-align: center;
         height: 4em;
         padding: 1em 0.5em 0 0.5em; }
-        body#group #period #period-controls .period-control-button {
+        body#group #plan #period-controls .period-control-button {
           display: -webkit-flex;
           display: -ms-flexbox;
           display: flex;
@@ -117,12 +121,12 @@ body {
           font-size: 180%;
           font-weight: 700;
           color: #333; }
-          body#group #period #period-controls .period-control-button div {
+          body#group #plan #period-controls .period-control-button div {
             color: #999;
             border-radius: 100%;
             padding: 0.3em;
             font-size: 100%; }
-        body#group #period #period-controls .period {
+        body#group #plan #period-controls .period {
           display: -webkit-flex;
           display: -ms-flexbox;
           display: flex;
@@ -136,14 +140,14 @@ body {
           font-size: 140%;
           font-weight: 300;
           color: #999; }
-      body#group #period #periods {
+      body#group #plan #periods {
         padding: 1em; }
-        body#group #period #periods .period .wrapper {
+        body#group #plan #periods .period .wrapper {
           border-radius: 0.15em;
           overflow: hidden;
           margin-bottom: 1em;
           box-shadow: 0 0.1em 0.2em 0 rgba(0, 0, 0, 0.08); }
-        body#group #period #periods .period .header {
+        body#group #plan #periods .period .header {
           width: 100%;
           padding: 0.2em 0 0.3em 0;
           background-color: #F9F9F9;
@@ -151,7 +155,7 @@ body {
           font-style: italic;
           text-align: center;
           color: #9E9E9E; }
-        body#group #period #periods .period.availability #avail-days {
+        body#group #plan #periods .period.availability #avail-days {
           display: -webkit-flex;
           display: -ms-flexbox;
           display: flex;
@@ -161,23 +165,23 @@ body {
           width: 100%;
           text-align: center;
           overflow: hidden; }
-          body#group #period #periods .period.availability #avail-days .day {
+          body#group #plan #periods .period.availability #avail-days .day {
             width: 100%;
             padding: 0.6em 0em 0.6em 0em;
             background-color: #FFF; }
-            body#group #period #periods .period.availability #avail-days .day .day-date {
+            body#group #plan #periods .period.availability #avail-days .day .day-date {
               font-size: 70%;
               color: #9d9d9d; }
-            body#group #period #periods .period.availability #avail-days .day.available {
+            body#group #plan #periods .period.availability #avail-days .day.available {
               color: #FFF;
               background-color: #27ED99; }
-              body#group #period #periods .period.availability #avail-days .day.available .day-date {
+              body#group #plan #periods .period.availability #avail-days .day.available .day-date {
                 color: #FFF !important; }
-        body#group #period #periods .period.availability #avail-plan {
+        body#group #plan #periods .period.availability #avail-plan {
           width: 100%;
           text-align: center;
           overflow: hidden; }
-          body#group #period #periods .period.availability #avail-plan .day {
+          body#group #plan #periods .period.availability #avail-plan .day {
             position: relative;
             display: -webkit-flex;
             display: -ms-flexbox;
@@ -194,7 +198,7 @@ body {
             background-color: #F2F0F2;
             border-top: 0.1em solid #F2F0F2;
             border-bottom: 0.1em solid #F2F0F2; }
-            body#group #period #periods .period.availability #avail-plan .day .label {
+            body#group #plan #periods .period.availability #avail-plan .day .label {
               height: 100%;
               padding: 0.4em 0.5em;
               width: 3em;
@@ -207,28 +211,28 @@ body {
               -webkit-flex-grow: 0;
               -ms-flex-positive: 0;
               flex-grow: 0; }
-              body#group #period #periods .period.availability #avail-plan .day .label .day-date {
+              body#group #plan #periods .period.availability #avail-plan .day .label .day-date {
                 font-weight: 300;
                 display: inline-block;
                 font-size: 80%;
                 color: #AAA; }
-              body#group #period #periods .period.availability #avail-plan .day .label .day-name {
+              body#group #plan #periods .period.availability #avail-plan .day .label .day-name {
                 display: inline-block;
                 font-size: 80%;
                 color: #AAA; }
-            body#group #period #periods .period.availability #avail-plan .day .bar {
+            body#group #plan #periods .period.availability #avail-plan .day .bar {
               height: 1em;
               width: 100%;
               margin: 0.7em 0.5em 0.5em 0;
               background-color: #EEE; }
-              body#group #period #periods .period.availability #avail-plan .day .bar .bar-content {
+              body#group #plan #periods .period.availability #avail-plan .day .bar .bar-content {
                 position: relative;
                 background-color: #e0e0e0;
                 height: 100%;
                 width: 0%;
                 border-radius: 0.2em;
                 transition: width 0.2s ease, background-color 0.2s ease; }
-            body#group #period #periods .period.availability #avail-plan .day .go-btn {
+            body#group #plan #periods .period.availability #avail-plan .day .go-btn {
               height: 1.5em;
               width: 5em;
               margin: 0.7em 0.5em 0.5em 0;
@@ -239,84 +243,84 @@ body {
               cursor: pointer;
               transition: background-color 0.2s ease, color 0.2s ease, opacity 0.2s ease;
               border-radius: 0.2em; }
-              body#group #period #periods .period.availability #avail-plan .day .go-btn i {
+              body#group #plan #periods .period.availability #avail-plan .day .go-btn i {
                 margin: 0 0 0 0.5em;
                 vertical-align: middle; }
-            body#group #period #periods .period.availability #avail-plan .day.doable, body#group #period #periods .period.availability #avail-plan .day.go {
+            body#group #plan #periods .period.availability #avail-plan .day.doable, body#group #plan #periods .period.availability #avail-plan .day.go {
               background-color: #FFF;
               transition: height 0.2s ease; }
-              body#group #period #periods .period.availability #avail-plan .day.doable .label .day-name, body#group #period #periods .period.availability #avail-plan .day.go .label .day-name {
+              body#group #plan #periods .period.availability #avail-plan .day.doable .label .day-name, body#group #plan #periods .period.availability #avail-plan .day.go .label .day-name {
                 font-weight: 400;
                 color: #555; }
-              body#group #period #periods .period.availability #avail-plan .day.doable .go-btn, body#group #period #periods .period.availability #avail-plan .day.go .go-btn {
+              body#group #plan #periods .period.availability #avail-plan .day.doable .go-btn, body#group #plan #periods .period.availability #avail-plan .day.go .go-btn {
                 opacity: 1; }
-            body#group #period #periods .period.availability #avail-plan .day.doable .bar-content {
+            body#group #plan #periods .period.availability #avail-plan .day.doable .bar-content {
               background-color: #a2e3b1; }
-            body#group #period #periods .period.availability #avail-plan .day.go .go-btn {
+            body#group #plan #periods .period.availability #avail-plan .day.go .go-btn {
               color: #FFF;
               background-color: #5480DD; }
-            body#group #period #periods .period.availability #avail-plan .day.go .bar-content {
+            body#group #plan #periods .period.availability #avail-plan .day.go .bar-content {
               background-color: #27ED99; }
-            body#group #period #periods .period.availability #avail-plan .day:first-child {
+            body#group #plan #periods .period.availability #avail-plan .day:first-child {
               border-top: none !important; }
-            body#group #period #periods .period.availability #avail-plan .day:last-child {
+            body#group #plan #periods .period.availability #avail-plan .day:last-child {
               border-bottom: none !important; }
-        body#group #period #periods .period.planned .plannedDate {
+        body#group #plan #periods .period.planned .plannedDate {
           text-align: center;
           background-color: #FFF;
           border-radius: 0.2em;
           overflow: hidden;
           box-shadow: 0 0.1em 0.2em 0 rgba(0, 0, 0, 0.08); }
-          body#group #period #periods .period.planned .plannedDate .day {
+          body#group #plan #periods .period.planned .plannedDate .day {
             padding: 1em; }
-            body#group #period #periods .period.planned .plannedDate .day .name {
+            body#group #plan #periods .period.planned .plannedDate .day .name {
               color: #c1c1c1;
               font-size: 220%;
               margin: 0 0 0.5em 0.5em; }
-              body#group #period #periods .period.planned .plannedDate .day .name .icon {
+              body#group #plan #periods .period.planned .plannedDate .day .name .icon {
                 display: inline-block;
                 margin: 0 0 0 0.2em;
                 font-size: 90%;
                 vertical-align: middle; }
-            body#group #period #periods .period.planned .plannedDate .day .date {
+            body#group #plan #periods .period.planned .plannedDate .day .date {
               display: inline-block;
               padding: 0.3em 0.5em 0.3em 0.5em;
               font-size: 150%;
               color: #FFF;
               background-color: #2CC282;
               border-radius: 0.2em; }
-          body#group #period #periods .period.planned .plannedDate .available {
+          body#group #plan #periods .period.planned .plannedDate .available {
             padding: 1em; }
-            body#group #period #periods .period.planned .plannedDate .available .user {
+            body#group #plan #periods .period.planned .plannedDate .available .user {
               display: inline-block;
               margin: 0 0.5em; }
-              body#group #period #periods .period.planned .plannedDate .available .user .img {
+              body#group #plan #periods .period.planned .plannedDate .available .user .img {
                 margin: 0 0.5em 0.6em 0.5em;
                 width: 2em;
                 height: 2em;
                 border-radius: 100%;
                 overflow: hidden;
                 box-shadow: 0 0.05em 0.1em 0.1em rgba(0, 0, 0, 0.2); }
-                body#group #period #periods .period.planned .plannedDate .available .user .img img {
+                body#group #plan #periods .period.planned .plannedDate .available .user .img img {
                   width: 100%;
                   height: 100%; }
-              body#group #period #periods .period.planned .plannedDate .available .user .name {
+              body#group #plan #periods .period.planned .plannedDate .available .user .name {
                 font-size: 60%;
                 color: #888; }
-            body#group #period #periods .period.planned .plannedDate .available:after {
+            body#group #plan #periods .period.planned .plannedDate .available:after {
               display: block;
               content: "";
               clear: both; }
-        body#group #period #periods .period.planned .notes {
+        body#group #plan #periods .period.planned .notes {
           color: #333;
           background-color: #F2FA8D; }
-          body#group #period #periods .period.planned .notes h3 {
+          body#group #plan #periods .period.planned .notes h3 {
             margin: 0;
             padding: 0.5em;
             font-size: 100%;
             text-align: center;
             background-color: #f5ff82; }
-          body#group #period #periods .period.planned .notes .content {
+          body#group #plan #periods .period.planned .notes .content {
             width: 100%;
             min-height: 10em;
             padding: 1em 2em;
@@ -325,23 +329,23 @@ body {
             font-family: inherit;
             font-size: 105%;
             color: #6E6E6E; }
-        body#group #period #periods .period.planned .buttons {
+        body#group #plan #periods .period.planned .buttons {
           padding: 1em 0 0 0; }
-          body#group #period #periods .period.planned .buttons .btn {
+          body#group #plan #periods .period.planned .buttons .btn {
             display: block;
             margin: 0 0 0.5em 0;
             font-size: 100%; }
-          body#group #period #periods .period.planned .buttons #mail {
+          body#group #plan #periods .period.planned .buttons #mail {
             background-color: #35969f; }
-            body#group #period #periods .period.planned .buttons #mail:hover {
+            body#group #plan #periods .period.planned .buttons #mail:hover {
               background-color: #02afbf; }
-          body#group #period #periods .period.planned .buttons #addToCalendar {
+          body#group #plan #periods .period.planned .buttons #addToCalendar {
             background-color: #555596; }
-            body#group #period #periods .period.planned .buttons #addToCalendar:hover {
+            body#group #plan #periods .period.planned .buttons #addToCalendar:hover {
               background-color: #4a4aaa; }
-          body#group #period #periods .period.planned .buttons #replan {
+          body#group #plan #periods .period.planned .buttons #replan {
             background-color: #DA504A; }
-            body#group #period #periods .period.planned .buttons #replan:hover {
+            body#group #plan #periods .period.planned .buttons #replan:hover {
               background-color: #f8362d; }
     body#group #manage {
       padding: 0 0 1em 0;
@@ -469,22 +473,24 @@ body {
         text-align: center;
         font-size: 700%; }
     body#group nav {
-      position: fixed;
-      bottom: 0;
       width: 100%;
-      background-color: #452D9B; }
+      background-color: #4BCD96;
+      overflow: hidden; }
       body#group nav .tab {
         float: left;
         width: 33%;
         color: #FFF;
         text-align: center;
-        padding: 0.6rem 0; }
+        padding: 0.3rem 0 0.5rem 0;
+        border-top: 0.3rem solid transparent; }
         body#group nav .tab div {
           font-size: 1rem;
-          margin-bottom: 0.2em; }
+          margin-bottom: 0.3em; }
         body#group nav .tab span {
           font-weight: 300;
           font-size: 0.8rem; }
+        body#group nav .tab.active {
+          border-top-color: #FFF; }
   body#groups #header {
     height: 2em;
     padding: 1em;
