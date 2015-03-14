@@ -94,14 +94,24 @@ body {
       color: #ADADAD;
       padding-bottom: 2em; }
       body#group #period #period-controls {
+        display: -webkit-flex;
+        display: -ms-flexbox;
         display: flex;
+        -webkit-justify-content: space-between;
+        -ms-flex-pack: justify;
         justify-content: space-between;
         text-align: center;
         height: 4em;
         padding: 1em 0.5em 0 0.5em; }
         body#group #period #period-controls .period-control-button {
+          display: -webkit-flex;
+          display: -ms-flexbox;
           display: flex;
+          -webkit-justify-content: center;
+          -ms-flex-pack: center;
           justify-content: center;
+          -webkit-align-items: center;
+          -ms-flex-align: center;
           align-items: center;
           width: 20%;
           font-size: 180%;
@@ -113,8 +123,14 @@ body {
             padding: 0.3em;
             font-size: 100%; }
         body#group #period #period-controls .period {
+          display: -webkit-flex;
+          display: -ms-flexbox;
           display: flex;
+          -webkit-justify-content: center;
+          -ms-flex-pack: center;
           justify-content: center;
+          -webkit-align-items: center;
+          -ms-flex-align: center;
           align-items: center;
           width: 60%;
           font-size: 140%;
@@ -136,7 +152,11 @@ body {
           text-align: center;
           color: #9E9E9E; }
         body#group #period #periods .period.availability #avail-days {
+          display: -webkit-flex;
+          display: -ms-flexbox;
           display: flex;
+          -webkit-justify-content: space-between;
+          -ms-flex-pack: justify;
           justify-content: space-between;
           width: 100%;
           text-align: center;
@@ -159,8 +179,14 @@ body {
           overflow: hidden; }
           body#group #period #periods .period.availability #avail-plan .day {
             position: relative;
+            display: -webkit-flex;
+            display: -ms-flexbox;
             display: flex;
+            -webkit-flex-direction: row;
+            -ms-flex-direction: row;
             flex-direction: row;
+            -webkit-align-items: stretch;
+            -ms-flex-align: stretch;
             align-items: stretch;
             width: 100%;
             height: 3.3em;
@@ -172,8 +198,14 @@ body {
               height: 100%;
               padding: 0.4em 0.5em;
               width: 3em;
+              -webkit-flex-basis: 3em;
+              -ms-flex-preferred-size: 3em;
               flex-basis: 3em;
+              -webkit-flex-shrink: 0;
+              -ms-flex-negative: 0;
               flex-shrink: 0;
+              -webkit-flex-grow: 0;
+              -ms-flex-positive: 0;
               flex-grow: 0; }
               body#group #period #periods .period.availability #avail-plan .day .label .day-date {
                 font-weight: 300;
@@ -323,8 +355,14 @@ body {
         color: #FFF;
         font-weight: 300; }
       body#group #manage #users {
+        display: -webkit-flex;
+        display: -ms-flexbox;
         display: flex;
+        -webkit-justify-content: flex-start;
+        -ms-flex-pack: start;
         justify-content: flex-start;
+        -webkit-flex-wrap: wrap;
+        -ms-flex-wrap: wrap;
         flex-wrap: wrap;
         padding: 0.5em; }
         body#group #manage #users .user {
@@ -392,6 +430,8 @@ body {
           cursor: pointer;
           float: right; }
           body#group #invite h1 .button-close i {
+            display: -webkit-flex;
+            display: -ms-flexbox;
             display: flex; }
       body#group #invite #form {
         position: relative;
@@ -428,6 +468,23 @@ body {
         background-color: #CD8E00;
         text-align: center;
         font-size: 700%; }
+    body#group nav {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background-color: #452D9B; }
+      body#group nav .tab {
+        float: left;
+        width: 33%;
+        color: #FFF;
+        text-align: center;
+        padding: 0.6rem 0; }
+        body#group nav .tab div {
+          font-size: 1rem;
+          margin-bottom: 0.2em; }
+        body#group nav .tab span {
+          font-weight: 300;
+          font-size: 0.8rem; }
   body#groups #header {
     height: 2em;
     padding: 1em;
@@ -503,8 +560,14 @@ body {
       body#invite #info h2 {
         margin: 0; }
       body#invite #info #users {
+        display: -webkit-flex;
+        display: -ms-flexbox;
         display: flex;
+        -webkit-justify-content: flex-start;
+        -ms-flex-pack: start;
         justify-content: flex-start;
+        -webkit-flex-wrap: wrap;
+        -ms-flex-wrap: wrap;
         flex-wrap: wrap;
         padding: 0.5em; }
         body#invite #info #users .user {
@@ -646,6 +709,8 @@ input {
     border-top-left-radius: 0.2em; }
 
 .radio {
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
   display: inline-flex;
   margin: 0 0.5em 0 0;
   vertical-align: middle;
@@ -670,3 +735,7 @@ input {
     .radio .option:last-child {
       border-top-right-radius: 0.3em;
       border-bottom-right-radius: 0.3em; }
+
+.test {
+  -webkit-animation: test;
+  animation: test; }

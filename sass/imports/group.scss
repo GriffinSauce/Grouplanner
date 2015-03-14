@@ -1,7 +1,7 @@
 &#group
 {
 	text-align:left;
-	
+
 	#header
 	{
 		height:2em;
@@ -173,7 +173,7 @@
 					padding: 0 1em;
 				}
 			}
-			
+
 			#invite-btn
 			{
 				width: 33%;
@@ -301,6 +301,34 @@
 			background-color: #CD8E00;
 			text-align: center;
 			font-size: 700%;
+		}
+	}
+
+	nav
+	{
+		position:fixed;
+		bottom:0;
+		width:100%;
+		background-color: #452D9B;
+
+		.tab
+		{
+			float:left;
+			width:33%;
+			color:#FFF;
+			text-align: center;
+			padding: 0.6rem 0;
+
+			div
+			{
+				font-size: 1rem;
+				margin-bottom: 0.2em;
+			}
+			span
+			{
+				font-weight: 300;
+				font-size: 0.8rem;
+			}
 		}
 	}
 }
