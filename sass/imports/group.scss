@@ -249,8 +249,6 @@
 		width:100%;
 		background-color: #4BCD96;
 		overflow: hidden;
-		box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.3);
-		transition: box-shadow 0.2s ease;
 
 		.tab
 		{
@@ -283,7 +281,6 @@
 		{
 			position: fixed;
 			top:0;
-			  box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.2);
 		}
 	}
 	.nav-placeholder
