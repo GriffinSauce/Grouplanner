@@ -7,27 +7,27 @@ html
 	height:100%;
 	font-family:Roboto, "sans-serif";
 	background-color:#E0E0E0;
-	
+
 }
 body
 {
 	padding: 0;
 	margin: 0;
 	text-align: center;
-	
+
 	#banner
 	{
 		padding:2em 2em 0 2em;
 		background-color:white;
 		border-bottom: 10px #CDBDFF solid;
-		
+
 		img
 		{
 			height:15%;
 			max-height:540px;
 		}
 	}
-	
+
 	&#index,
 	&#login
 	{
@@ -81,7 +81,7 @@ i
 	cursor:pointer;
 	border-radius:0.2em;
 	transition:background-color 0.1s;
-	
+
 	i
 	{
 		margin: 0 0.3em 0 -0.1em;
@@ -164,7 +164,7 @@ input
 {
 	color: #333;
 	background-color: rgba(207, 207, 207, 0.80);
-	
+
 	&.number
 	{
 		margin: 0;
@@ -186,7 +186,7 @@ input
 	background-color: #FFF;
 	text-align: center;
 	z-index: 2;
-	
+
 	&#plus
 	{
 		margin: 0 0.3em 0 -0.3em;
@@ -208,7 +208,7 @@ input
 	margin: 0 0.5em 0 0;
 	vertical-align: middle;
 	cursor: pointer;
-	
+
 	.option
 	{
 		margin: 0;
@@ -219,7 +219,7 @@ input
 		background-color: transparent;
 		border:0.1em solid #4558a8;
 		transition: background-color 0.1s ease, color 0.1s ease;
-		
+
 		&.active
 		{
 			color:#FFF;
@@ -243,4 +243,13 @@ input
 .test
 {
 	animation: test;
+}
+
+/* Tablets and up ----------- */
+@media only screen  and (min-width : 500px) {
+	section
+	{
+		width: 500px;
+		margin:auto;
+	}
 }

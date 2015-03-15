@@ -55,10 +55,7 @@ body {
         padding: 0 1em; }
     body#create section#permissions {
       text-align: left;
-      padding: 0em 1em 2em 1em;
-      border-bottom: 10px #CDBDFF solid; }
-    body#create section:last-of-type {
-      background-color: #FAFAFA; }
+      padding: 0em 1em 2em 1em; }
   body#create a {
     margin-bottom: 0.5em; }
   body#group {
@@ -712,3 +709,9 @@ input {
 .test {
   -webkit-animation: test;
   animation: test; }
+
+/* Tablets and up ----------- */
+@media only screen and (min-width: 500px) {
+  section {
+    width: 500px;
+    margin: auto; } }

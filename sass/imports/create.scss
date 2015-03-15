@@ -4,7 +4,7 @@
 	#banner
 	{
 		padding: 1.5em 2em 0 2em;
-		
+
 		img
 		{
 			height:10%;
@@ -12,19 +12,19 @@
 		}
 		h1
 		{
-			color: #9736CA;	
+			color: #9736CA;
 		}
 		p
 		{
-			color: #697DD3;	
+			color: #697DD3;
 		}
 	}
-	
+
 	h2
 	{
 		position: relative;
 		text-align: center;
-		
+
 		span
 		{
 			position: relative;
@@ -32,7 +32,7 @@
 			background-color: #E0E0E0;
 			z-index:2;
 		}
-		
+
 		&:before
 		{
 			content:"";
@@ -45,33 +45,28 @@
 			z-index: 1;
 		}
 	}
-	
+
 	section
 	{
 		padding: 1em 1em 2em 1em;
-		
+
 		&#form
 		{
 			text-align: left;
 			font-size: 110%;
-			
+
 			p
 			{
-				padding: 0 1em;	
+				padding: 0 1em;
 			}
 		}
 		&#permissions
 		{
 			text-align: left;
 			padding: 0em 1em 2em 1em;
-			border-bottom: 10px #CDBDFF solid;
-		}
-		&:last-of-type
-		{
-			background-color:#FAFAFA;
 		}
 	}
-	
+
 	a
 	{
 		margin-bottom:0.5em;
