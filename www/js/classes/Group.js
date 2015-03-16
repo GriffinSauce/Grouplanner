@@ -25,6 +25,9 @@ function Group(data)
 			if(removedUserId == app.user._id)
 			{
 				window.location.href = '/groups';
+			} else
+			{
+				$('.remove-user[data-id=\'' + removedUserId + '\']').parent('.user').remove();
 			}
 		});
 	};
