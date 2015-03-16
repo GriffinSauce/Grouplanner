@@ -46,14 +46,14 @@
 				<div class="user">
 					<div class="img"><img src="{{picture}}" /></div>
 					<div class="name">{{name.full}}</div>
-					<div class='icon-x'></div>
+					<div class='icon-x remove-user' data-id='{{id}}'></div>
 				</div>
 				{{/each}}
 				<div id="invite">
 					<input type="email" placeholder="invite@someone.com"><span class="btn" id="send"><i class="icon-mail"></i> Invite</span>
 				</div>
 			</div>
-			<div class="btn leave">Leave group</div>
+			<div class="btn leave remove-user" data-id='{{user.id}}'>Leave group</div>
 		</section>
 
 		<section id="updates">

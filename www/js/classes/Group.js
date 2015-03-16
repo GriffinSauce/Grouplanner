@@ -8,23 +8,27 @@
 function Group(data)
 {
 	var scope = this;
-	
+
 	// TODO: Build Add member function
 	this.addMember = function()
 	{
-		
+
 	};
-	// TODO: Build Remove member function
+
+	/**
+	* Removes current user from the group
+	*/
 	this.removeMember = function()
 	{
-		
+		socket.emit('delete/group/member', {group:scope._id, member:$(this).data('id')});
 	};
+
 	// TODO: Build Delete group function
 	this.delete = function()
 	{
-		
+
 	};
-	
+
 	// Save supplied data into this object
 	for(var key in data)
 	{

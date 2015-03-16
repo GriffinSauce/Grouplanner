@@ -35,4 +35,6 @@ $(document).ready(function(){
 		placeholder.removeClass("stick");
 	  }
 	});
+
+	$('.remove-user').bind('click tap', app.group.removeMember);
 });
