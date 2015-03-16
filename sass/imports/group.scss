@@ -150,6 +150,7 @@
 
 		#info
 		{
+
 			h2
 			{
 				margin:0;
@@ -194,6 +195,7 @@
 					flex-grow: 2;
 					font-size: 110%;
 					padding:0.2em 0.5em;
+					@include allow-select();
 				}
 				.icon-x
 				{
@@ -251,6 +253,11 @@
 			text-align: center;
 			background-color: #EC4242;
 		}
+	}
+
+	#updates
+	{
+		@include allow-select();
 	}
 
 	nav
