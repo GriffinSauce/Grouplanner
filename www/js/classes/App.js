@@ -7,28 +7,28 @@
 function App()
 {
 	var scope = this;
-	
+
 	// Currently active period
 	// Default to this week
 	this.activePeriod = moment().format('DDMMYYYY');
-	
+
 	// Currently active group
 	// TODO: Supply Group ID (from select, localstorage or default for the user)
 	// TODO: Remove dummy
 	this.group = {};
-	
+
 	// Period length
 	// Default 7
 	this.periodLength = this.group.length;
-	
+
 	// Data contains locally loaded periods, by startDate in DDMMYYYY format
 	// Contains only this week by default
 	this.data = {};
-	
+
 	// User data
 	this.user = {};
-	
-	/*	
+
+	/*
 	 *	Initialise the app
 	 *
 	 */
@@ -36,7 +36,6 @@ function App()
 	{
 		$('.period-control-button.next').bind('click tap', this.nextPeriod);
 		$('.period-control-button.prev').bind('click tap', this.prevPeriod);
-		$('#manage #invite-btn').bind('click tap', this.showInvite);
 		$('#invite #send').bind('click tap', this.sendInvite);
 
 		// Get data that is supplied with jshare
@@ -46,8 +45,8 @@ function App()
 
 		console.log('APP INITIALISED');
 	};
-	
-	/*	
+
+	/*
 	 *	Load a particular period
 	 *	Input a startDate as a DDMMYYYY string
 	 */
@@ -63,8 +62,8 @@ function App()
 		scope.data[scope.activePeriod].activate();
 		scope.updateName();
 	};
-		
-	/*	
+
+	/*
 	 *	Switch to next period and load
 	 *
 	 */
@@ -75,8 +74,8 @@ function App()
 		var next = moment(scope.activePeriod, 'DDMMYYYY').add(scope.periodLength, 'd').format('DDMMYYYY');
 		scope.loadPeriod(next);
 	};
-	
-	/*	
+
+	/*
 	 *	Switch to previous period and load
 	 *
 	 */
@@ -87,8 +86,8 @@ function App()
 		var prev = moment(scope.activePeriod, 'DDMMYYYY').subtract(scope.periodLength, 'd').format('DDMMYYYY');
 		scope.loadPeriod(prev);
 	};
-	
-	/*	
+
+	/*
 	 *	Update period display
 	 *
 	 */
@@ -100,28 +99,6 @@ function App()
 		var periodName = startDay+' - '+endDay;
 		$('#period-controls .period span').text(periodName);
 	};
-	
-	/*
-	 *	Show invite page
-	 *
-	 */
-	this.showInvite = function()
-	{
-		$('#manage').slideUp();
-		$('#invite').slideDown();
-		$('#invite .button-close').bind('click tap', scope.hideInvite);
-	};
-
-	/*
-	 * Hide invite page
-	 *
-	 */
-	this.hideInvite = function()
-	{
-		$('#manage').slideDown();
-		$('#invite').slideUp();
-		$('#invite .button-close').unbind('click tap');
-	};
 
 	/*
 	 *	Show invite page
@@ -129,7 +106,7 @@ function App()
 	 */
 	this.sendInvite = function()
 	{
-		var email = $('#invite #form input').val();
+		var email = $('#invite input').val();
 		var re = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
 		if(re.test(email))
 		{
@@ -140,18 +117,14 @@ function App()
 			socket.emit('put/invite', data, function(rtnData) {
 				if(rtnData.success)
 				{
-					$('#invite #confirm').fadeIn(300, function(){
-						// Reset
-						$('#manage').slideDown();
-						$('#invite').slideUp(function(){
-							$('#invite #confirm').hide();
-							this.hideInvite();
-						});
-					});
+					// TODO: notify user of success more smoothly
+					$('#invite input').val('');
+					$('#invite #send i').removeClass('icon-mail').addClass('icon-check');
+					setTimeout(function(){
+						$('#invite #send i').removeClass('icon-check').addClass('icon-mail');
+					},1500);
 				}else{
 					alert('An error occured, please try again later.');
-					// Reset
-					this.hideInvite()
 				}
 			});
 		}else{

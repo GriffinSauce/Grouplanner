@@ -1,7 +1,7 @@
 &#group
 {
 	text-align:left;
-	
+
 	#header
 	{
 		height:2em;
@@ -50,7 +50,17 @@
 		}
 	}
 
-	#period
+	section
+	{
+		display:none;
+		padding:1em;
+		&.active
+		{
+			display:block;
+		}
+	}
+
+	#plan
 	{
 		color: #ADADAD;
 		padding-bottom:2em;
@@ -61,7 +71,7 @@
 			justify-content:space-between;
 			text-align: center;
 			height:4em;
-			padding:1em 0.5em 0 0.5em;
+			padding:0;
 
 			.period-control-button
 			{
@@ -95,7 +105,6 @@
 
 		#periods
 		{
-			padding: 1em;
 
 			.period
 			{
@@ -125,38 +134,51 @@
 
 	#manage
 	{
-		padding:0 0 1em 0;
 		color:#FFF;
-		background-color: #4E37A1;
 
-		h1
+		#users,
+		#info
 		{
-			text-align: center;
-			margin:0 0 0.5em 0;
-			padding:0.5em;
-			background-color: #452D9B;
-			color: #FFF;
-			font-weight: 300;
+			position: relative;
+			margin:0 0 1em 0;
+			padding: 1em;
+			border-radius: 0.15em;
+			color:#555;
+			background-color: #FFF;
+			box-shadow: 0 0.1em 0.2em 0 rgba(0, 0, 0, 0.08);
+		}
+
+		#info
+		{
+			h2
+			{
+				margin:0;
+			}
+			i
+			{
+				position:absolute;
+				top:1em;
+				right:1em;
+			}
 		}
 
 		#users
 		{
-			display:flex;
-			justify-content: flex-start;
-			flex-wrap: wrap;
-			padding: 0.5em;
+			display:block;
+			padding:1.5em 1em 1em 1em;
 
 			.user
 			{
-				width: 33%;
-				text-align: center;
-				margin: 0em 0 1em 0;
+				display:flex;
+				padding:0 0 1em 0;
+				margin:0 0 1em 0;
+				border-bottom: 1px solid #F0F0F0;
 
 				.img
 				{
-					width: 5em;
-					height: 5em;
-					margin: 0em auto 0.5em auto;
+					width: 2em;
+					height: 2em;
+					margin: 0em auto;
 					background-color: #FFF;
 					border-radius: 100%;
 					overflow:hidden;
@@ -169,138 +191,114 @@
 				}
 				.name
 				{
-					font-size: 80%;
-					padding: 0 1em;
+					flex-grow: 2;
+					font-size: 110%;
+					padding:0.2em 0.5em;
+				}
+				.icon-x
+				{
+					font-size: 1.4em;
+					color: #BBB;
+					width: 2em;
+					text-align: right;
+					cursor: pointer;
 				}
 			}
-			
-			#invite-btn
+			#invite
 			{
-				width: 33%;
-				text-align: center;
-				margin: 0em 0 1em 0;
+				display: flex;
+				position: relative;
+				margin:0;
+				width: 100%;
 
-				#icon
+				input
 				{
-					width: 2em;
-					height: 2em;
-					padding: 1.5em;
-					margin: 0em auto 0.5em auto;
-					background-color: #FFF;
-					border-radius: 100%;
-					overflow:hidden;
+					flex-grow: 2;
+					margin:0;
+					font-size: 110%;
+					padding: 0.5em;
+					background-color:#FFF;
+					border: 2px solid #DADADA;
+					border-right: none;
+					border-top-right-radius: 0;
+					border-bottom-right-radius: 0;
+				}
+				.btn
+				{
+					display:inline-block;
+					white-space:nowrap;
+					margin:0;
+					padding: 0.55em 1em 0.45em 0.8em;
+					text-align: center;
+					font-size: 110%;
+					color:#FFF;
+					background-color: #4BCD96;
+					border-top-left-radius: 0;
+					border-bottom-left-radius: 0;
 
-					i
+					&:hover
 					{
-						font-size: 2em;
-						color:#DDD;
+						background-color: #2CC282;
 					}
 				}
-				#title
-				{
-					font-size: 80%;
-					padding: 0 1em;
-				}
 			}
-
 		}
 
-		#info
+		.leave
 		{
-			position: relative;
-			margin: 1em;
-			padding: 1em;
-			border-radius: 0.15em;
-			color:#555;
-			background-color: #FFF;
-			box-shadow: 0 0.1em 0.2em 0 rgba(0, 0, 0, 0.08);
-
-			h2
-			{
-				margin:0;
-			}
-			i
-			{
-				position:absolute;
-				top:1em;
-				right:1em;
-			}
+			box-sizing: border-box;
+			width:100%;
+			text-align: center;
+			background-color: #EC4242;
 		}
 	}
 
-	#invite
+	nav
+	{
+		width:100%;
+		background-color: #4BCD96;
+		overflow: hidden;
+		-webkit-transform: translateZ(0);
+
+		.tab
+		{
+			float:left;
+			width:33%;
+			color:#FFF;
+			text-align: center;
+			padding: 0.3rem 0 0.5rem 0;
+			border-top:0.3rem solid transparent;
+			transition: border-color 0.1s ease;
+
+			div
+			{
+				font-size: 1rem;
+				margin-bottom: 0.3em;
+			}
+			span
+			{
+				font-weight: 300;
+				font-size: 0.8rem;
+			}
+
+			&.active
+			{
+				border-top-color:#FFF;
+			}
+		}
+
+		&.stick
+		{
+			position: fixed;
+			top:0;
+		}
+	}
+	.nav-placeholder
 	{
 		display:none;
-		padding:0 0 2em 0;
-		color:#FFF;
-		background-color: #CD8E00;
-
-		h1
+		&.stick
 		{
-			text-align: center;
-			margin:0 0 0.5em 0;
-			padding:0.5em;
-			background-color: #e09d06;
-			color: #FFF;
-			font-weight: 300;
-			.button-close
-			{
-				cursor: pointer;
-				float: right;
-				i
-				{
-					display: flex;
-				}
-			}
-		}
-		#form
-		{
-			position: relative;
-			margin: 1em;
-			padding: 1em;
-			color:#FFF;
-
-			p
-			{
-				margin:0;
-			}
-			input
-			{
-				margin:2em 0.5em 1em 0;
-				width:100%;
-				text-align: center;
-				font-size: 110%;
-				padding: 0.5em 0 0.5em 0.4em;
-				background-color:#FFF;
-			}
-			.btn
-			{
-				display:inline-block;
-				margin:0;
-				width: 100%;
-				padding: 0.4em 0em 0.5em 0em;
-				text-align: center;
-				font-size: 110%;
-				color:#777;
-				background-color:#F0F0F0;
-
-				&:hover
-				{
-					background-color: #FFF;
-				}
-			}
-		}
-		#confirm
-		{
-			display: none;
-			position: absolute;
-			width: 100%;
-			padding: 0.2em 0;
-			top: 0;
-			left: 0;
-			background-color: #CD8E00;
-			text-align: center;
-			font-size: 700%;
+			display:block;
 		}
 	}
 }

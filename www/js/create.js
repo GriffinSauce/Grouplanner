@@ -5,7 +5,7 @@ var socket = io();
  *
  */
 $(document).ready(function(){
-	
+
 	$('.numberBtn#minus').bind('click tap',function(){
 		var val = parseInt($('#form #length').val());
 		val -= val !== 0 ? 1 : 0;
@@ -16,7 +16,7 @@ $(document).ready(function(){
 		val++;
 		$('#form #length').val(val);
 	});
-		
+
 	$('#createGroupBtn').bind('click tap',function(){
 		
 		if(validate())

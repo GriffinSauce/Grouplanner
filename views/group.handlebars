@@ -12,7 +12,14 @@
 			</a>
 		</div>
 
-		<div id="period">
+		<div class="nav-placeholder"></div>
+		<nav>
+			<div class="tab active" data-target="plan"><div class="icon-calendar-1"></div><span>Plan</span></div>
+			<div class="tab" data-target="manage"><div class="icon-manage"></div><span>Manage</span></div>
+			<div class="tab" data-target="updates"><div class="icon-clock"></div><span>Updates</span></div>
+		</nav>
+
+		<section id="plan" class="active">
 			<div id='period-controls'>
 				<div class='period-control-button prev'>
 					<div><i class="icon-chevron-left"></i></div>
@@ -26,44 +33,32 @@
 			<div id="periods">
 
 			</div>
-		</div>
+		</section>
 
-		<div id="manage">
-			<h1>Manage</h1>
-			<div id="users">
-				{{#each group.members}}
-				<div class="user">
-					<div class="img"><img src="{{picture}}" /></div>
-					<div class="name">{{name.first}}</div>
-				</div>
-				{{/each}}
-				<div id="invite-btn">
-					<div id="icon"><i class="icon-plus"></i></div>
-					<div id="title">Invite</div>
-				</div>
-			</div>
+		<section id="manage">
 			<div id="info">
 				<i class="icon-pencil"></i>
 				<h2>{{group.name}}</h2>
 				<p>{{group.description}}</p>
 			</div>
-		</div>
-
-		<div id="invite">
-			<h1>Invite<div class='button-close'><i class='icon-x'></i></div></h1>
-			<div id="form">
-				<p>
-					Input an e-mail address and we'll send him/her a link to join the group.
-				</p>
-				<p>
-					<input type="email" placeholder="email@something.com">
-					<span class="btn" id="send"><i class="icon-mail"></i> Send invite link</span>
-				</p>
-				<div id="confirm">
-					<i class="icon-check"></i>
+			<div id="users">
+				{{#each group.members}}
+				<div class="user">
+					<div class="img"><img src="{{picture}}" /></div>
+					<div class="name">{{name.full}}</div>
+					<div class='icon-x remove-user' data-id='{{id}}'></div>
+				</div>
+				{{/each}}
+				<div id="invite">
+					<input type="email" placeholder="invite@someone.com"><span class="btn" id="send"><i class="icon-mail"></i> Invite</span>
 				</div>
 			</div>
-		</div>
+			<div class="btn leave remove-user" data-id='{{user.id}}'>Leave group</div>
+		</section>
+
+		<section id="updates">
+			<p>Latest updates will be shown here</p>
+		</section>
 
 	</body>
 	<script>{{{JShare}}}</script>
