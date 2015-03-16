@@ -721,10 +721,6 @@ input {
       border-top-right-radius: 0.3em;
       border-bottom-right-radius: 0.3em; }
 
-.test {
-  -webkit-animation: test;
-  animation: test; }
-
 /* Tablets and up ----------- */
 @media only screen and (min-width: 500px) {
   section {
