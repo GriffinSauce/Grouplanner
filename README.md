@@ -7,3 +7,5 @@ Grouplanner
 
 This is a webapp for planning with groups.
 Readme will be updated...
+
+Issues are managed on [Waffle](https://waffle.io/griffinsauce/grouplanner).

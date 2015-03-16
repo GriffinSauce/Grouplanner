@@ -20,6 +20,17 @@ var groupSchema = new Schema(
 		token: {type: String},
 		open: {type: Boolean},
 		email: {type: String}
+	},
+	permissions:
+	{
+		plan: {
+			allowed: [{type:Schema.Types.ObjectId, ref: 'User'}],
+			addNewMembers: {type:Boolean}
+		},
+		settings: {
+			allowed: [{type:Schema.Types.ObjectId, ref: 'User'}],
+			addNewMembers: {type:Boolean}
+		}
 	}
 }, { autoIndex: false });
 
