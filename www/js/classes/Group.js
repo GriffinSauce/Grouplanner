@@ -20,7 +20,13 @@ function Group(data)
 	*/
 	this.removeMember = function()
 	{
-		socket.emit('delete/group/member', {group:scope._id, member:$(this).data('id')});
+		socket.emit('delete/group/member', {group:scope._id, member:$(this).data('id')}, function(removedUserId)
+		{
+			if(removedUserId == app.user._id)
+			{
+				window.location.href = '/groups';
+			}
+		});
 	};
 
 	// TODO: Build Delete group function

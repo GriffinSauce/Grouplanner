@@ -20,7 +20,7 @@ var email = require(__dirname + '/email.js');
 // Object containing all functions
 var apiFunctions = {
 
-	/*	
+	/*
 	 *	Get group
 	 *	input.id = group id
 	 */
@@ -40,11 +40,11 @@ var apiFunctions = {
 			{
 				console.log('Group not found, returning lastgroup');
 				callback(group);
-			});	
+			});
 		}
 	},
-	
-	/*	
+
+	/*
 	 *	Create group
 	 *	input.group = group data
 	 *	input.user = current user
@@ -68,8 +68,8 @@ var apiFunctions = {
 			});
 		});
 	},
-	
-	/*	
+
+	/*
 	 *	Get period
 	 *	input.startDate = period startDate
 	 *	input.groupid = _id of the group this period is part of
@@ -115,8 +115,8 @@ var apiFunctions = {
 			}
 		});
 	},
-	
-	/*	
+
+	/*
 	 *	Put available
 	 *	input.periodid = _id of the period
 	 *	input.date = date of availability
@@ -145,8 +145,8 @@ var apiFunctions = {
 			callback({success:true});
 		});
 	},
-	
-	/*	
+
+	/*
 	 *	Put planned
 	 *	input.periodid = _id of the period
 	 *	input.date = date that is planned
@@ -168,8 +168,8 @@ var apiFunctions = {
 			callback({success:true});
 		});
 	},
-	
-	/*	
+
+	/*
 	 *	Put user, users can only update their own data
 	 *	input.lastgroup = _id of group
 	 */
@@ -204,7 +204,10 @@ var apiFunctions = {
 			else
 			{
 				group.members.remove(input.member);
-				group.save(callback);
+				group.save(function()
+				{
+					callback(input.member);
+				});
 			}
 		});
 	},
@@ -240,7 +243,7 @@ var apiFunctions = {
 			});
 		});
 	},
-	
+
 	/*
 	 *	Put notification, sends an email notification
 	 *	input.group = _id of group
@@ -256,7 +259,7 @@ var apiFunctions = {
 				console.log(input.from);
 				// Find group
 				for(var i=0; i<group.members.length; i++)
-				{	
+				{
 					group.members[i].id = String(group.members[i]._id); // Fuck you, Mongo, just .. fuck you.
 					if(input.to.indexOf(group.members[i].id) !== -1)
 					{
@@ -286,7 +289,7 @@ var apiFunctions = {
 
 // Export for use in server.js
 module.exports = apiFunctions;
-  
+
 // Socket listeners
 io.on('connection', function (client)
 {
