@@ -20,16 +20,37 @@ function Group(data)
 	*/
 	this.removeMember = function()
 	{
-		socket.emit('delete/group/member', {group:scope._id, member:$(this).data('id')}, function(removedUserId)
+		var userId = $(this).data('id');
+		var confirmMessage = '';
+		if(userId == app.user._id)
 		{
-			if(removedUserId == app.user._id)
+			confirmMessage = 'Y u leave group? Are you sure?';
+		} else
+		{
+			var memberToRemove = {};
+			$.each(app.group.members, function(index, member)
 			{
-				window.location.href = '/groups';
-			} else
+				if(member._id == userId)
+				{
+					memberToRemove = member;
+				}
+			});
+			confirmMessage = 'Are you sure you want to remove ' + memberToRemove.name.first + ' ' + memberToRemove.name.last + '?';
+		}
+
+		if(confirm(confirmMessage))
+		{
+			socket.emit('delete/group/member', {group:scope._id, member:userId}, function(removedUserId)
 			{
-				$('.remove-user[data-id=\'' + removedUserId + '\']').parent('.user').remove();
-			}
-		});
+				if(removedUserId == app.user._id)
+				{
+					window.location.href = '/groups';
+				} else
+				{
+					$('.remove-user[data-id=\'' + removedUserId + '\']').parent('.user').remove();
+				}
+			});
+		}
 	};
 
 	// TODO: Build Delete group function
