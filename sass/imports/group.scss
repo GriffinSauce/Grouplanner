@@ -155,11 +155,24 @@
 			{
 				margin:0;
 			}
-			i
+			#display i
 			{
-				position:absolute;
-				top:1em;
-				right:1em;
+				float: right;
+			}
+			#display,
+			#edit
+			{
+				overflow:hidden;
+				max-height:0;
+				transition:max-height 400ms ease;
+				&.visible
+				{
+					max-height:100%;
+				}
+				.btn
+				{
+					float:right;
+				}
 			}
 		}
 

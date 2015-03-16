@@ -37,6 +37,8 @@ function App()
 		$('.period-control-button.next').bind('click tap', this.nextPeriod);
 		$('.period-control-button.prev').bind('click tap', this.prevPeriod);
 		$('#invite #send').bind('click tap', this.sendInvite);
+		$('#info #display').bind('click tap', this.editInfo);
+		$('#info #edit .btn').bind('click tap', this.saveInfo);
 
 		// Get data that is supplied with jshare
 		scope.user = jshare.user;
@@ -131,6 +133,27 @@ function App()
 			alert("Please provide a valid e-mail address");
 		}
 	};
+
+	/*
+	 *	Edit group info
+	 *
+	 */
+	this.editInfo = function()
+	{
+		$('#info #display').removeClass('visible');
+		$('#info #edit').addClass('visible');
+	};
+
+	/*
+	 *	Save group info
+	 *
+	 */
+	this.saveInfo = function()
+	{
+		$('#info #edit').removeClass('visible');
+		$('#info #display').addClass('visible');
+	};
+
 
 	this.init();
 }
