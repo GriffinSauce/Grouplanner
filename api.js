@@ -231,6 +231,11 @@ var apiFunctions = {
 					token:token,
 					open:true,
 					email:input.invitedUser.email
+				},
+				events:{
+					type: 'invite',
+					user: scope.passport.user._id,
+					inviteduser: input.invitedUser.email
 				}
 			};
 			Group.findOneAndUpdate({_id: input.group}, update, function(err, group)
