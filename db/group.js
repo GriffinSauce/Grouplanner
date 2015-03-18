@@ -37,7 +37,8 @@ var groupSchema = new Schema(
 		{
 			type: {type:String, default:''},
 			user: {type:Schema.Types.ObjectId, ref: 'User'},
-			date: {type:Date, default:Date.now }
+			date: {type:Date, default:Date.now },
+			meta: {type:Object, default: {}}
 		}
 	]
 }, { autoIndex: false });

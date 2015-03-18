@@ -235,7 +235,10 @@ var apiFunctions = {
 				events:{
 					type: 'invite',
 					user: scope.passport.user._id,
-					inviteduser: input.invitedUser.email
+					meta:
+					{
+						inviteduser: input.invitedUser.email
+					}
 				}
 			};
 			Group.findOneAndUpdate({_id: input.group}, update, function(err, group)
