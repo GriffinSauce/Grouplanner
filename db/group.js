@@ -31,7 +31,15 @@ var groupSchema = new Schema(
 			allowed: [{type:Schema.Types.ObjectId, ref: 'User'}],
 			addNewMembers: {type:Boolean}
 		}
-	}
+	},
+	events:
+	[
+		{
+			type: {type:String, default:''},
+			user: {type:Schema.Types.ObjectId, ref: 'User'},
+			date: {type:Date, default:Date.now }
+		}
+	]
 }, { autoIndex: false });
 
 groupSchema.plugin(findOrCreate);
