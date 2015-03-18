@@ -50,7 +50,7 @@ if(global.grouplanner.environment == 'local')
 {
 	var dbconnectionURL = 'mongodb://';
 		dbconnectionURL += process.env.MONGODB_USER + ':';
-		dbconnectionURL += process.env.MONGODB_PASS + '@';
+		dbconnectionURL += env.MONGODB_PASS + '@';
 		dbconnectionURL += global.grouplanner.ipaddress + ':';
 		dbconnectionURL += process.env.OPENSHIFT_MONGODB_DB_PORT + '/';
 		dbconnectionURL += process.env.MONGODB_DB_DB;
