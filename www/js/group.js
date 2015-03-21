@@ -1,10 +1,10 @@
 /* global $,moment,App,Group,Period,document */
 
 Handlebars.registerHelper("everyOther", function (index, amount, scope) {
-    if ( ++index % amount )
-        return scope.inverse(this);
-    else
-        return scope.fn(this);
+	if ( ++index % amount )
+		return scope.inverse(this);
+	else
+		return scope.fn(this);
 });
 
 var socket = io();
@@ -26,22 +26,23 @@ $(document).ready(function(){
 		// Sections
 		$('section').removeClass('active');
 		$('section#'+t.data('target')).addClass('active');
+
+		// Save
+		localStorage.tab = t.data('target');
 	});
 
-	var nav = $('nav');
-	var placeholder = $('.nav-placeholder');
-	placeholder.height($('nav').outerHeight());
-	var threshold = $('#header').outerHeight();
-	threshold += $('.environment-label').outerHeight() !== null ? $('.environment-label').outerHeight() : 0;
-	$(document).on("scroll", function() {
-	  if ( $(this).scrollTop() > threshold) {
-		nav.addClass("stick");
-		placeholder.addClass("stick");
-	  } else {
-		nav.removeClass("stick");
-		placeholder.removeClass("stick");
-	  }
-	});
+	if(localStorage.tab !== undefined && localStorage.tab !== null)
+	{
+		var tab = localStorage.tab;
+
+		// Tabs
+		$('nav .tab').removeClass('active');
+		$('nav .tab[data-target="'+tab+'"]').addClass('active');
+
+		// Sections
+		$('section').removeClass('active');
+		$('section#'+tab).addClass('active');
+	}
 
 	$('.remove-user').bind('click tap', app.group.removeMember);
 });
