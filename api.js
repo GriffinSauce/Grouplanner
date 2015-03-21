@@ -86,11 +86,11 @@ var apiFunctions = {
 		console.log('Updating group '+input.group.id+' with:');
 		console.log(update);
 
-		Group.update({_id:input.group.id}, update, function(err)
+		Group.findOneAndUpdate({_id:input.group.id}, update, function(err,group)
 		{
 			if(err) { console.log('Error updating'); console.log(err); }else{
 				console.log('Updated group');
-				callback({success:true});
+				callback({success:true,group:group});
 			}
 		});
 	},
@@ -180,7 +180,7 @@ var apiFunctions = {
 	 */
 	'put/planned' : function(input,callback)
 	{
-        var scope = this;
+		var scope = this;
 		console.log('Updating date '+input.date+' in period '+input.periodid);
 		var update = {};
 		update['days.'+input.date+'.planned'] = input.planned;
@@ -239,7 +239,7 @@ var apiFunctions = {
 	 */
 	'delete/group/member' : function(input, callback)
 	{
-        var scope = this;
+		var scope = this;
 		if(this.passport.user._id !== input.member)
 		{
 			// The user is removing someone else from the group, does he have the power?
@@ -249,7 +249,6 @@ var apiFunctions = {
 			if(err) { console.log("Error: " + err);	}
 			else
 			{
-                // group.members.find(input.member);
                 group.members.pull(input.member);
                 group.events.push({
 					type: 'user-removed',

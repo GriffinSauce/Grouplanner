@@ -40,16 +40,6 @@ function App()
 		$('#info #display').bind('click tap', this.editInfo);
 		var edit = $('#info #edit');
 		$('.btn',edit).bind('click tap', this.saveInfo);
-		$('.numberBtn#minus',edit).bind('click tap',function(){
-			var val = parseInt($('#length',edit).val());
-			val -= val !== 0 ? 1 : 0;
-			$('#length',edit).val(val);
-		});
-		$('.numberBtn#plus',edit).bind('click tap',function(){
-			var val = parseInt($('#length',edit).val());
-			val++;
-			$('#length',edit).val(val);
-		});
 		$('.radio .option').bind('click tap',function(){
 			if(!$(this).hasClass('active'))
 			{
@@ -175,7 +165,7 @@ function App()
 		{
 			var name = $('#info #edit #name').val();
 			var type = $('#info #edit #type').val();
-			var length = $('#info #edit #length').val();
+			//var length = $('#info #edit #length').val();
 			var data = {
 				id:app.group._id,
 				name:name,
@@ -196,12 +186,13 @@ function App()
 				if(rtnData.success)
 				{
 					// Update client side
-					$('#header #back span').text(name);
-					$('#info #display h2').text(name);
-					scope.group.name = data.name;
-					scope.group.eventtype = data.eventtype;
-					scope.group.permissions.plan.addNewMembers = data.permissions.plan.addNewMembers;
-					scope.group.permissions.settings.addNewMembers = data.permissions.settings.addNewMembers;
+					$('#header #back span').text(rtnData.group.name);
+					$('#info #display h2').text(rtnData.group.name);
+					$('#info #display p').text(rtnData.group.description);
+					scope.group.name = rtnData.group.name;
+					scope.group.eventtype = rtnData.group.eventtype;
+					scope.group.permissions.plan.addNewMembers = rtnData.group.permissions.plan.addNewMembers;
+					scope.group.permissions.settings.addNewMembers = rtnData.group.permissions.settings.addNewMembers;
 				}else{
 					alert('There was an error, admins have not been notified. Sucks to be you.'); // lol
 				}
@@ -214,12 +205,6 @@ function App()
 			{
 				alert('A name is required.');
 				$('#info #edit').focus();
-				return false;
-			}
-			if($('#info #edit #length').val().length === 0)
-			{
-				alert('Please fill in how often you want to plan '+$('#info #edit #type').val()+'. \nIt must be a number.');
-				$('#info #edit #length').focus();
 				return false;
 			}
 			return true;

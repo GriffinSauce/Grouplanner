@@ -7,7 +7,6 @@ var groupSchema = new Schema(
 {
 	name: {type: String, default: ''},
 	eventtype: {type: String, default: 'dates'},
-	description: {type: String, default: ''},
 	image: {data: Buffer, contentType: String},
 	startdate: {type: Date},
 	periodLength: {type: Number, default: 7},
@@ -41,7 +40,16 @@ var groupSchema = new Schema(
 			meta: {type:Object, default: {}}
 		}
 	]
-}, { autoIndex: false });
+}, {
+	autoIndex: false,
+	toObject: {virtuals: true},
+	toJSON: {virtuals: true}
+});
+
+groupSchema.virtual('description').get(function()
+{
+	return "We're called "+this.name+" and we plan "+this.eventtype+" once every "+this.periodLength+" days.";
+});
 
 groupSchema.plugin(findOrCreate);
 
