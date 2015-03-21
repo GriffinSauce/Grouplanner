@@ -1,28 +1,28 @@
 {{#each this}}
 	<div class="event {{type}}">
 		{{#ifCond type '==' 'group-created'}}
-			<p>{{user.name.full}} created this group</p>
-			<span>{{#formatDate date 'DD-MM-YYYY' }}{{/formatDate}}</span>
+			<p><span class="user">{{user.name.full}}</span> created this group</p>
+			<span class="date">{{#formatDate date 'DD-MM-YYYY' }}{{/formatDate}}</span>
 		{{/ifCond}}
 		{{#ifCond type '==' 'group-updated'}}
-			<p>{{user.name.full}} updated the group information</p>
-			<span>{{#formatDate date 'DD-MM-YYYY'}}{{/formatDate}}</span>
+			<p><span class="user">{{user.name.full}}</span> updated the group information</p>
+			<span class="date">{{#formatDate date 'DD-MM-YYYY'}}{{/formatDate}}</span>
 		{{/ifCond}}
 		{{#ifCond type '==' 'period-planned'}}
-			<p>{{user.name.full}} planned a date.</p>
-			<span>{{#formatDate date 'DD-MM-YYYY'}}{{/formatDate}}</span>
+			<p><span class="user">{{user.name.full}}</span> planned a date.</p>
+			<span class="date">{{#formatDate date 'DD-MM-YYYY'}}{{/formatDate}}</span>
 		{{/ifCond}}
 		{{#ifCond type '==' 'user-removed'}}
-			<p>{{user.name.full}} removed SOMEONE</p>
-			<span>{{#formatDate date 'DD-MM-YYYY'}}{{/formatDate}}</span>
+			<p><span class="user">{{user.name.full}}</span> removed SOMEONE</p>
+			<span class="date">{{#formatDate date 'DD-MM-YYYY'}}{{/formatDate}}</span>
 		{{/ifCond}}
 		{{#ifCond type '==' 'user-invited'}}
-			<p>{{user.name.full}} invited {{meta.inviteduser}}</p>
-			<span>{{#formatDate date 'DD-MM-YYYY'}}{{/formatDate}}</span>
+			<p><span class="user">{{user.name.full}}</span> invited {{meta.inviteduser}}</p>
+			<span class="date">{{#formatDate date 'DD-MM-YYYY'}}{{/formatDate}}</span>
 		{{/ifCond}}
 		{{#ifCond type '==' 'user-joined'}}
-			<p>{{user.name.full}} joined this group</p>
-			<span>{{#formatDate date 'DD-MM-YYYY'}}{{/formatDate}}</span>
+			<p><span class="user">{{user.name.full}}</span> joined this group</p>
+			<span class="date">{{#formatDate date 'DD-MM-YYYY'}}{{/formatDate}}</span>
 		{{/ifCond}}
 	</div>
 {{/each}}
