@@ -240,9 +240,11 @@ var apiFunctions = {
 	'delete/group/member' : function(input, callback)
 	{
 		var scope = this;
+		var kamikaze = true;
 		if(this.passport.user._id !== input.member)
 		{
 			// The user is removing someone else from the group, does he have the power?
+			kamikaze = false;
 		}
 		Group.findOne({_id: input.group}).populate('members').exec(function(err, group)
 		{
@@ -255,7 +257,8 @@ var apiFunctions = {
 					user: scope.passport.user._id,
 					meta:
 					{
-						removeduser: mongoose.Types.ObjectId(input.member)
+						removeduser: mongoose.Types.ObjectId(input.member),
+						selfremove: kamikaze
 					}
 				});
 				group.save(function()
