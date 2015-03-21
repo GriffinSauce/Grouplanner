@@ -45,21 +45,22 @@ var routes =
 // DATABASE CONNECTION
 if(global.grouplanner.environment == 'local')
 {
-	mongoose.connect('mongodb://' + (process.env.OPENSHIFT_MONGODB_DB_HOST || global.grouplanner.ipaddress) + '/grouplanner');
+	mongoose.connect('mongodb://' + global.grouplanner.ipaddress + '/grouplanner');
 } else
 {
 	var dbconnectionURL = 'mongodb://';
 		dbconnectionURL += process.env.MONGODB_USER + ':';
 		dbconnectionURL += process.env.MONGODB_PASS + '@';
-		dbconnectionURL += global.grouplanner.ipaddress + ':';
+		dbconnectionURL += process.env.OPENSHIFT_MONGODB_DB_HOST + ':';
 		dbconnectionURL += process.env.OPENSHIFT_MONGODB_DB_PORT + '/';
-		dbconnectionURL += process.env.MONGODB_DB_DB;
+		dbconnectionURL += process.env.MONGODB_DB;
 	mongoose.connect(dbconnectionURL);
 }
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function callback() { console.log('Connected to the database'); });
+
 
 var sessionMiddleware = session(
 {
@@ -69,7 +70,7 @@ var sessionMiddleware = session(
 		db:mongoose.connection.db
 	}),
 	resave: true,
-	saveUninitialized: true
+    saveUninitialized: true
 });
 
 // EXPRESS SETUP
