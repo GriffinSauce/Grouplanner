@@ -378,6 +378,8 @@ body {
           border-right: none; }
         body#group #manage #info #display input, body#group #manage #info #display select, body#group #manage #info #edit input, body#group #manage #info #edit select {
           background-color: #F5F5F5; }
+        body#group #manage #info #display .permission, body#group #manage #info #edit .permission {
+          font-size: 0.9rem; }
       body#group #manage #users {
         display: block;
         padding: 1.5em 1em 1em 1em; }

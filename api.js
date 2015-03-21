@@ -70,6 +70,30 @@ var apiFunctions = {
 	},
 
 	/*
+	 *	Update group
+	 *	input.group = group data
+	 */
+	'update/group' : function(input, callback)
+	{
+		var update = {};
+		if(input.group.name !== undefined){			update.name = input.group.name;	}
+		if(input.group.periodLength !== undefined){	update.periodLength = input.group.periodLength;	}
+		if(input.group.eventtype !== undefined){	update.eventtype = input.group.eventtype;	}
+		if(input.group.permissions !== undefined){	update.permissions = input.group.permissions;	}
+
+		console.log('Updating group '+input.group.id+' with:');
+		console.log(update);
+
+		Group.update({_id:input.group.id}, update, function(err)
+		{
+			if(err) { console.log('Error updating'); console.log(err); }else{
+				console.log('Updated group');
+				callback({success:true});
+			}
+		});
+	},
+
+	/*
 	 *	Get period
 	 *	input.startDate = period startDate
 	 *	input.groupid = _id of the group this period is part of
