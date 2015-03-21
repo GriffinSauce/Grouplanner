@@ -7,6 +7,7 @@ var User = require(__dirname + '/db/user.js');
 var io = global.grouplanner.io;
 var moment = require('moment');
 var email = require(__dirname + '/email.js');
+var mongoose = require('mongoose');
 
 /*
  *	Command structure:	'method/resource'
@@ -66,6 +67,31 @@ var apiFunctions = {
 				if(err) { console.log('Error updating'); console.log(err); }
 				console.log('Saved to user as lastgroup');
 			});
+		});
+	},
+
+	/*
+	 *	Update group
+	 *	input.group = group data
+	 */
+	'update/group' : function(input, callback)
+	{
+		var update = {};
+		if(input.group.name !== undefined){			update.name = input.group.name;	}
+		if(input.group.periodLength !== undefined){	update.periodLength = input.group.periodLength;	}
+		if(input.group.eventtype !== undefined){	update.eventtype = input.group.eventtype;	}
+		if(input.group.permissions !== undefined){	update.permissions = input.group.permissions;	}
+		update.$push = {'events':{ type:'group.update', user:this.passport.user._id, meta: { updated:input.group }}};
+
+		console.log('Updating group '+input.group.id+' with:');
+		console.log(update);
+
+		Group.findOneAndUpdate({_id:input.group.id}, update, function(err,group)
+		{
+			if(err) { console.log('Error updating'); console.log(err); }else{
+				console.log('Updated group');
+				callback({success:true,group:group});
+			}
 		});
 	},
 
@@ -154,6 +180,7 @@ var apiFunctions = {
 	 */
 	'put/planned' : function(input,callback)
 	{
+		var scope = this;
 		console.log('Updating date '+input.date+' in period '+input.periodid);
 		var update = {};
 		update['days.'+input.date+'.planned'] = input.planned;
@@ -162,10 +189,29 @@ var apiFunctions = {
 		{
 			update.mailed = input.mailed;
 		}
-		Period.update({_id: input.periodid}, update, function(err)
+		Period.findOneAndUpdate({_id: input.periodid}, update, function(err, period)
 		{
 			if(err) { console.log('Error updating'); console.log(err); }
-			callback({success:true});
+			Group.update(
+				{_id: period.groupid},
+				{
+					$push:
+					{
+						'events':
+						{
+							type:'period.planned',
+							user: scope.passport.user._id,
+							meta:
+							{
+								period: mongoose.Types.ObjectId(this._id)
+							}
+						}
+					}
+				}, function(err)
+				{
+					if(err) { console.log('Error adding event'); console.log(err); }
+					callback({success:true});
+				});
 		});
 	},
 
@@ -193,17 +239,26 @@ var apiFunctions = {
 	 */
 	'delete/group/member' : function(input, callback)
 	{
+		var scope = this;
 		if(this.passport.user._id !== input.member)
 		{
 			// The user is removing someone else from the group, does he have the power?
 		}
-
 		Group.findOne({_id: input.group}).populate('members').exec(function(err, group)
 		{
 			if(err) { console.log("Error: " + err);	}
 			else
 			{
-				group.members.remove(input.member);
+				// group.members.find(input.member);
+				group.members.pull(input.member);
+				group.events.push({
+					type: 'user.removed',
+					user: scope.passport.user._id,
+					meta:
+					{
+						removeduser: mongoose.Types.ObjectId(input.member)
+					}
+				});
 				group.save(function()
 				{
 					callback(input.member);
@@ -231,6 +286,14 @@ var apiFunctions = {
 					token:token,
 					open:true,
 					email:input.invitedUser.email
+				},
+				events:{
+					type: 'invite',
+					user: scope.passport.user._id,
+					meta:
+					{
+						inviteduser: input.invitedUser.email
+					}
 				}
 			};
 			Group.findOneAndUpdate({_id: input.group}, update, function(err, group)

@@ -37,9 +37,61 @@
 
 		<section id="manage">
 			<div id="info">
-				<i class="icon-pencil"></i>
-				<h2>{{group.name}}</h2>
-				<p>{{group.description}}</p>
+				<div id="display" class="visible">
+					<i class="icon-pencil"></i>
+					<h2>{{group.name}}</h2>
+					<p>{{group.description}}</p>
+				</div>
+
+				<div id="edit">
+					<p>
+						We're called <input id="name" type="text" placeholder="name" size="12" value="{{group.name}}"/>
+					</p>
+					<p>
+						We want to plan
+						<select id="type" name="type">
+							<option value="dates">dates</option>
+							<option value="rehearsals">rehearsals</option>
+							<option value="meetings">meetings</option>
+						</select>
+					</p>
+					<!--<p>
+						Once every
+						<span id="minus" class="numberBtn">-</span>
+						<input id="length" class="number" type="number" value="{{group.periodLength}}"/>
+						<span id="plus" class="numberBtn">+</span>
+						days
+					</p>-->
+					<hr>
+					<p class="permission">
+						<span id="planning" class="radio">
+							{{#if group.permissions.plan.addNewMembers}}
+							<span id="false" class="option">Only I</span>
+							<span id="true" class="option active">Everybody</span>
+							{{else}}
+							<span id="false" class="option active">Only I</span>
+							<span id="true" class="option">Everybody</span>
+							{{/if}}
+						</span>
+						can choose dates
+					</p>
+					<p class="permission">
+						<span id="settings" class="radio">
+							{{#if group.permissions.settings.addNewMembers}}
+							<span id="false" class="option">Only I</span>
+							<span id="true" class="option active">Everybody</span>
+							{{else}}
+							<span id="false" class="option active">Only I</span>
+							<span id="true" class="option">Everybody</span>
+							{{/if}}
+						</span>
+						can change settings
+					</p>
+					<p class="permission">
+						<i>Please note: the permissions are not active yet, but we'll remember.</i>
+					</p>
+					<div class="btn"><i class="icon-check"></i> Save</div>
+				</div>
 			</div>
 			<div id="users">
 				{{#each group.members}}

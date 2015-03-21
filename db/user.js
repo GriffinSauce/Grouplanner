@@ -29,7 +29,11 @@ var userSchema = new Schema(
 	{
 
 	}
-}, { autoIndex: false });
+}, {
+	autoIndex: false,
+	toObject: {virtuals: true},
+    toJSON: {virtuals: true}
+});
 
 userSchema.virtual('name.full').get(function()
 {

@@ -1,3 +1,4 @@
+/* globals $,jshare,document,moment,window */
 var socket = io();
 /*
  *	Group creation
@@ -18,18 +19,16 @@ $(document).ready(function(){
 	});
 
 	$('#createGroupBtn').bind('click tap',function(){
-		
+
 		if(validate())
 		{
 			var name = $('#form #name').val();
 			var type = $('#form #type').val();
 			var length = $('#form #length').val();
-			var description = "We're called "+name+" and we plan "+type+" once every "+length+" days.";
 			var data = {
 				name:name,
 				eventtype:type,
 				periodLength:length,
-				description:description,
 				startDate:moment().weekday(1).toDate(),
 				permissions:
 				{
@@ -44,7 +43,7 @@ $(document).ready(function(){
 						addNewMembers:JSON.parse($('.radio#settings .active').attr('id'))
 					}
 				}
-			}
+			};
 			socket.emit('create/group', {group:data,user:jshare.user}, function(rtnData) {
 				if(rtnData.success)
 				{
@@ -53,17 +52,16 @@ $(document).ready(function(){
 					alert('Error 2'); // lol
 				}
 			});
-
 		}
 	});
-	
+
 	$('.radio .option').bind('click tap',function(){
 		if(!$(this).hasClass('active'))
 		{
 			$(this).siblings('.active').toggleClass('active');
 			$(this).toggleClass('active');
 		}
-	})
+	});
 });
 
 function validate()
