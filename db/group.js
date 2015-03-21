@@ -42,13 +42,15 @@ var groupSchema = new Schema(
 	]
 }, {
 	autoIndex: false,
-	toObject: {virtuals: true}
+	toObject: {virtuals: true},
+	toJSON: {virtuals: true}
 });
 
 groupSchema.virtual('description').get(function()
 {
 	return "We're called "+this.name+" and we plan "+this.eventtype+" once every "+this.periodLength+" days.";
 });
+
 groupSchema.plugin(findOrCreate);
 
 module.exports = mongoose.model('Group', groupSchema);

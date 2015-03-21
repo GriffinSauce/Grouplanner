@@ -196,12 +196,13 @@ function App()
 				if(rtnData.success)
 				{
 					// Update client side
-					$('#header #back span').text(name);
-					$('#info #display h2').text(name);
-					scope.group.name = data.name;
-					scope.group.eventtype = data.eventtype;
-					scope.group.permissions.plan.addNewMembers = data.permissions.plan.addNewMembers;
-					scope.group.permissions.settings.addNewMembers = data.permissions.settings.addNewMembers;
+					$('#header #back span').text(rtnData.group.name);
+					$('#info #display h2').text(rtnData.group.name);
+					$('#info #display p').text(rtnData.group.description);
+					scope.group.name = rtnData.group.name;
+					scope.group.eventtype = rtnData.group.eventtype;
+					scope.group.permissions.plan.addNewMembers = rtnData.group.permissions.plan.addNewMembers;
+					scope.group.permissions.settings.addNewMembers = rtnData.group.permissions.settings.addNewMembers;
 				}else{
 					alert('There was an error, admins have not been notified. Sucks to be you.'); // lol
 				}
