@@ -1,28 +1,32 @@
-{{#each this}}
+{{#eachReverse this}}
 	<div class="event {{type}}">
 		{{#ifCond type '==' 'group-created'}}
 			<p><span class="user">{{user.name.full}}</span> created this group</p>
-			<span class="date">{{#formatDate date 'DD-MM-YYYY' }}{{/formatDate}}</span>
+			<span class="date">{{#formatDate date 'DD-MM-YYYY hh:mm:ss' }}{{/formatDate}}</span>
 		{{/ifCond}}
 		{{#ifCond type '==' 'group-updated'}}
 			<p><span class="user">{{user.name.full}}</span> updated the group information</p>
-			<span class="date">{{#formatDate date 'DD-MM-YYYY'}}{{/formatDate}}</span>
+			<span class="date">{{#formatDate date 'DD-MM-YYYY hh:mm:ss'}}{{/formatDate}}</span>
 		{{/ifCond}}
 		{{#ifCond type '==' 'period-planned'}}
 			<p><span class="user">{{user.name.full}}</span> planned a date.</p>
-			<span class="date">{{#formatDate date 'DD-MM-YYYY'}}{{/formatDate}}</span>
+			<span class="date">{{#formatDate date 'DD-MM-YYYY hh:mm:ss'}}{{/formatDate}}</span>
 		{{/ifCond}}
 		{{#ifCond type '==' 'user-removed'}}
-			<p><span class="user">{{user.name.full}}</span> removed SOMEONE</p>
-			<span class="date">{{#formatDate date 'DD-MM-YYYY'}}{{/formatDate}}</span>
+			{{#if meta.selfremove}}
+				<p><span class="user">{{user.name.full}}</span> left the group.</p>
+				{{else}}
+				<p><span class="user">{{user.name.full}}</span> removed {{meta.removeduser}} from the group</p>
+			{{/if}}
+				<span class="date">{{#formatDate date 'DD-MM-YYYY hh:mm:ss'}}{{/formatDate}}</span>
 		{{/ifCond}}
 		{{#ifCond type '==' 'user-invited'}}
 			<p><span class="user">{{user.name.full}}</span> invited {{meta.inviteduser}}</p>
-			<span class="date">{{#formatDate date 'DD-MM-YYYY'}}{{/formatDate}}</span>
+			<span class="date">{{#formatDate date 'DD-MM-YYYY hh:mm:ss'}}{{/formatDate}}</span>
 		{{/ifCond}}
 		{{#ifCond type '==' 'user-joined'}}
 			<p><span class="user">{{user.name.full}}</span> joined this group</p>
-			<span class="date">{{#formatDate date 'DD-MM-YYYY'}}{{/formatDate}}</span>
+			<span class="date">{{#formatDate date 'DD-MM-YYYY hh:mm:ss'}}{{/formatDate}}</span>
 		{{/ifCond}}
 	</div>
-{{/each}}
+{{/eachReverse}}
