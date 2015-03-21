@@ -180,7 +180,6 @@ function App()
 				id:app.group._id,
 				name:name,
 				eventtype:type,
-				periodLength:length,
 				permissions:
 				{
 					plan:
@@ -196,9 +195,15 @@ function App()
 			socket.emit('update/group', {group:data,user:jshare.user}, function(rtnData) {
 				if(rtnData.success)
 				{
-					alert('Joe.');
+					// Update client side
+					$('#header #back span').text(name);
+					$('#info #display h2').text(name);
+					scope.group.name = data.name;
+					scope.group.eventtype = data.eventtype;
+					scope.group.permissions.plan.addNewMembers = data.permissions.plan.addNewMembers;
+					scope.group.permissions.settings.addNewMembers = data.permissions.settings.addNewMembers;
 				}else{
-					alert('Error 2'); // lol
+					alert('There was an error, admins have not been notified. Sucks to be you.'); // lol
 				}
 			});
 		}
