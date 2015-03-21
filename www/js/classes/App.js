@@ -38,7 +38,19 @@ function App()
 		$('.period-control-button.prev').bind('click tap', this.prevPeriod);
 		$('#invite #send').bind('click tap', this.sendInvite);
 		$('#info #display').bind('click tap', this.editInfo);
-		$('#info #edit .btn').bind('click tap', this.saveInfo);
+		var edit = $('#info #edit');
+		$('.btn',edit).bind('click tap', this.saveInfo);
+		$('.numberBtn#minus',edit).bind('click tap',function(){
+			var val = parseInt($('#length',edit).val());
+			val -= val !== 0 ? 1 : 0;
+			$('#length',edit).val(val);
+		});
+		$('.numberBtn#plus',edit).bind('click tap',function(){
+			var val = parseInt($('#length',edit).val());
+			val++;
+			$('#length',edit).val(val);
+		});
+
 
 		// Get data that is supplied with jshare
 		scope.user = jshare.user;
