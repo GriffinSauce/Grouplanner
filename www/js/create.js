@@ -1,3 +1,4 @@
+/* globals $,jshare,document,moment,window */
 var socket = io();
 /*
  *	Group creation
@@ -42,7 +43,7 @@ $(document).ready(function(){
 						addNewMembers:JSON.parse($('.radio#settings .active').attr('id'))
 					}
 				}
-			}
+			};
 			socket.emit('create/group', {group:data,user:jshare.user}, function(rtnData) {
 				if(rtnData.success)
 				{
