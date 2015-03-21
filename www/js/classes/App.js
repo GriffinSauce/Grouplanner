@@ -40,16 +40,6 @@ function App()
 		$('#info #display').bind('click tap', this.editInfo);
 		var edit = $('#info #edit');
 		$('.btn',edit).bind('click tap', this.saveInfo);
-		/*$('.numberBtn#minus',edit).bind('click tap',function(){
-			var val = parseInt($('#length',edit).val());
-			val -= val !== 0 ? 1 : 0;
-			$('#length',edit).val(val);
-		});
-		$('.numberBtn#plus',edit).bind('click tap',function(){
-			var val = parseInt($('#length',edit).val());
-			val++;
-			$('#length',edit).val(val);
-		});*/
 		$('.radio .option').bind('click tap',function(){
 			if(!$(this).hasClass('active'))
 			{
@@ -217,12 +207,6 @@ function App()
 				$('#info #edit').focus();
 				return false;
 			}
-			/*if($('#info #edit #length').val().length === 0)
-			{
-				alert('Please fill in how often you want to plan '+$('#info #edit #type').val()+'. \nIt must be a number.');
-				$('#info #edit #length').focus();
-				return false;
-			}*/
 			return true;
 		}
 	};
