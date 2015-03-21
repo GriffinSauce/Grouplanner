@@ -52,10 +52,10 @@ var apiFunctions = {
 	 */
 	'create/group' : function(input, callback)
 	{
-		var scope = this;
 		var group = new Group(input.group);
 		group.creator = this.passport.user._id;
 		group.members.push(this.passport.user._id);
+        group.events.push({ type:'group-created', user:this.passport.user._id});
 		group.save(function(err)
 		{
 			if(err) { console.log('Error saving group %s to the database', group.name); }
@@ -81,7 +81,7 @@ var apiFunctions = {
 		if(input.group.periodLength !== undefined){	update.periodLength = input.group.periodLength;	}
 		if(input.group.eventtype !== undefined){	update.eventtype = input.group.eventtype;	}
 		if(input.group.permissions !== undefined){	update.permissions = input.group.permissions;	}
-        update.$push = {'events':{ type:'group.update', user:this.passport.user._id, meta: { updated:input.group }}};
+        update.$push = {'events':{ type:'group-updated', user:this.passport.user._id, meta: { updated:input.group }}};
 
 		console.log('Updating group '+input.group.id+' with:');
 		console.log(update);
@@ -199,7 +199,7 @@ var apiFunctions = {
                     {
                         'events':
                         {
-                            type:'period.planned',
+                            type:'period-planned',
                             user: scope.passport.user._id,
                             meta:
                             {
@@ -252,7 +252,7 @@ var apiFunctions = {
                 // group.members.find(input.member);
                 group.members.pull(input.member);
                 group.events.push({
-					type: 'user.removed',
+					type: 'user-removed',
 					user: scope.passport.user._id,
 					meta:
 					{
@@ -288,7 +288,7 @@ var apiFunctions = {
 					email:input.invitedUser.email
 				},
 				events:{
-					type: 'invite',
+					type: 'user-invited',
 					user: scope.passport.user._id,
 					meta:
 					{
