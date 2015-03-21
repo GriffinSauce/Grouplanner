@@ -24,12 +24,10 @@ $(document).ready(function(){
 			var name = $('#form #name').val();
 			var type = $('#form #type').val();
 			var length = $('#form #length').val();
-			var description = "We're called "+name+" and we plan "+type+" once every "+length+" days.";
 			var data = {
 				name:name,
 				eventtype:type,
 				periodLength:length,
-				description:description,
 				startDate:moment().weekday(1).toDate(),
 				permissions:
 				{
