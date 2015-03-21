@@ -52,7 +52,7 @@ function App()
 		scope.user = jshare.user;
 		scope.group = new Group(jshare.group);
 		scope.periodLength = scope.group.periodLength;
-
+		scope.renderEvents();
 		console.log('APP INITIALISED');
 	};
 
@@ -210,6 +210,13 @@ function App()
 			return true;
 		}
 	};
+
+    this.renderEvents = function()
+    {
+        var compiledTemplate = Handlebars.getTemplate('events');
+		var html = $(compiledTemplate(scope.group.events));
+		$('section#updates').html(html);
+    };
 
 
 	this.init();

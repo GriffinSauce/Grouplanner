@@ -26,8 +26,7 @@ router.get('/login/success', function(req, res)
 			group.update(
                 {
                     $pull:{'invites':{'token':req.session.invitetoken}},
-                    $push:{'members':req.user},
-                    $push:{'events':{type:'group.join', user:req.user._id, meta:{token:req.session.invitetoken}}}
+                    $push:{'members':req.user, 'events':{type:'user-joined', user:req.user._id, meta:{token:req.session.invitetoken}}}
                 }, function(err, group) {
 				delete req.session.invitetoken;
 			});
