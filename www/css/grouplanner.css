@@ -362,10 +362,22 @@ body {
         box-shadow: 0 0.1em 0.2em 0 rgba(0, 0, 0, 0.08); }
       body#group #manage #info h2 {
         margin: 0; }
-      body#group #manage #info i {
-        position: absolute;
-        top: 1em;
-        right: 1em; }
+      body#group #manage #info #display i {
+        float: right; }
+      body#group #manage #info #display, body#group #manage #info #edit {
+        overflow: hidden;
+        max-height: 0;
+        transition: max-height 400ms ease; }
+        body#group #manage #info #display.visible, body#group #manage #info #edit.visible {
+          max-height: 100%; }
+        body#group #manage #info #display .btn, body#group #manage #info #edit .btn {
+          float: right; }
+        body#group #manage #info #display .numberBtn, body#group #manage #info #edit .numberBtn {
+          background-color: #F8F8F8;
+          border-left: none;
+          border-right: none; }
+        body#group #manage #info #display input, body#group #manage #info #display select, body#group #manage #info #edit input, body#group #manage #info #edit select {
+          background-color: #F5F5F5; }
       body#group #manage #users {
         display: block;
         padding: 1.5em 1em 1em 1em; }

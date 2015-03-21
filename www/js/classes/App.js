@@ -37,6 +37,20 @@ function App()
 		$('.period-control-button.next').bind('click tap', this.nextPeriod);
 		$('.period-control-button.prev').bind('click tap', this.prevPeriod);
 		$('#invite #send').bind('click tap', this.sendInvite);
+		$('#info #display').bind('click tap', this.editInfo);
+		var edit = $('#info #edit');
+		$('.btn',edit).bind('click tap', this.saveInfo);
+		$('.numberBtn#minus',edit).bind('click tap',function(){
+			var val = parseInt($('#length',edit).val());
+			val -= val !== 0 ? 1 : 0;
+			$('#length',edit).val(val);
+		});
+		$('.numberBtn#plus',edit).bind('click tap',function(){
+			var val = parseInt($('#length',edit).val());
+			val++;
+			$('#length',edit).val(val);
+		});
+
 
 		// Get data that is supplied with jshare
 		scope.user = jshare.user;
@@ -131,6 +145,27 @@ function App()
 			alert("Please provide a valid e-mail address");
 		}
 	};
+
+	/*
+	 *	Edit group info
+	 *
+	 */
+	this.editInfo = function()
+	{
+		$('#info #display').removeClass('visible');
+		$('#info #edit').addClass('visible');
+	};
+
+	/*
+	 *	Save group info
+	 *
+	 */
+	this.saveInfo = function()
+	{
+		$('#info #edit').removeClass('visible');
+		$('#info #display').addClass('visible');
+	};
+
 
 	this.init();
 }
