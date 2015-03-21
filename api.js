@@ -81,6 +81,7 @@ var apiFunctions = {
 		if(input.group.periodLength !== undefined){	update.periodLength = input.group.periodLength;	}
 		if(input.group.eventtype !== undefined){	update.eventtype = input.group.eventtype;	}
 		if(input.group.permissions !== undefined){	update.permissions = input.group.permissions;	}
+        update.$push = {'events':{ type:'group.update', user:this.passport.user._id, meta: { updated:input.group }}};
 
 		console.log('Updating group '+input.group.id+' with:');
 		console.log(update);
