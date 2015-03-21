@@ -7,6 +7,7 @@ var User = require(__dirname + '/db/user.js');
 var io = global.grouplanner.io;
 var moment = require('moment');
 var email = require(__dirname + '/email.js');
+var mongoose = require('mongoose');
 
 /*
  *	Command structure:	'method/resource'
@@ -193,17 +194,26 @@ var apiFunctions = {
 	 */
 	'delete/group/member' : function(input, callback)
 	{
+        var scope = this;
 		if(this.passport.user._id !== input.member)
 		{
 			// The user is removing someone else from the group, does he have the power?
 		}
-
 		Group.findOne({_id: input.group}).populate('members').exec(function(err, group)
 		{
 			if(err) { console.log("Error: " + err);	}
 			else
 			{
-				group.members.remove(input.member);
+                // group.members.find(input.member);
+                group.members.pull(input.member);
+                group.events.push({
+					type: 'user.removed',
+					user: scope.passport.user._id,
+					meta:
+					{
+						removeduser: mongoose.Types.ObjectId(input.member)
+					}
+				});
 				group.save(function()
 				{
 					callback(input.member);
