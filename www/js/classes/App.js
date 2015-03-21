@@ -50,7 +50,13 @@ function App()
 			val++;
 			$('#length',edit).val(val);
 		});
-
+		$('.radio .option').bind('click tap',function(){
+			if(!$(this).hasClass('active'))
+			{
+				$(this).siblings('.active').toggleClass('active');
+				$(this).toggleClass('active');
+			}
+		});
 
 		// Get data that is supplied with jshare
 		scope.user = jshare.user;
@@ -164,6 +170,60 @@ function App()
 	{
 		$('#info #edit').removeClass('visible');
 		$('#info #display').addClass('visible');
+
+		if(validate())
+		{
+			var name = $('#info #edit #name').val();
+			var type = $('#info #edit #type').val();
+			var length = $('#info #edit #length').val();
+			var data = {
+				id:app.group._id,
+				name:name,
+				eventtype:type,
+				permissions:
+				{
+					plan:
+					{
+						addNewMembers:JSON.parse($('.radio#planning .active').attr('id'))
+					},
+					settings:
+					{
+						addNewMembers:JSON.parse($('.radio#settings .active').attr('id'))
+					}
+				}
+			}
+			socket.emit('update/group', {group:data,user:jshare.user}, function(rtnData) {
+				if(rtnData.success)
+				{
+					// Update client side
+					$('#header #back span').text(name);
+					$('#info #display h2').text(name);
+					scope.group.name = data.name;
+					scope.group.eventtype = data.eventtype;
+					scope.group.permissions.plan.addNewMembers = data.permissions.plan.addNewMembers;
+					scope.group.permissions.settings.addNewMembers = data.permissions.settings.addNewMembers;
+				}else{
+					alert('There was an error, admins have not been notified. Sucks to be you.'); // lol
+				}
+			});
+		}
+
+		function validate()
+		{
+			if($('#info #edit #name').val().length === 0)
+			{
+				alert('A name is required.');
+				$('#info #edit').focus();
+				return false;
+			}
+			if($('#info #edit #length').val().length === 0)
+			{
+				alert('Please fill in how often you want to plan '+$('#info #edit #type').val()+'. \nIt must be a number.');
+				$('#info #edit #length').focus();
+				return false;
+			}
+			return true;
+		}
 	};
 
 

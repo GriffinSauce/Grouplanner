@@ -18,7 +18,7 @@ $(document).ready(function(){
 	});
 
 	$('#createGroupBtn').bind('click tap',function(){
-		
+
 		if(validate())
 		{
 			var name = $('#form #name').val();
@@ -53,17 +53,16 @@ $(document).ready(function(){
 					alert('Error 2'); // lol
 				}
 			});
-
 		}
 	});
-	
+
 	$('.radio .option').bind('click tap',function(){
 		if(!$(this).hasClass('active'))
 		{
 			$(this).siblings('.active').toggleClass('active');
 			$(this).toggleClass('active');
 		}
-	})
+	});
 });
 
 function validate()
