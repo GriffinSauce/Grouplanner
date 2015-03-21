@@ -155,6 +155,7 @@ var apiFunctions = {
 	 */
 	'put/planned' : function(input,callback)
 	{
+        var scope = this;
 		console.log('Updating date '+input.date+' in period '+input.periodid);
 		var update = {};
 		update['days.'+input.date+'.planned'] = input.planned;
@@ -163,10 +164,29 @@ var apiFunctions = {
 		{
 			update.mailed = input.mailed;
 		}
-		Period.update({_id: input.periodid}, update, function(err)
+		Period.findOneAndUpdate({_id: input.periodid}, update, function(err, period)
 		{
 			if(err) { console.log('Error updating'); console.log(err); }
-			callback({success:true});
+            Group.update(
+                {_id: period.groupid},
+                {
+                    $push:
+                    {
+                        'events':
+                        {
+                            type:'period.planned',
+                            user: scope.passport.user._id,
+                            meta:
+                            {
+                                period: mongoose.Types.ObjectId(this._id)
+                            }
+                        }
+                    }
+                }, function(err)
+                {
+                     if(err) { console.log('Error adding event'); console.log(err); }
+                     callback({success:true});
+                });
 		});
 	},
 
