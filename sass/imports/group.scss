@@ -288,6 +288,42 @@
 	#updates
 	{
 		@include allow-select();
+		text-align: center;
+
+		.event
+		{
+			position: relative;
+			margin:0 0 1em 0;
+			padding:0 0 2.4em 0;
+			background-color:#FFF;
+			border-radius: 0.15em;
+			overflow:hidden;
+			box-shadow: 0 0.1em 0.2em 0 rgba(0, 0, 0, 0.08);
+		}
+		.user
+		{
+			display:block;
+			padding:0.25em 0.4em 0.25em 0.4em;
+			margin:0 0 0.55em 0;
+			color:#FFF;
+			background-color: #5480DD;
+		}
+		p
+		{
+			margin:0;
+		}
+		.date
+		{
+			display:block;
+			position: absolute;
+			bottom:0;
+			right:0;
+			padding:0.4em;
+			font-size: 0.8rem;
+			color:rgba(0,0,0,0.5);
+			background-color: #F0F0F0;
+			border-top-left-radius: 0.3rem;
+		}
 	}
 
 	nav

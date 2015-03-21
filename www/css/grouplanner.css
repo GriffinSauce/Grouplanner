@@ -462,7 +462,34 @@ body {
       -khtml-user-select: initial;
       -moz-user-select: initial;
       -ms-user-select: initial;
-      user-select: initial; }
+      user-select: initial;
+      text-align: center; }
+      body#group #updates .event {
+        position: relative;
+        margin: 0 0 1em 0;
+        padding: 0 0 2.4em 0;
+        background-color: #FFF;
+        border-radius: 0.15em;
+        overflow: hidden;
+        box-shadow: 0 0.1em 0.2em 0 rgba(0, 0, 0, 0.08); }
+      body#group #updates .user {
+        display: block;
+        padding: 0.25em 0.4em 0.25em 0.4em;
+        margin: 0 0 0.55em 0;
+        color: #FFF;
+        background-color: #5480DD; }
+      body#group #updates p {
+        margin: 0; }
+      body#group #updates .date {
+        display: block;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        padding: 0.4em;
+        font-size: 0.8rem;
+        color: rgba(0, 0, 0, 0.5);
+        background-color: #F0F0F0;
+        border-top-left-radius: 0.3rem; }
     body#group nav {
       width: 100%;
       background-color: #4BCD96;
