@@ -45,13 +45,13 @@ var routes =
 // DATABASE CONNECTION
 if(global.grouplanner.environment == 'local')
 {
-	mongoose.connect('mongodb://' + (process.env.OPENSHIFT_MONGODB_DB_HOST || global.grouplanner.ipaddress) + '/grouplanner');
+	mongoose.connect('mongodb://' + global.grouplanner.ipaddress + '/grouplanner');
 } else
 {
 	var dbconnectionURL = 'mongodb://';
 		dbconnectionURL += process.env.MONGODB_USER + ':';
 		dbconnectionURL += process.env.MONGODB_PASS + '@';
-		dbconnectionURL += global.grouplanner.ipaddress + ':';
+		dbconnectionURL += process.env.OPENSHIFT_MONGODB_DB_HOST + ':';
 		dbconnectionURL += process.env.OPENSHIFT_MONGODB_DB_PORT + '/';
 		dbconnectionURL += process.env.MONGODB_DB;
 	mongoose.connect(dbconnectionURL);
