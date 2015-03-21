@@ -53,7 +53,7 @@ if(global.grouplanner.environment == 'local')
 		dbconnectionURL += process.env.MONGODB_PASS + '@';
 		dbconnectionURL += global.grouplanner.ipaddress + ':';
 		dbconnectionURL += process.env.OPENSHIFT_MONGODB_DB_PORT + '/';
-		dbconnectionURL += process.env.MONGODB_DB_DB;
+		dbconnectionURL += process.env.MONGODB_DB;
 	mongoose.connect(dbconnectionURL);
 }
 
