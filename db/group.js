@@ -30,7 +30,16 @@ var groupSchema = new Schema(
 			allowed: [{type:Schema.Types.ObjectId, ref: 'User'}],
 			addNewMembers: {type:Boolean}
 		}
-	}
+	},
+	events:
+	[
+		{
+			type: {type:String, default:''},
+			user: {type:Schema.Types.ObjectId, ref: 'User'},
+			date: {type:Date, default:Date.now },
+			meta: {type:Object, default: {}}
+		}
+	]
 }, {
 	autoIndex: false,
 	toObject: {virtuals: true}
@@ -40,7 +49,6 @@ groupSchema.virtual('description').get(function()
 {
 	return "We're called "+this.name+" and we plan "+this.eventtype+" once every "+this.periodLength+" days.";
 });
-
 groupSchema.plugin(findOrCreate);
 
 module.exports = mongoose.model('Group', groupSchema);

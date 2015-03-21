@@ -23,7 +23,12 @@ router.get('/login/success', function(req, res)
 	{
 		Group.findOne({'invites.token': req.session.invitetoken}).exec(function(err, group)
 		{
-			group.update({$pull:{'invites':{'token':req.session.invitetoken}}, $push:{'members':req.user}}, function(err, group) {
+			group.update(
+                {
+                    $pull:{'invites':{'token':req.session.invitetoken}},
+                    $push:{'members':req.user},
+                    $push:{'events':{type:'group.join', user:req.user._id, meta:{token:req.session.invitetoken}}}
+                }, function(err, group) {
 				delete req.session.invitetoken;
 			});
 		});
