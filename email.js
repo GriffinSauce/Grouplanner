@@ -44,7 +44,7 @@ if(global.grouplanner.environment == 'local')
 	mailAuth.support.pass = process.env.MAIL_SUPPORT_PASSWORD;
 }
 
-var transporters = 
+var transporters =
 {
 	invite : nodemailer.createTransport(smtpTransport(
 	{
@@ -89,7 +89,7 @@ function sendInvite(user, group, invitedUser)
 	var source_html = fs.readFileSync(templates.invite.html, "utf8");
 	var template_text = handlebars.compile(source_text);
 	var template_html = handlebars.compile(source_html);
-	var acceptinvitelink = global.grouplanner.environment == 'local' ? 'http://' + global.grouplanner.ipaddress + ':' + global.grouplanner.port : 'http://www.grouplanner.nl';
+	var acceptinvitelink = global.grouplanner.environment == 'local' ? 'http://' + global.grouplanner.ipaddress + ':' + global.grouplanner.port : 'http://'+process.env.APP_URL;
 	acceptinvitelink += '/invite/' + invitedUser.token;
 
 	var data = {
@@ -108,7 +108,7 @@ function sendInvite(user, group, invitedUser)
 		text: body_text,
 		html: body_html
 	};
-	
+
 	sendMail(mailOptions, transporters.invite);
 }
 
@@ -137,7 +137,7 @@ function sendNotification(type, to, from, group, data)
 		default: unknownType = true;
 		break;
 	}
-	
+
 	if(!unknownType)
 	{
 		// Get and build template
