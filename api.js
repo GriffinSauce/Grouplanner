@@ -34,6 +34,7 @@ var apiFunctions = {
 				.populate({path:'members', model:User})
 				.populate({path:'events.user', model:User})
 				.populate({path:'events.meta.period', model:Period})
+				.populate({path:'events.meta.removeduser', model:User})
 				.exec(function(err, group)
 				{
 					console.log('Group found');
@@ -46,6 +47,7 @@ var apiFunctions = {
 				.populate({path:'members', model:User})
 				.populate({path:'events.user', model:User})
 				.populate({path:'events.meta.period', model:Period})
+				.populate({path:'events.meta.removeduser', model:User})
 				.exec(function(err, group)
 				{
 					console.log('Group not found, returning lastgroup');

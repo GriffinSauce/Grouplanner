@@ -29,6 +29,7 @@ router.get('/group/:groupid', function(req, res)
 	.populate({path:'members', model:User})
 	.populate({path:'events.user', model:User})
 	.populate({path:'events.meta.period', model:Period})
+	.populate({path:'events.meta.removeduser', model:User})
 	.exec(function(err, group)
 	{
 		res.jshare.user = req.user;
