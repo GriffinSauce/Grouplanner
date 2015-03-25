@@ -30,18 +30,27 @@ var apiFunctions = {
 		console.log('Getting group by ID: '+input.id);
 		if(input.id !== undefined)
 		{
-			Group.findOne({_id: input.id}).populate('members').populate('events.user').exec(function(err, group)
-			{
-				console.log('Group found');
-				callback(group);
-			});
-		}else{
+			Group.findOne({_id: input.id})
+				.populate({path:'members', model:User})
+				.populate({path:'events.user', model:User})
+				.populate({path:'events.meta.period', model:Period})
+				.exec(function(err, group)
+				{
+					console.log('Group found');
+					callback(group);
+				});
+		} else
+		{
 			// Find a random group this user is a member of
-			Group.findOne({_id: this.passport.user.lastgroup}).populate('members').populate('events.user').exec(function(err, group)
-			{
-				console.log('Group not found, returning lastgroup');
-				callback(group);
-			});
+			Group.findOne({_id: this.passport.user.lastgroup})
+				.populate({path:'members', model:User})
+				.populate({path:'events.user', model:User})
+				.populate({path:'events.meta.period', model:Period})
+				.exec(function(err, group)
+				{
+					console.log('Group not found, returning lastgroup');
+					callback(group);
+				});
 		}
 	},
 
@@ -203,7 +212,7 @@ var apiFunctions = {
 							user: scope.passport.user._id,
 							meta:
 							{
-								period: mongoose.Types.ObjectId(this._id)
+								period: mongoose.Types.ObjectId(input.periodid)
 							}
 						}
 					}

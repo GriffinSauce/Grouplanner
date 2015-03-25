@@ -4,6 +4,8 @@ var express = require('express');
 var router = express.Router();
 
 var Group = require(__dirname + '/../db/group.js');
+var User = require(__dirname + '/../db/user.js');
+var Period = require(__dirname + '/../db/period.js');
 
 router.get('/create', function(req, res)
 {
@@ -23,7 +25,11 @@ router.get('/group/', function(req, res)
 
 router.get('/group/:groupid', function(req, res)
 {
-	Group.findOne({_id: req.params.groupid}).populate('members').populate('events.user').exec(function(err, group)
+	Group.findOne({_id: req.params.groupid})
+	.populate({path:'members', model:User})
+	.populate({path:'events.user', model:User})
+	.populate({path:'events.meta.period', model:Period})
+	.exec(function(err, group)
 	{
 		res.jshare.user = req.user;
 		res.jshare.group = group;
