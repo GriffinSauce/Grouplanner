@@ -55,7 +55,7 @@ var apiFunctions = {
 		var group = new Group(input.group);
 		group.creator = this.passport.user._id;
 		group.members.push(this.passport.user._id);
-        group.events.push({ type:'group-created', user:this.passport.user._id});
+		group.events.push({ type:'group-created', user:this.passport.user._id});
 		group.save(function(err)
 		{
 			if(err) { console.log('Error saving group %s to the database', group.name); }
@@ -81,7 +81,7 @@ var apiFunctions = {
 		if(input.group.periodLength !== undefined){	update.periodLength = input.group.periodLength;	}
 		if(input.group.eventtype !== undefined){	update.eventtype = input.group.eventtype;	}
 		if(input.group.permissions !== undefined){	update.permissions = input.group.permissions;	}
-        update.$push = {'events':{ type:'group-updated', user:this.passport.user._id, meta: { updated:input.group }}};
+		update.$push = {'events':{ type:'group-updated', user:this.passport.user._id, meta: { updated:input.group }}};
 
 		console.log('Updating group '+input.group.id+' with:');
 		console.log(update);
@@ -192,26 +192,26 @@ var apiFunctions = {
 		Period.findOneAndUpdate({_id: input.periodid}, update, function(err, period)
 		{
 			if(err) { console.log('Error updating'); console.log(err); }
-            Group.update(
-                {_id: period.groupid},
-                {
-                    $push:
-                    {
-                        'events':
-                        {
-                            type:'period-planned',
-                            user: scope.passport.user._id,
-                            meta:
-                            {
-                                period: mongoose.Types.ObjectId(this._id)
-                            }
-                        }
-                    }
-                }, function(err)
-                {
-                     if(err) { console.log('Error adding event'); console.log(err); }
-                     callback({success:true});
-                });
+			Group.update(
+				{_id: period.groupid},
+				{
+					$push:
+					{
+						'events':
+						{
+							type:'period-planned',
+							user: scope.passport.user._id,
+							meta:
+							{
+								period: mongoose.Types.ObjectId(this._id)
+							}
+						}
+					}
+				}, function(err)
+				{
+					 if(err) { console.log('Error adding event'); console.log(err); }
+					 callback({success:true});
+				});
 		});
 	},
 
@@ -251,8 +251,8 @@ var apiFunctions = {
 			if(err) { console.log("Error: " + err);	}
 			else
 			{
-                group.members.pull(input.member);
-                group.events.push({
+				group.members.pull(input.member);
+				group.events.push({
 					type: 'user-removed',
 					user: scope.passport.user._id,
 					meta:
