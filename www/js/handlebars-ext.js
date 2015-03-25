@@ -1,4 +1,4 @@
-/*	
+/*
  *	Get template
  *
  */
@@ -20,44 +20,45 @@ Handlebars.getTemplate = function(name) {
 
 Handlebars.registerHelper('ifCond', function (v1, operator, v2, options) {
 
-    switch (operator) {
-        case '==':
-            return (v1 == v2) ? options.fn(this) : options.inverse(this);
-        case '===':
-            return (v1 === v2) ? options.fn(this) : options.inverse(this);
-        case '<':
-            return (v1 < v2) ? options.fn(this) : options.inverse(this);
-        case '<=':
-            return (v1 <= v2) ? options.fn(this) : options.inverse(this);
-        case '>':
-            return (v1 > v2) ? options.fn(this) : options.inverse(this);
-        case '>=':
-            return (v1 >= v2) ? options.fn(this) : options.inverse(this);
-        case '&&':
-            return (v1 && v2) ? options.fn(this) : options.inverse(this);
-        case '||':
-            return (v1 || v2) ? options.fn(this) : options.inverse(this);
-        default:
-            return options.inverse(this);
-    }
+	switch (operator) {
+		case '==':
+			return (v1 == v2) ? options.fn(this) : options.inverse(this);
+		case '===':
+			return (v1 === v2) ? options.fn(this) : options.inverse(this);
+		case '<':
+			return (v1 < v2) ? options.fn(this) : options.inverse(this);
+		case '<=':
+			return (v1 <= v2) ? options.fn(this) : options.inverse(this);
+		case '>':
+			return (v1 > v2) ? options.fn(this) : options.inverse(this);
+		case '>=':
+			return (v1 >= v2) ? options.fn(this) : options.inverse(this);
+		case '&&':
+			return (v1 && v2) ? options.fn(this) : options.inverse(this);
+		case '||':
+			return (v1 || v2) ? options.fn(this) : options.inverse(this);
+		default:
+			return options.inverse(this);
+	}
 });
 
-Handlebars.registerHelper('formatDate', function (date, format) {
+Handlebars.registerHelper('formatDate', function (date, format)
+{
 	return moment(date).format(format);
 });
 
 Handlebars.registerHelper('eachReverse', function(context)
 {
-    var options = arguments[arguments.length - 1];
-    var ret = '';
+	var options = arguments[arguments.length - 1];
+	var ret = '';
 
-    if (context && context.length > 0) {
-        for (var i = context.length - 1; i >= 0; i--) {
-            ret += options.fn(context[i]);
-        }
-    } else {
-        ret = options.inverse(this);
-    }
+	if (context && context.length > 0) {
+		for (var i = context.length - 1; i >= 0; i--) {
+			ret += options.fn(context[i]);
+		}
+	} else {
+		ret = options.inverse(this);
+	}
 
-    return ret;
+	return ret;
 });
