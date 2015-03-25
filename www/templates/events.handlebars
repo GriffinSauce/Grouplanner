@@ -9,7 +9,11 @@
 			<span class="date">{{#formatDate date 'DD-MM-YYYY hh:mm:ss'}}{{/formatDate}}</span>
 		{{/ifCond}}
 		{{#ifCond type '==' 'period-planned'}}
-			<p><span class="user">{{user.name.full}}</span> planned a date.</p>
+			<p><span class="user">{{user.name.full}}</span>{{#formatPreformattedDate meta.period.plannedDate 'MMMM Do' 'DDMMYYYY'}}{{/formatPreformattedDate}} is a date!</p>
+			<p><span>Date is planned for period&nbsp;
+				{{#formatPreformattedDate meta.period.startDate 'DD-MM-YYYY' 'DDMMYYYY'}}{{/formatPreformattedDate}} to
+				{{#formatPreformattedDate meta.period.endDate 'DD-MM-YYYY' 'DDMMYYYY'}}{{/formatPreformattedDate}}
+				</span></p>
 			<span class="date">{{#formatDate date 'DD-MM-YYYY hh:mm:ss'}}{{/formatDate}}</span>
 		{{/ifCond}}
 		{{#ifCond type '==' 'user-removed'}}
