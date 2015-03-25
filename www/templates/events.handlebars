@@ -20,7 +20,7 @@
 			{{#if meta.selfremove}}
 				<p><span class="user">{{user.name.full}}</span> left the group.</p>
 				{{else}}
-				<p><span class="user">{{user.name.full}}</span> removed {{meta.removeduser}} from the group</p>
+				<p><span class="user">{{user.name.full}}</span> removed {{meta.removeduser.name.full}} from the group</p>
 			{{/if}}
 				<span class="date">{{#formatDate date 'DD-MM-YYYY hh:mm:ss'}}{{/formatDate}}</span>
 		{{/ifCond}}
