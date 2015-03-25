@@ -47,6 +47,11 @@ Handlebars.registerHelper('formatDate', function (date, format)
 	return moment(date).format(format);
 });
 
+Handlebars.registerHelper('formatPreformattedDate', function (date, format, formatDate)
+{
+	return moment(date, formatDate).format(format);
+});
+
 Handlebars.registerHelper('eachReverse', function(context)
 {
 	var options = arguments[arguments.length - 1];
