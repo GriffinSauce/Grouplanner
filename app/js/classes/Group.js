@@ -1,10 +1,10 @@
-/* global $,moment,App,Group,Period,jshare,localStorage */
+/* global $,moment,Period,jshare,localStorage */
 
 /*
- *	App class
+ *	Group class
  *
  */
-function App()
+function Group()
 {
 	var scope = this;
 
@@ -12,21 +12,16 @@ function App()
 	// Default to this week
 	this.activePeriod = moment().format('DDMMYYYY');
 
-	// Currently active group
-	// TODO: Supply Group ID (from select, localstorage or default for the user)
-	// TODO: Remove dummy
-	this.group = {};
-
 	// Period length
 	// Default 7
-	this.periodLength = this.group.length;
+	this.periodLength = this.length;
 
-	// Data contains locally loaded periods, by startDate in DDMMYYYY format
+	// Locally loaded periods, by startDate in DDMMYYYY format
 	// Contains only this week by default
-	this.data = {};
+	this.periods = {};
 
 	// User data
-	this.user = {};
+	this.user = {};	// TODO: Move this to App class
 
 	/*
 	 *	Initialise the app
@@ -38,8 +33,7 @@ function App()
 		$('.period-control-button.prev').bind('click tap', this.prevPeriod);
 		$('#invite #send').bind('click tap', this.sendInvite);
 		$('#info #display').bind('click tap', this.editInfo);
-		var edit = $('#info #edit');
-		$('.btn',edit).bind('click tap', this.saveInfo);
+		$('#info #edit .btn',edit).bind('click tap', this.saveInfo);
 		$('.radio .option').bind('click tap',function(){
 			if(!$(this).hasClass('active'))
 			{
@@ -47,11 +41,45 @@ function App()
 				$(this).toggleClass('active');
 			}
 		});
+		$('nav .tab').bind('click tap', function(e){
+			var t = $(this)
+
+			// Tabs
+			$('nav .tab').removeClass('active');
+			t.addClass('active');
+
+			// Sections
+			$('section').removeClass('active');
+			$('section#'+t.data('target')).addClass('active');
+
+			// Save
+			localStorage.tab = t.data('target');
+		});
+
+		if(localStorage.tab !== undefined && localStorage.tab !== null)
+		{
+			var tab = localStorage.tab;
+
+			// Tabs
+			$('nav .tab').removeClass('active');
+			$('nav .tab[data-target="'+tab+'"]').addClass('active');
+
+			// Sections
+			$('section').removeClass('active');
+			$('section#'+tab).addClass('active');
+		}
+
+		$('.remove-user').bind('click tap', scope.removeMember);
 
 		// Get data that is supplied with jshare
 		scope.user = jshare.user;
-		scope.group = new Group(jshare.group);
-		scope.periodLength = scope.group.periodLength;
+
+		// Save supplied group data into this object
+		for(var key in jshare.group)
+		{
+			scope[key] = jshare.group[key];
+		}
+
 		scope.renderEvents();
 		console.log('APP INITIALISED');
 	};
@@ -65,11 +93,11 @@ function App()
 		this.activePeriod = p;
 		// TODO: get data from DB
 		// If Period doesn't exist, create new
-		if(typeof scope.data[scope.activePeriod] === 'undefined')
+		if(typeof scope.periods[scope.activePeriod] === 'undefined')
 		{
-			scope.data[scope.activePeriod] = new Period({startDate:scope.activePeriod, length:scope.periodLength});
+			scope.periods[scope.activePeriod] = new Period({startDate:scope.activePeriod, length:scope.periodLength}, scope);
 		}
-		scope.data[scope.activePeriod].activate();
+		scope.periods[scope.activePeriod].activate();
 		scope.updateName();
 	};
 
@@ -104,8 +132,8 @@ function App()
 	this.updateName = function()
 	{
 		// Update period name display
-		var startDay = scope.data[scope.activePeriod].startDate.format('D MMM');
-		var endDay = scope.data[scope.activePeriod].endDate.format('D MMM');
+		var startDay = scope.periods[scope.activePeriod].startDate.format('D MMM');
+		var endDay = scope.periods[scope.activePeriod].endDate.format('D MMM');
 		var periodName = startDay+' - '+endDay;
 		$('#period-controls .period span').text(periodName);
 	};
@@ -122,7 +150,7 @@ function App()
 		{
 			var data = {
 				invitedUser:{email:email},
-				group:scope.group._id
+				group:scope._id
 			};
 			socket.emit('put/invite', data, function(rtnData) {
 				if(rtnData.success)
@@ -167,7 +195,7 @@ function App()
 			var type = $('#info #edit #type').val();
 			//var length = $('#info #edit #length').val();
 			var data = {
-				id:app.group._id,
+				id:scope._id,
 				name:name,
 				eventtype:type,
 				permissions:
@@ -189,10 +217,10 @@ function App()
 					$('#header #back span').text(rtnData.group.name);
 					$('#info #display h2').text(rtnData.group.name);
 					$('#info #display p').text(rtnData.group.description);
-					scope.group.name = rtnData.group.name;
-					scope.group.eventtype = rtnData.group.eventtype;
-					scope.group.permissions.plan.addNewMembers = rtnData.group.permissions.plan.addNewMembers;
-					scope.group.permissions.settings.addNewMembers = rtnData.group.permissions.settings.addNewMembers;
+					scope.name = rtnData.group.name;
+					scope.eventtype = rtnData.group.eventtype;
+					scope.permissions.plan.addNewMembers = rtnData.group.permissions.plan.addNewMembers;
+					scope.permissions.settings.addNewMembers = rtnData.group.permissions.settings.addNewMembers;
 				}else{
 					alert('There was an error, admins have not been notified. Sucks to be you.'); // lol
 				}
@@ -211,12 +239,50 @@ function App()
 		}
 	};
 
-    this.renderEvents = function()
-    {
-        var compiledTemplate = Handlebars.getTemplate('events');
-		var html = $(compiledTemplate(scope.group.events));
+	/**
+	* Removes current user from the group
+	*/
+	this.removeMember = function()
+	{
+		var userId = $(this).data('id');
+		var confirmMessage = '';
+		if(userId == app.user._id)
+		{
+			confirmMessage = 'Y u leave group? Are you sure?';
+		} else
+		{
+			var memberToRemove = {};
+			$.each(scope.members, function(index, member)
+			{
+				if(member._id == userId)
+				{
+					memberToRemove = member;
+				}
+			});
+			confirmMessage = 'Are you sure you want to remove ' + memberToRemove.name.first + ' ' + memberToRemove.name.last + '?';
+		}
+
+		if(confirm(confirmMessage))
+		{
+			socket.emit('delete/group/member', {group:scope._id, member:userId}, function(removedUserId)
+			{
+				if(removedUserId == app.user._id)
+				{
+					window.location.href = '/groups';
+				} else
+				{
+					$('.remove-user[data-id=\'' + removedUserId + '\']').parent('.user').remove();
+				}
+			});
+		}
+	};
+
+	this.renderEvents = function()
+	{
+		var compiledTemplate = Handlebars.getTemplate('events');
+		var html = $(compiledTemplate(scope.events));
 		$('section#updates').html(html);
-    };
+	};
 
 
 	this.init();
