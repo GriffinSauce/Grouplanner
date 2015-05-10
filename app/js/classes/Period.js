@@ -4,8 +4,9 @@
  *	Period class
  *	options.startDate: 	The starting date in DDMMYYYY format 	default: Monday of this week, will be converted to Moment
  *	options.length:		The length of the period				default: 7 days
+ *	parent:				The group this period belongs to
  */
-function Period(options)
+function Period(options, parent)
 {
 	var scope = this;
 	// Set props based on options or defaults
@@ -14,17 +15,20 @@ function Period(options)
 		length:7
 	};
 	options = typeof options !== 'undefined' ? options : scope.defaultOptions; // Prevent options undefined error
-	for(var prop in scope.defaultOptions)	
+	for(var prop in scope.defaultOptions)
 	{
 		scope[prop] = typeof options[prop]	!== 'undefined' ? options[prop]	: scope.defaultOptions[prop];
 	}
-	
+
+	// Group
+	this.group = parent;
+
 	// Convert startDate to moment
 	this.startDate = moment(this.startDate,'DDMMYYYY');
-	
+
 	// Set endDate
 	this.endDate = this.startDate.clone().add(this.length,'d');
-	
+
 	/* 	Days in the period, contains array of objects:
 	* 	{
 	* 		date:Moment,
@@ -33,14 +37,14 @@ function Period(options)
 	* 	}
 	*/
 	this.days = [];
-	
+
 	// Planned date, false or moment
 	this.plannedDate = false;
-	
+
 	// Mailed state, boolean
 	this.mailed = false;
-	
-	/*	
+
+	/*
 	 *	Generate day objects
 	 */
 	this.generateDays = function()
@@ -56,9 +60,9 @@ function Period(options)
 			dateTemp.add(1, 'd');
 		}
 	};
-	
-	
-	/*	
+
+
+	/*
 	 *	Gets period html
 	 */
 	this.getHTML = function()
@@ -75,8 +79,8 @@ function Period(options)
 					day:m.format('dd'),
 					date:m.format('DD'),
 					dateFull:date,
-					available:scope.days[date].available.indexOf(app.user._id) !== -1,
-					percent:(scope.days[date].available.length / app.group.members.length) * 100
+					available:scope.days[date].available.indexOf(scope.group.user._id) !== -1,
+					percent:(scope.days[date].available.length / scope.group.members.length) * 100
 				});
 			}
 			data.days.sort(function(a,b){
@@ -108,7 +112,7 @@ function Period(options)
 
 		return html;
 	}
-	
+
 	/*
 	 *	Get available users for a certain day
 	 *
@@ -116,17 +120,17 @@ function Period(options)
 	this.getAvailableUsers = function(date)
 	{
 		var users = [];
-		for(var key in app.group.members)
+		for(var key in scope.group.members)
 		{
-			if(scope.days[date].available.indexOf(app.group.members[key]._id) !== -1)
+			if(scope.days[date].available.indexOf(scope.group.members[key]._id) !== -1)
 			{
-				users.push(app.group.members[key]);
+				users.push(scope.group.members[key]);
 			}
 		}
 		return users;
 	};
-	 
-	/*	
+
+	/*
 	 *	Clickhandler for days
 	 *
 	 */
@@ -136,22 +140,22 @@ function Period(options)
 		var date = el.attr('id');
 		var available = null;
 		console.log('Changing availability on: '+date);
-		
+
 		// Update UI and data
 		if(el.hasClass('available'))
 		{
 			available = false;
 			el.removeClass('available');
-			var i = scope.days[date].available.indexOf(app.user._id);
+			var i = scope.days[date].available.indexOf(scope.group.user._id);
 			if(i != -1) {
-				scope.days[date].available.splice(i, 1);	
+				scope.days[date].available.splice(i, 1);
 			}
 		}else{
 			available = true;
 			el.addClass('available');
-			scope.days[date].available.push(app.user._id);
+			scope.days[date].available.push(scope.group.user._id);
 		}
-		
+
 		// Update day to db
 		var data = {
 			periodid:scope.id,
@@ -163,8 +167,8 @@ function Period(options)
 		});
 		scope.updatePicker();
 	};
-	
-	/*	
+
+	/*
 	 *	Clickhandler for go buttons
 	 *
 	 */
@@ -172,11 +176,11 @@ function Period(options)
 	{
 		var el = $(this);
 		var date = el.parent().attr('id');
-		
+
 		if(el.parent().hasClass('doable'))
 		{
 			if(confirm("Planning the date! \nYou sure about that?"))
-			{		
+			{
 				console.log('Planning date: '+date);
 
 				// Update data
@@ -202,8 +206,8 @@ function Period(options)
 			alert("No can't do. \nYou need more than 50% available to plan a date.");
 		}
 	};
-	
-	/*	
+
+	/*
 	 *	Clickhandler for replan button
 	 *
 	 */
@@ -251,8 +255,8 @@ function Period(options)
 				var data = {
 					type: 'plannedDate',
 					to: scope.days[scope.plannedDate].available,
-					from: app.user._id,
-					group: app.group._id,
+					from: scope.group.user._id,
+					group: scope.group._id,
 					data:
 					{
 						date:scope.plannedDate,
@@ -290,16 +294,16 @@ function Period(options)
 		for(var key in days)
 		{
 			var day = $('#'+scope.startDate.format('DDMMYYYY')).find('#avail-days #'+key);
-			if(days[key].available.indexOf(app.user._id) !== -1)
+			if(days[key].available.indexOf(scope.group.user._id) !== -1)
 			{
 				day.removeClass('available').addClass('available');
 			}else{
-				day.removeClass('available');	
+				day.removeClass('available');
 			}
 		}
 	};
-	
-	/*	
+
+	/*
 	 *	Update date planning UI
 	 *
 	 */
@@ -308,20 +312,20 @@ function Period(options)
 		var days = scope.days;
 		for(var key in days)
 		{
-			days[key].percent = (days[key].available.length / app.group.members.length) * 100;
+			days[key].percent = (days[key].available.length / scope.group.members.length) * 100;
 			// TODO: Use Group's allowed-absense setting
-			
+
 			var day = $('#'+scope.startDate.format('DDMMYYYY')).find('#avail-plan #'+key);
 			day.find('.bar-content').css({width: days[key].percent+'%'});
-			
+
 			day.removeClass('doable go');
 			if(days[key].percent >= 50){ 	day.addClass('doable'); }
 			if(days[key].percent === 100){	day.addClass('go');		}
 		}
 		// TODO: Order according to percent
 	};
-	
-	/*	
+
+	/*
 	 *	Show this period in the UI
 	 *
 	 */
@@ -337,15 +341,15 @@ function Period(options)
 			$('#periods').append(scope.getHTML());
 		}
 	};
-	
-	/*	
+
+	/*
 	 *	Load data from db and update UI
 	 *
 	 */
 	this.updateData = function()
 	{
 		var period = {
-			groupid:app.group._id,
+			groupid:scope.group._id,
 			startDate:scope.startDate.format('DDMMYYYY'),
 			endDate:scope.endDate.format('DDMMYYYY')
 		}
@@ -362,7 +366,7 @@ function Period(options)
 				}else{
 					scope.plannedDate = false;
 				}
-				
+
 				// Update UI
 				if(!scope.plannedDate)
 				{
@@ -377,7 +381,7 @@ function Period(options)
 			}
 		});
 	};
-	
+
 	this.generateDays();
 	this.updateData();
 }
