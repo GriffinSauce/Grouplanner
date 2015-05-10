@@ -102,15 +102,15 @@ var hbs = handlebars(
 	{
 		environmentLabel: environmentLabel
 	},
-	layoutsDir:'www/templates/views',
-	partialsDir:'www/templates/partials'
+	layoutsDir:'app/templates/views',
+	partialsDir:'app/templates/partials'
 });
 
 app.engine('handlebars', hbs);
 app.set('view engine', 'handlebars');
-app.set('views', 'www/templates/views');
+app.set('views', 'app/templates/views');
 
-app.use("/www", serveStatic(__dirname + '/www'));
+app.use("/app", serveStatic(__dirname + '/app'));
 app.use('/', routes.main.router);
 app.use('/', routes.invite.router);
 app.use('/', routes.passport.router);

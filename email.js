@@ -15,13 +15,13 @@ var templates =
 {
 	invite:
 	{
-		text: __dirname + '/www/templates/email/invite_text.handlebars',
-		html: __dirname + '/www/templates/email/invite_html.handlebars'
+		text: __dirname + '/app/templates/email/invite_text.handlebars',
+		html: __dirname + '/app/templates/email/invite_html.handlebars'
 	},
 	notification_plannedDate:
 	{
-		text: __dirname + '/www/templates/email/notification_plannedDate_text.handlebars',
-		html: __dirname + '/www/templates/email/notification_plannedDate_html.handlebars'
+		text: __dirname + '/app/templates/email/notification_plannedDate_text.handlebars',
+		html: __dirname + '/app/templates/email/notification_plannedDate_html.handlebars'
 	}
 };
 

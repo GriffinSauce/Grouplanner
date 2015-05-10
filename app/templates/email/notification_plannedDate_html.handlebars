@@ -212,7 +212,7 @@
 						<table>
 							<tr>
 								<td align="center">
-									<p><img class='header-image' src='http://www.grouplanner.nl/www/img/grouplanner_logo.png' height='100' alt=""></p>
+									<p><img class='header-image' src='http://www.grouplanner.nl/app/img/grouplanner_logo.png' height='100' alt=""></p>
 								</td>
 							</tr>
 						</table>
@@ -237,17 +237,10 @@
 						<tr>
 							<td>
 								<p>Hi there,</p>
-								<p>{{inviter.name.first}} has invited you to come join planning {{group.grouptype}} for {{group.name}}.</p>
-								<p>{{description}}</p>
-								<table>
-									<tr>
-										<td class="padding">
-											<p><a href="{{acceptinvitelink}}" class="btn-primary">Start planning!</a></p>
-										</td>
-									</tr>
-								</table>
-								<h3>Don't know Grouplanner yet?</h3>
-								<p>It's really awesome!</p>
+								<p>A new date was planned for {{group.name}} by {{from.name.first}}</p>
+								<h1>It's happening on {{data.displayDate}}</h1>
+								<h3>Notes:</h3>
+								<p>{{data.notes}}</p>
 								<p>Cheers,<br />Grouplanner</p>
 								<p><a href="http://www.twitter.com/grouplanner">Follow @grouplanner on Twitter</a></p>
 							</td>
