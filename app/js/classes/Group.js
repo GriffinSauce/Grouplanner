@@ -16,9 +16,9 @@ function Group()
 	// Default 7
 	this.periodLength = this.length;
 
-	// Data contains locally loaded periods, by startDate in DDMMYYYY format
+	// Locally loaded periods, by startDate in DDMMYYYY format
 	// Contains only this week by default
-	this.data = {};
+	this.periods = {};
 
 	// User data
 	this.user = {};	// TODO: Move this to App class
@@ -93,11 +93,11 @@ function Group()
 		this.activePeriod = p;
 		// TODO: get data from DB
 		// If Period doesn't exist, create new
-		if(typeof scope.data[scope.activePeriod] === 'undefined')
+		if(typeof scope.periods[scope.activePeriod] === 'undefined')
 		{
-			scope.data[scope.activePeriod] = new Period({startDate:scope.activePeriod, length:scope.periodLength}, scope);
+			scope.periods[scope.activePeriod] = new Period({startDate:scope.activePeriod, length:scope.periodLength}, scope);
 		}
-		scope.data[scope.activePeriod].activate();
+		scope.periods[scope.activePeriod].activate();
 		scope.updateName();
 	};
 
@@ -132,8 +132,8 @@ function Group()
 	this.updateName = function()
 	{
 		// Update period name display
-		var startDay = scope.data[scope.activePeriod].startDate.format('D MMM');
-		var endDay = scope.data[scope.activePeriod].endDate.format('D MMM');
+		var startDay = scope.periods[scope.activePeriod].startDate.format('D MMM');
+		var endDay = scope.periods[scope.activePeriod].endDate.format('D MMM');
 		var periodName = startDay+' - '+endDay;
 		$('#period-controls .period span').text(periodName);
 	};
