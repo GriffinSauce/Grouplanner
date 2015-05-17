@@ -1,4 +1,4 @@
-var app = angular.module('grouplanner', ['ngRoute']);
+var app = angular.module('grouplanner', ['ngResource', 'ngRoute']);
 
 app.config(
 	function($routeProvider, $locationProvider) {
@@ -10,6 +10,10 @@ app.config(
 		when('/groups', {
 			templateUrl: 'components/groups/groups-view.html',
 			controller: 'GroupsCtrl'
+		}).
+		when('/groups/:groupId', {
+			templateUrl: 'components/group/group-view.html',
+			controller: 'GroupCtrl'
 		}).
 		when('/login', {
 			templateUrl: 'components/login/login-view.html',
@@ -24,3 +28,8 @@ app.config(
 		$locationProvider.hashPrefix('!');
 	}
 );
+
+app.factory('Groups', function($resource)
+{
+	return $resource('/api/groups/:groupId', {groupId:'@_id'});
+});
