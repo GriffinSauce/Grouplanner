@@ -1,11 +1,11 @@
 #!/bin/env node
 
-var express = require('express');
-var router = express.Router();
+var router = require('express').Router();
 var passport = require('passport');
 
 var Group = require(__dirname + '/../mongoose/group.js');
 var User = require(__dirname + '/../mongoose/user.js');
+
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 var FacebookStrategy = require('passport-facebook').Strategy;
 
@@ -32,7 +32,7 @@ router.get('/login/success', function(req, res)
 		});
 	}
 
-	var redirect_to = req.session.redirect_to ? req.session.redirect_to : '/';
+	var redirect_to = req.session.redirect_to ? req.session.redirect_to : '/groups';
 	delete req.session.redirect_to;
 	res.redirect(redirect_to);
 });
@@ -64,6 +64,7 @@ if(global.grouplanner.environment == 'local')
 	googleStrategySettings.client_id = process.env.GOOGLE_CLIENT_ID;
 	googleStrategySettings.client_secret = process.env.GOOGLE_CLIENT_SECRET;
 	googleStrategySettings.callbackURL = 'http://'+process.env.APP_URL+'/auth/google/callback';
+
 	facebookStrategySettings.client_id = process.env.FACEBOOK_APP_ID;
 	facebookStrategySettings.client_secret = process.env.FACEBOOK_APP_SECRET;
 	facebookStrategySettings.callbackURL = 'http://'+process.env.APP_URL+'/auth/facebook/callback';

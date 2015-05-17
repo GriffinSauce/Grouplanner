@@ -16,11 +16,6 @@ app.directive("loginButtons", function()
                 }
 
             ];
-
-			$scope.login = function(provider)
-			{
-				$location.path(provider.path);
-			};
 		},
 		controllerAs:'loginButtons'
 	};
