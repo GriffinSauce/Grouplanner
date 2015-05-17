@@ -18,7 +18,7 @@
       connectionString += process.env.MONGODB_DB;
       mongo_mongoose.connect(connectionString);
     }
-
+    global.grouplanner.mongoose = mongo_mongoose;
     global.grouplanner.database = mongo_mongoose.connection;
     global.grouplanner.database.on('error', console.error.bind(console, 'Database connection error:'));
     global.grouplanner.database.once('open', function callback() { console.log('Connected to the database'); });

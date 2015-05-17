@@ -11,7 +11,26 @@ var express_cookieParser = require('cookie-parser');
 var express_session = require('express-session');
 var express_methodOverride = require('method-override');
 var express_serveStatic = require('serve-static');
-var mongo_connect = require('connect-mongo')(express_session);
+
+var MongoStore = require('connect-mongo')(express_session);
+
+var sessionMiddleware = express_session(
+{
+	secret: 'fg783#$%f',
+	store: new MongoStore({
+		mongoose_connection:global.grouplanner.mongoose.connections[0],
+		db:global.grouplanner.database
+	}),
+	resave: true,
+	saveUninitialized: true
+});
+
+// EXPRESS SETUP
+express.set('title', 'Grouplanner');
+express.use(express_cookieParser());
+express.use(express_bodyParser.json());
+express.use(express_methodOverride('X-HTTP-Method-Override'));
+express.use(sessionMiddleware);
 
 express.use("/", express_serveStatic(__dirname + '/app'));
 
