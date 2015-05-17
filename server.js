@@ -39,7 +39,7 @@ express.use(passport.passport.initialize());
 express.use(passport.passport.session());
 express.use(passport.router);
 
-express.use(api);
+express.use('/api', api);
 
 express.use("/", express_serveStatic(__dirname + '/app'));
 express.all("*", function(req, res)
