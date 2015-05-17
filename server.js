@@ -34,9 +34,9 @@ express.use(express_bodyParser.json());
 express.use(express_methodOverride('X-HTTP-Method-Override'));
 express.use(sessionMiddleware);
 
-app.use(passport.passport.initialize());
-app.use(passport.passport.session());
-app.use('/', passport.router);
+express.use(passport.passport.initialize());
+express.use(passport.passport.session());
+express.use('/', passport.router);
 
 express.use("/", express_serveStatic(__dirname + '/app'));
 express.all("*", function(req, res)
