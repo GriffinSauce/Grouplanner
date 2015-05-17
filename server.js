@@ -4,6 +4,7 @@ var globals		= require(__dirname + '/server/globals.js');
 var exit		= require(__dirname + '/server/server-exit.js');
 var database	= require(__dirname + '/server/database-connection.js');
 var passport	= require(__dirname + '/server/routes/passport.js');
+var api			= require(__dirname + '/api/routes.js');
 var fs			= require('fs');
 
 var express					= require('express')();
@@ -37,6 +38,8 @@ express.use(sessionMiddleware);
 express.use(passport.passport.initialize());
 express.use(passport.passport.session());
 express.use(passport.router);
+
+express.use(api);
 
 express.use("/", express_serveStatic(__dirname + '/app'));
 express.all("*", function(req, res)
