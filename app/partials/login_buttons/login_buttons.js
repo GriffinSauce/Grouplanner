@@ -17,10 +17,9 @@ app.directive("loginButtons", function()
 
             ];
 
-			$scope.google = function(provider)
+			$scope.login = function(provider)
 			{
-                console.log(provider);
-				//$location.path('/google');
+				$location.path(provider.path);
 			};
 		},
 		controllerAs:'loginButtons'

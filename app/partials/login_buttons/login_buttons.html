@@ -1,5 +1,5 @@
 <div id="loginBtns">
 	<p ng-repeat="provider in providers" class="loginBtn" id="{{provider.name | lowercase}}">
-		<a class="btn" href="{{provider.path}}">Sign in with {{provider.name}}</a>
+		<a class="btn" ng-href="#" ng-click="login(provider)">Sign in with {{provider.name}}</a>
 	</p>
 </div>
