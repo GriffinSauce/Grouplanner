@@ -1,3 +1,13 @@
 app.controller('GroupsCtrl', function ($scope) {
-  // Not much to do here...
+	$scope.groups = [
+		{
+			name:"Altitude"
+		},
+		{
+			name:"Left Alive"
+		},
+		{
+			name:"GrouplannerDev"
+		}
+	];
 });
