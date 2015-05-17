@@ -7,6 +7,10 @@ app.config(
         templateUrl: 'components/home/home-view.html',
         controller: 'HomeCtrl'
       }).
+      when('/app/groups', {
+        templateUrl: 'components/groups/groups-view.html',
+        controller: 'GroupsCtrl'
+      }).
       otherwise({
         redirectTo: '/'
       });

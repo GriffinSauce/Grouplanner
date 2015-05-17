@@ -1,0 +1,3 @@
+app.controller('GroupsCtrl', function ($scope) {
+  // Not much to do here...
+});

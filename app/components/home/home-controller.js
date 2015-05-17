@@ -1,3 +1,3 @@
 app.controller('HomeCtrl', function ($scope) {
-  $scope.message = "Hello world!";
+  // Not much to do here...
 });
