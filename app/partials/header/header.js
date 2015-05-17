@@ -7,20 +7,22 @@
 		return {
 			restrict: "E",
 			templateUrl: "partials/header/header-view.html",
-			controller: function($scope, $location)
-			{
-				$scope.back = function()
-				{
-					window.history.back();
-				};
-
-				$scope.logout = function()
-				{
-					$location.path('logout');
-				};
-			},
+			controller: headerController,
 			controllerAs:'header'
 		};
+
+		function headerController($scope, $location)
+		{
+			$scope.back = function()
+			{
+				window.history.back();
+			};
+
+			$scope.logout = function()
+			{
+				$location.path('logout');
+			};
+		}
 	});
 
 }());

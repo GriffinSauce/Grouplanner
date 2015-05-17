@@ -6,22 +6,23 @@
 		return {
 			restrict: "E",
 			templateUrl: "partials/login_buttons/login_buttons.html",
-			controller: function($scope, $location)
-			{
-	            $scope.providers = [
-	                {
-	                    name: "Google",
-	                    path: "/auth/google"
-	                },
-	                {
-	                    name: "Facebook",
-	                    path: "/auth/facebook"
-	                }
-
-	            ];
-			},
+			controller: loginButtonController,
 			controllerAs:'loginButtons'
 		};
+
+		function loginButtonController($scope)
+		{
+            $scope.providers = [
+	            {
+	                name: "Google",
+	                path: "/auth/google"
+	            },
+	            {
+	                name: "Facebook",
+	                path: "/auth/facebook"
+	            }
+            ];
+		}
 	});
 
 }());
