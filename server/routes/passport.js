@@ -15,7 +15,6 @@ router.get('/auth/google/callback', passport.authenticate('google', { successRed
 router.get('/auth/facebook', passport.authenticate('facebook', {scope: 'email'}));
 router.get('/auth/facebook/callback', passport.authenticate('facebook', { successRedirect:'/login/success', failureRedirect: '/login' }));
 
-router.get('/login', function(req, res) { res.render('login', {page:'login'}); });
 router.get('/login/success', function(req, res)
 {
 	// If user came from invite link, we'll add him to the group and remove the invite token
@@ -51,7 +50,7 @@ var facebookStrategySettings = {};
 
 if(global.grouplanner.environment == 'local')
 {
-	var SecretSettingsFile = require(__dirname + '/../secrets.json');
+	var SecretSettingsFile = require(__dirname + '/../../secrets.json');
 
 	googleStrategySettings.client_id = SecretSettingsFile.google.client_id;
 	googleStrategySettings.client_secret = SecretSettingsFile.google.client_secret;
