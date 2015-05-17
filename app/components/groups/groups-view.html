@@ -4,7 +4,13 @@
 	<a ng-repeat="group in groups" class="group" ng-href="/groups/{{group._id}}">
 		<h3>{{group.name}}</h3>
 		<div class="members">
-			<div ng-repeat="member in group.members" class="member"><img src="{{picture}}" /></div>
+			<div ng-repeat="member in group.members" class="member"><img src="{{member.picture}}" /></div>
 		</div>
 	</a>
+	<p>
+		<a id="newGroupBtn" class="btn" ng-href="groups/create"><i class="icon-plus"></i>Create a new group</a>
+	</p>
+	<p>
+		<a id="joinGroupBtn" ng-href="help">Join an existing group</a>
+	</p>
 </div>

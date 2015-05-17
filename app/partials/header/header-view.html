@@ -1,3 +1,10 @@
-<div class="header">Header
-	<div ng-click="logout()">Logout</div>
+<div id="header">
+	<a id="back" ng-href="#" ng-click="back()" ng-show="group">
+		<i class="icon-left-open-big"></i>
+		<span>{{group.name}}</span>
+	</a>
+	<span ng-show="groups">Your groups</span>
+	<a id="logout" ng-href="#" ng-click="logout()">
+		<i class="icon-sign-out"></i>
+	</a>
 </div>

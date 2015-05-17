@@ -5,6 +5,11 @@ app.directive("headerView", function()
 		templateUrl: "partials/header/header-view.html",
 		controller: function($scope, $location)
 		{
+			$scope.back = function()
+			{
+				window.history.back();
+			};
+
 			$scope.logout = function()
 			{
 				$location.path('logout');
