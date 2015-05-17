@@ -2,12 +2,12 @@
 
 var express = require('express');
 var router = express.Router();
-var Group = require(__dirname + '/../db/group.js');
-
 var passport = require('passport');
+
+var Group = require(__dirname + '/../mongoose/group.js');
+var User = require(__dirname + '/../mongoose/user.js');
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 var FacebookStrategy = require('passport-facebook').Strategy;
-var User = require(__dirname + '/../db/user.js');
 
 // Passport routes
 router.get('/auth/google', passport.authenticate('google', {scope: 'https://www.googleapis.com/auth/userinfo.email'}));
