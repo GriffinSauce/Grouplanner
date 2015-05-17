@@ -10,7 +10,6 @@ var Period = require(__dirname + '/../server/mongoose/period.js');
 // Authenticate user
 router.use('/api/*', function(req, res, next)
 {
-    console.log("API ROUTER");
     if(req.user === undefined)
 	{
         console.log("USER NOT LOGGED IN");
@@ -33,6 +32,20 @@ router.get('/api/groups/', function(req, res)
     .exec(function(err, groups)
 	{
 		res.json(groups);
+	});
+});
+
+router.get('/api/groups/:group_id', function(req, res)
+{
+	Group.find({'members':{$in:[req.user._id]}, _id:req.params.group_id})
+    .populate({path:'members', model:User})
+    .populate({path:'events.user', model:User})
+    .populate({path:'events.meta.period', model:Period})
+    .populate({path:'events.meta.removeduser', model:User})
+    .limit(1)
+    .exec(function(err, groups)
+	{
+		res.json(groups[0]);
 	});
 });
 
