@@ -3,6 +3,7 @@
 var globals = require(__dirname + '/server/globals.js');
 var exit = require(__dirname + '/server/server-exit.js');
 var database = require(__dirname + '/server/database-connection.js');
+var passport = require(__dirname + '/server/routes/passport.js');
 var fs = require('fs');
 
 var express = require('express')();
@@ -32,6 +33,10 @@ express.use(express_cookieParser());
 express.use(express_bodyParser.json());
 express.use(express_methodOverride('X-HTTP-Method-Override'));
 express.use(sessionMiddleware);
+
+app.use(passport.passport.initialize());
+app.use(passport.passport.session());
+app.use('/', passport.router);
 
 express.use("/", express_serveStatic(__dirname + '/app'));
 express.all("*", function(req, res)
