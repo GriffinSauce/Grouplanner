@@ -3,6 +3,7 @@
 var globals = require(__dirname + '/server/globals.js');
 var exit = require(__dirname + '/server/server-exit.js');
 var database = require(__dirname + '/server/database-connection.js');
+var fs = require('fs');
 
 var express = require('express')();
 var express_http = require('http').Server(express);
@@ -33,6 +34,13 @@ express.use(express_methodOverride('X-HTTP-Method-Override'));
 express.use(sessionMiddleware);
 
 express.use("/", express_serveStatic(__dirname + '/app'));
+express.all("*", function(req, res)
+{
+	fs.readFile(__dirname + '/app/index.html', 'utf8', function(err, text)
+	{
+        res.send(text);
+    });
+});
 
 // START SERVER
 express_http.listen(global.grouplanner.port, global.grouplanner.ipaddress, function()
