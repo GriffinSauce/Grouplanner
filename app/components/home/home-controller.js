@@ -1,0 +1,3 @@
+app.controller('HomeCtrl', function ($scope) {
+  // Not much to do here...
+});
