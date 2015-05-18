@@ -1,0 +1,59 @@
+
+	<header-view></header-view>
+	<div id="banner">
+		<h1>So, what cha doin'?</h1>
+		<p>
+			Just tell us some things about your group and you'll be ready to go.
+		</p>
+	</div>
+
+	<section id="form">
+		<h2><span>Info</span></h2>
+		<p>
+			We're called <input id="name" type="text" placeholder="name" size="11" ng-model="group.name"/>
+		</p>
+		<p>
+			We want to plan
+			<select id="type" name="type" ng-model="group.eventtype">
+				<option value="dates" ng-selected>dates</option>
+				<option value="rehearsals">rehearsals</option>
+				<option value="meetings">meetings</option>
+			</select>
+		</p>
+		<p>
+			Once every
+			<span id="minus" class="numberBtn">-</span>
+			<input id="length" class="number" type="number" value="7" ng-model="group.periodLength"/>
+			<span id="plus" class="numberBtn">+</span>
+			days
+		</p>
+	</section>
+
+	<section id="permissions">
+		<h2><span>Permissions</span></h2>
+		<p>
+			<span id="planning" class="radio">
+				<span id="false" class="option">Only I</span>
+				<span id="true" class="option active">Everybody</span>
+			</span>
+			can choose dates
+		</p>
+		<p>
+			<span id="settings" class="radio">
+				<span id="false" class="option active">Only I</span>
+				<span id="true" class="option">Everybody</span>
+			</span>
+			can change settings
+		</p>
+		<p>
+			<i>Please note: these settings are not active yet, but we'll remember.</i>
+		</p>
+	</section>
+	<section>
+		<p>
+			<a id="createGroupBtn" class="btn" ng-click="saveGroup(group)"><i class="icon-check"></i>Start planning</a>
+		</p>
+		<p>
+			<a id="nevermindBtn" href="help">Join an existing group</a>
+		</p>
+	</section>

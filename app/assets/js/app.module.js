@@ -14,6 +14,10 @@
 				templateUrl: 'components/groups/groups-view.html',
 				controller: 'GroupsCtrl'
 			}).
+			when('/groups/create', {
+				templateUrl: 'components/create_group/create-group-view.html',
+				controller: 'CreateGroupCtrl'
+			}).
 			when('/groups/:groupId', {
 				templateUrl: 'components/group/group-view.html',
 				controller: 'GroupCtrl'
