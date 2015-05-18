@@ -34,7 +34,7 @@ router.get('/groups', function(req, res)
 
 router.post('/groups', function(req, res)
 {
-    var group = new Group(req.body.group);
+    var group = new Group(req.body);
     group.creator = req.user._id;
     group.members.push(req.user._id);
     group.events.push({ type:'group-created', user:req.user._id});
@@ -47,7 +47,7 @@ router.post('/groups', function(req, res)
             if(err) { console.log('Error updating'); console.log(err); }
             console.log('Saved to user as lastgroup');
         });
-        res.sendStatus(201);
+        res.status(201);
         res.json(group);
     });
 });
