@@ -12,10 +12,7 @@ router.use('/*', function(req, res, next)
 {
     if(req.user === undefined)
 	{
-        console.log("USER NOT LOGGED IN");
-		req.session.redirect_to = req.url;
-		res.redirect('/login');
-        // TODO: Instead of redirect respond with a 403 or 40? status.
+        res.sendStatus(401);
 	} else
 	{
 		next();
