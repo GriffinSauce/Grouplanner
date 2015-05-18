@@ -34,7 +34,7 @@ router.get('/groups', function(req, res)
 
 router.post('/groups', function(req, res)
 {
-    var group = new Group(input.group);
+    var group = new Group(req.body.group);
     group.creator = req.user._id;
     group.members.push(req.user._id);
     group.events.push({ type:'group-created', user:req.user._id});
