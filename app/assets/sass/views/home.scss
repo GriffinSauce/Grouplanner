@@ -1,0 +1,55 @@
+.view#home
+{
+    background-color: #F0F0F0;
+    header
+    {
+        display: block;
+        margin:0 0 1em 0;
+        background-image: url("/assets/img/landing-header.jpeg");
+        background-size: cover;
+        div{
+            display: inline-block;
+            width:100%;
+            padding: 1.6em 1.4em 1.8em 1.4em;
+            box-sizing: border-box;
+            color: #fff;
+            background-color: rgba(103, 1, 167, 0.5);
+        }
+        img
+        {
+            height: 100px;
+        }
+        .btn
+        {
+            margin:1em 0 0 0;
+            font-size: 1.4em;
+        }
+    }
+    section
+    {
+        margin: 1em;
+        padding:0.5em 3em;
+        background-color: #FFF;
+        border-radius: 0.2em;
+        ul
+        {
+            list-style: none;
+            padding:0;
+        }
+        .btn
+        {
+            font-size: 1em;
+        }
+    }
+    footer
+    {
+        margin:1em 0 0 0;
+        padding:0.5em 4em 0.5em 4em;
+        font-size: 0.8em;
+        background-color: #E0E0E0;
+        p
+        {
+            margin-top: 0.5;
+        }
+    }
+}

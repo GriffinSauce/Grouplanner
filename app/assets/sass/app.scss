@@ -11,6 +11,13 @@
 /*
  *	Pages
  */
+html,
+body,
+body > .ng-wrapper,
+body > .ng-wrapper > .view,
+{
+    min-height:100%;
+}
 html
 {
 	width:100%;
@@ -76,3 +83,4 @@ i
 @import 'responsive';
 @import 'views/header';
 @import 'views/login';
+@import 'views/home';

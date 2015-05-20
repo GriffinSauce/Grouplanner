@@ -1,6 +1,9 @@
 /*
  *	Pages
  */
+html, body, body > .ng-wrapper, body > .ng-wrapper > .view {
+  min-height: 100%; }
+
 html {
   width: 100%;
   height: 100%;
@@ -196,3 +199,40 @@ input {
   border-bottom-color: #3178ad; }
   .loginBtn#twitter a:hover {
     background: #2795E9; }
+
+.view#home {
+  background-color: #F0F0F0; }
+  .view#home header {
+    display: block;
+    margin: 0 0 1em 0;
+    background-image: url("/assets/img/landing-header.jpeg");
+    background-size: cover; }
+    .view#home header div {
+      display: inline-block;
+      width: 100%;
+      padding: 1.6em 1.4em 1.8em 1.4em;
+      box-sizing: border-box;
+      color: #fff;
+      background-color: rgba(103, 1, 167, 0.5); }
+    .view#home header img {
+      height: 100px; }
+    .view#home header .btn {
+      margin: 1em 0 0 0;
+      font-size: 1.4em; }
+  .view#home section {
+    margin: 1em;
+    padding: 0.5em 3em;
+    background-color: #FFF;
+    border-radius: 0.2em; }
+    .view#home section ul {
+      list-style: none;
+      padding: 0; }
+    .view#home section .btn {
+      font-size: 1em; }
+  .view#home footer {
+    margin: 1em 0 0 0;
+    padding: 0.5em 4em 0.5em 4em;
+    font-size: 0.8em;
+    background-color: #E0E0E0; }
+    .view#home footer p {
+      margin-top: 0.5; }
