@@ -4,19 +4,19 @@ var autoprefixer = require('gulp-autoprefixer');
 var livereload = require('gulp-livereload');
 
 gulp.task('sass', function () {
-	gulp.src('./sass/grouplanner.scss')
+	gulp.src('./app/assets/sass/app.scss')
 		.pipe(sass())
 		.pipe(autoprefixer({
 			browsers: ['last 2 versions'],
 			cascade: false
 		}))
-		.pipe(gulp.dest('./www/css'))
+		.pipe(gulp.dest('./app/assets/css'))
 		.pipe(livereload());
 });
 
 gulp.task('watch', function () {
 	livereload.listen();
-	gulp.watch('sass/**/*.scss', ['sass']);
+	gulp.watch('./app/assets/sass/**/*.scss', ['sass']);
 });
 
 gulp.task('default', ['watch']);

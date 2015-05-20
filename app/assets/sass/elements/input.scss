@@ -1,0 +1,96 @@
+/*
+ *	Input elements
+ */
+select,
+input
+{
+	margin: 0 0.3em;
+	padding: 0.4em 0.3em 0.4em 0.4em;
+	font-size: 100%;
+	border-width: 0;
+	border-radius: 0.2em;
+}
+
+select
+{
+	background-color: rgba(255, 255, 255, 0.4);
+}
+input
+{
+	color: #333;
+	background-color: rgba(207, 207, 207, 0.80);
+
+	&.number
+	{
+		margin: 0;
+		width: 3em;
+		text-align: center;
+		border: none;
+		background-color: rgba(255, 255, 255, 0.4);
+		border-radius: 0;
+	}
+}
+.numberBtn
+{
+	display: inline-block;
+	position: relative;
+	width:1em;
+	padding: 0.3em 0.5em 0.4em 0.5em;
+	font-weight: 900;
+	color: #666;
+	background-color: #FFF;
+	text-align: center;
+	cursor:pointer;
+	z-index: 2;
+	&#plus
+	{
+		margin: 0 0.3em 0 -0.3em;
+		border-left: 0.1em solid #DDD;
+		border-bottom-right-radius: 0.2em;
+		border-top-right-radius: 0.2em;
+	}
+	&#minus
+	{
+		margin: 0 -0.3em 0 0.3em;
+		border-right: 0.1em solid #DDD;
+		border-bottom-left-radius: 0.2em;
+		border-top-left-radius: 0.2em;
+	}
+}
+.radio
+{
+	display: inline-flex;
+	margin: 0 0.5em 0 0;
+	vertical-align: middle;
+	cursor: pointer;
+
+	.option
+	{
+		margin: 0;
+		padding: 0.4em 0.6em 0.5em 0.6em;
+		color: rgba(255,255,255,0.6);
+		color: rgba(69, 88, 168, 0.5);
+		text-decoration: line-through;
+		background-color: transparent;
+		border:0.1em solid #4558a8;
+		transition: background-color 0.1s ease, color 0.1s ease;
+
+		&.active
+		{
+			color:#FFF;
+			text-decoration: none;
+			background-color: #4558a8;
+			border-bottom: none;
+		}
+		&:first-child
+		{
+			border-top-left-radius: 0.3em;
+			border-bottom-left-radius: 0.3em;
+		}
+		&:last-child
+		{
+			border-top-right-radius: 0.3em;
+			border-bottom-right-radius: 0.3em;
+		}
+	}
+}

@@ -1,0 +1,40 @@
+/*
+ *	Login buttons
+ */
+.loginBtn
+{
+	a
+	{
+		padding: 0.3em 0.7em 0.4em 0.7em;
+		font-size: 120%;
+		min-width: 11em;
+	}
+	&#google a
+	{
+		background: #dd4b39;
+		border-bottom-color: #bf3625;
+		&:hover
+		{
+			background: #e74b37;
+		}
+	}
+	&#facebook a
+	{
+		background: #3B5998;
+		border-bottom-color: #2D4373;
+		&:hover
+		{
+			background: #2D4373;
+			border-bottom-color: #1e3057;
+		}
+	}
+	&#twitter a
+	{
+		background: #55ACEE;
+		border-bottom-color: #3178ad;
+		&:hover
+		{
+			background: #2795E9;
+		}
+	}
+}

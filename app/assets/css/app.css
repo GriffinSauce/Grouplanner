@@ -1,0 +1,198 @@
+/*
+ *	Pages
+ */
+html {
+  width: 100%;
+  height: 100%;
+  font-family: Roboto, "sans-serif";
+  background-color: #E0E0E0;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none; }
+
+body {
+  padding: 0;
+  margin: 0;
+  text-align: center; }
+  body #banner {
+    padding: 3em 2em 2em 2em;
+    background-color: white; }
+    body #banner img {
+      max-height: 100px; }
+
+/*
+ *	Elements
+ */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 300; }
+
+h1 {
+  font-size: 150%; }
+
+h2 {
+  font-size: 120%;
+  font-style: italic;
+  color: #666; }
+
+hr {
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom-color: #D0D0D0; }
+
+i {
+  vertical-align: middle; }
+
+.btn {
+  display: inline-block;
+  padding: 0.4em 0.7em 0.5em 0.7em;
+  font-size: 120%;
+  color: #FFF;
+  background-color: #19be78;
+  text-decoration: none;
+  cursor: pointer;
+  border-radius: 0.2em;
+  transition: background-color 0.1s; }
+  .btn i {
+    margin: 0 0.3em 0 -0.1em; }
+  .btn:hover {
+    background-color: #00CB75; }
+
+/*
+ *	Input elements
+ */
+select, input {
+  margin: 0 0.3em;
+  padding: 0.4em 0.3em 0.4em 0.4em;
+  font-size: 100%;
+  border-width: 0;
+  border-radius: 0.2em; }
+
+select {
+  background-color: rgba(255, 255, 255, 0.4); }
+
+input {
+  color: #333;
+  background-color: rgba(207, 207, 207, 0.8); }
+  input.number {
+    margin: 0;
+    width: 3em;
+    text-align: center;
+    border: none;
+    background-color: rgba(255, 255, 255, 0.4);
+    border-radius: 0; }
+
+.numberBtn {
+  display: inline-block;
+  position: relative;
+  width: 1em;
+  padding: 0.3em 0.5em 0.4em 0.5em;
+  font-weight: 900;
+  color: #666;
+  background-color: #FFF;
+  text-align: center;
+  cursor: pointer;
+  z-index: 2; }
+  .numberBtn#plus {
+    margin: 0 0.3em 0 -0.3em;
+    border-left: 0.1em solid #DDD;
+    border-bottom-right-radius: 0.2em;
+    border-top-right-radius: 0.2em; }
+  .numberBtn#minus {
+    margin: 0 -0.3em 0 0.3em;
+    border-right: 0.1em solid #DDD;
+    border-bottom-left-radius: 0.2em;
+    border-top-left-radius: 0.2em; }
+
+.radio {
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  margin: 0 0.5em 0 0;
+  vertical-align: middle;
+  cursor: pointer; }
+  .radio .option {
+    margin: 0;
+    padding: 0.4em 0.6em 0.5em 0.6em;
+    color: rgba(255, 255, 255, 0.6);
+    color: rgba(69, 88, 168, 0.5);
+    text-decoration: line-through;
+    background-color: transparent;
+    border: 0.1em solid #4558a8;
+    transition: background-color 0.1s ease, color 0.1s ease; }
+    .radio .option.active {
+      color: #FFF;
+      text-decoration: none;
+      background-color: #4558a8;
+      border-bottom: none; }
+    .radio .option:first-child {
+      border-top-left-radius: 0.3em;
+      border-bottom-left-radius: 0.3em; }
+    .radio .option:last-child {
+      border-top-right-radius: 0.3em;
+      border-bottom-right-radius: 0.3em; }
+
+/* Smartphones (portrait) ----------- */
+@media only screen and (max-width: 360px) {
+  body#create section {
+    font-size: 0.9rem;
+    padding-bottom: 1em; }
+    body#create section#form {
+      font-size: 1rem; } }
+
+/* Tablets and up ----------- */
+@media only screen and (min-width: 500px) {
+  section {
+    width: 500px;
+    margin: auto; } }
+
+#header {
+  height: 2em;
+  padding: 1em;
+  background-color: #F0F0F0; }
+  #header #logo {
+    float: left;
+    height: 2em;
+    margin: 0 0 0 0.5em; }
+  #header span {
+    font-size: 140%;
+    font-weight: 500;
+    color: #555; }
+  #header #logout {
+    float: right;
+    padding: 0.3em 0 0 0; }
+    #header #logout i {
+      color: rgba(0, 0, 0, 0.25); }
+  #header a {
+    text-decoration: none; }
+  #header i {
+    color: #555;
+    font-size: 150%;
+    vertical-align: middle; }
+
+/*
+ *	Login buttons
+ */
+.loginBtn a {
+  padding: 0.3em 0.7em 0.4em 0.7em;
+  font-size: 120%;
+  min-width: 11em; }
+.loginBtn#google a {
+  background: #dd4b39;
+  border-bottom-color: #bf3625; }
+  .loginBtn#google a:hover {
+    background: #e74b37; }
+.loginBtn#facebook a {
+  background: #3B5998;
+  border-bottom-color: #2D4373; }
+  .loginBtn#facebook a:hover {
+    background: #2D4373;
+    border-bottom-color: #1e3057; }
+.loginBtn#twitter a {
+  background: #55ACEE;
+  border-bottom-color: #3178ad; }
+  .loginBtn#twitter a:hover {
+    background: #2795E9; }

@@ -1,0 +1,20 @@
+.btn
+{
+	display: inline-block;
+	padding: 0.4em 0.7em 0.5em 0.7em;
+	font-size: 120%;
+	color:#FFF;
+	background-color:#19be78;
+	text-decoration:none;
+	cursor:pointer;
+	border-radius:0.2em;
+	transition:background-color 0.1s;
+	i
+	{
+		margin: 0 0.3em 0 -0.1em;
+	}
+	&:hover
+	{
+		background-color: #00CB75;
+	}
+}
