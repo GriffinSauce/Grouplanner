@@ -22,3 +22,10 @@ $RECYCLE.BIN/
 
 node_modules/
 /secrets.json
+
+
+#############
+## Bower
+#############
+
+app/assets/libs/

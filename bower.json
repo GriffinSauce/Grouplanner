@@ -1,0 +1,30 @@
+{
+  "name": "Grouplanner",
+  "version": "1.0.0",
+  "homepage": "https://github.com/GriffinSauce/Grouplanner",
+  "authors": [
+    "(Joris Griffioen <jorisjgriffioen@gmail.com>)"
+  ],
+  "description": "Group Planning Application",
+  "main": "server.js",
+  "keywords": [
+    "Grouplanner",
+    "Node.js",
+    "planning",
+    "application"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "app/assets/libs",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.4.0",
+    "angular-route": "~1.4.0",
+    "angular-resource": "~1.4.0",
+    "moment": "~2.10.3"
+  }
+}

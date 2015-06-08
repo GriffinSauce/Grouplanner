@@ -6,11 +6,11 @@ var frisby = require('frisby');
 **/
 
 frisby.create('Query groups')
-  .get('http://localhost:8085/api/groups')
+  .get('http://localhost:8085/api/group')
   .expectStatus(401)
 .toss();
 
 frisby.create('Specific group')
-  .get('http://localhost:8085/api/groups/jhgjghjhg')
+  .get('http://localhost:8085/api/group/jhgjghjhg')
   .expectStatus(401)
 .toss();
