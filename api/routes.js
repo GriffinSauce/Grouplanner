@@ -19,7 +19,7 @@ router.use('/*', function(req, res, next)
 	}
 });
 
-router.get('/groups', function(req, res)
+router.get('/group', function(req, res)
 {
 	Group.find({'members':{$in:[req.user._id]}})
     .populate({path:'members', model:User})
@@ -32,7 +32,7 @@ router.get('/groups', function(req, res)
 	});
 });
 
-router.post('/groups', function(req, res)
+router.post('/group', function(req, res)
 {
     var group = new Group(req.body);
     group.creator = req.user._id;
@@ -52,7 +52,7 @@ router.post('/groups', function(req, res)
     });
 });
 
-router.get('/groups/:group_id', function(req, res)
+router.get('/group/:group_id', function(req, res)
 {
 	Group.find({'members':{$in:[req.user._id]}, _id:req.params.group_id})
     .populate({path:'members', model:User})

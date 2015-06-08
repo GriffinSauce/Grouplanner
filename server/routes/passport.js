@@ -32,7 +32,7 @@ router.get('/login/success', function(req, res)
 		});
 	}
 
-	var redirect_to = req.session.redirect_to ? req.session.redirect_to : '/groups';
+	var redirect_to = req.session.redirect_to ? req.session.redirect_to : '/group';
 	delete req.session.redirect_to;
 	res.redirect(redirect_to);
 });

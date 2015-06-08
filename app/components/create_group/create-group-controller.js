@@ -1,9 +1,9 @@
 (function() {
     'use strict';
 
-    angular.module('grouplanner').controller('CreateGroupCtrl', function($scope, $location, Groups)
+    angular.module('grouplanner').controller('CreateGroupCtrl', function($scope, $location, Group)
     {
-        $scope.group = new Groups();
+        $scope.group = new Group();
 
         $scope.saveGroup = function(group)
         {
@@ -12,7 +12,7 @@
 
         function redirectToGroup(group)
         {
-            $location.path('/groups/' + group._id);
+            $location.path('/group/' + group._id);
         }
     });
 }());

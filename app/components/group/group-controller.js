@@ -1,8 +1,8 @@
 (function() {
     'use strict';
 
-	angular.module('grouplanner').controller('GroupCtrl', function ($scope, $routeParams, Groups) {
-		$scope.group = Groups.get({groupId:$routeParams.groupId});
+	angular.module('grouplanner').controller('GroupCtrl', function ($scope, $routeParams, Group) {
+		$scope.group = Group.get({groupId:$routeParams.groupId});
 	});
 
 })();

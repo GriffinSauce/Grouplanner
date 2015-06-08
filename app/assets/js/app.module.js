@@ -10,15 +10,15 @@
 				templateUrl: 'components/home/home-view.html',
 				controller: 'HomeCtrl'
 			}).
-			when('/groups', {
+			when('/group', {
 				templateUrl: 'components/groups/groups-view.html',
 				controller: 'GroupsCtrl'
 			}).
-			when('/groups/create', {
+			when('/group/create', {
 				templateUrl: 'components/create_group/create-group-view.html',
 				controller: 'CreateGroupCtrl'
 			}).
-			when('/groups/:groupId', {
+			when('/group/:groupId', {
 				templateUrl: 'components/group/group-view.html',
 				controller: 'GroupCtrl'
 			}).
@@ -35,9 +35,9 @@
 			$locationProvider.hashPrefix('!');
 		}
 	)
-	.factory('Groups', function($resource)
+	.factory('Group', function($resource)
 	{
-		return $resource('/api/groups/:groupId', {groupId:'@_id'});
+		return $resource('/api/group/:groupId', {groupId:'@_id'});
 	});
 
 }());
