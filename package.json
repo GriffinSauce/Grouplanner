@@ -1,6 +1,6 @@
 {
   "name": "Grouplanner",
-  "version": "0.0.1",
+  "version": "2.0.0",
   "description": "Group Planning Application",
   "keywords": [
     "Grouplanner",
@@ -8,11 +8,15 @@
     "application",
     "planning"
   ],
-  "author": {
+  "contributors": [{
     "name": "Joris Griffioen",
-    "email": "joris.griffioen@live.nl",
+    "email": "jorisjgriffioen@gmail.com",
     "url": ""
-  },
+  },{
+    "name": "Niels Overwijn",
+    "email": "",
+    "url": ""
+  }],
   "engines": {
     "node": ">= 0.6.0",
     "npm": ">= 1.0.0"
