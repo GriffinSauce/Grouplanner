@@ -8,15 +8,18 @@
     "application",
     "planning"
   ],
-  "contributors": [{
-    "name": "Joris Griffioen",
-    "email": "jorisjgriffioen@gmail.com",
-    "url": ""
-  },{
-    "name": "Niels Overwijn",
-    "email": "",
-    "url": ""
-  }],
+  "contributors": [
+    {
+      "name": "Joris Griffioen",
+      "email": "jorisjgriffioen@gmail.com",
+      "url": ""
+    },
+    {
+      "name": "Niels Overwijn",
+      "email": "",
+      "url": ""
+    }
+  ],
   "engines": {
     "node": ">= 0.6.0",
     "npm": ">= 1.0.0"
@@ -46,10 +49,13 @@
   },
   "devDependencies": {
     "async": "^0.9.0",
+    "browser-sync": "^2.7.13",
     "frisby": "^0.8.5",
     "gulp": "^3.8.8",
     "gulp-autoprefixer": "~2.1.0",
+    "gulp-develop-server": "^0.4.3",
     "gulp-livereload": "^3.8.0",
+    "gulp-plumber": "^1.0.1",
     "gulp-sass": "1.0.0",
     "jasmine-node": "^1.14.5"
   },
