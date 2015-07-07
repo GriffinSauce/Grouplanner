@@ -221,7 +221,7 @@ input {
       font-size: 1.4em; }
   .view#home section {
     margin: 1em;
-    padding: 0.5em 3em;
+    padding: 0.5em 2em;
     background-color: #FFF;
     border-radius: 0.2em; }
     .view#home section ul {
@@ -229,6 +229,25 @@ input {
       padding: 0; }
     .view#home section .btn {
       font-size: 1em; }
+    .view#home section .steps {
+      text-align: left; }
+      .view#home section .steps .num {
+        display: inline-block;
+        margin: 0 0.5em 0.5em 0;
+        width: 1em;
+        height: 1em;
+        padding: 0.4em 0.5em 0.6em 0.5em;
+        border-radius: 100%;
+        text-align: center;
+        font-size: 1.2em;
+        font-weight: 700;
+        color: #FFF; }
+        .view#home section .steps .num.one {
+          background-color: rgba(103, 1, 167, 0.5); }
+        .view#home section .steps .num.two {
+          background-color: #1bb5af; }
+        .view#home section .steps .num.three {
+          background-color: #47b280; }
   .view#home footer {
     margin: 1em 0 0 0;
     padding: 0.5em 4em 0.5em 4em;
