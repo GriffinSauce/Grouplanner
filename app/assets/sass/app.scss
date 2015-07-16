@@ -79,8 +79,11 @@ i
 }
 
 @import 'elements/button';
+@import 'elements/loginbuttons';
 @import 'elements/input';
+@import 'elements/card';
 @import 'responsive';
 @import 'views/header';
 @import 'views/login';
 @import 'views/home';
+@import 'views/create';

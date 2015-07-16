@@ -1,0 +1,15 @@
+.card
+{
+	display:block;
+	margin:1em;
+	padding:1em;
+	background-color: #FFF;
+	overflow: hidden;
+	border-radius: 0.15em;
+	box-shadow: 0px 1px 1px 1px rgba(0,0,0,0.05);
+
+	> :first-child
+	{
+		margin-top: 0.4em;
+	}
+}

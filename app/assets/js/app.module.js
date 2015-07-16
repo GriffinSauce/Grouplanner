@@ -10,6 +10,10 @@
 				templateUrl: 'components/home/home-view.html',
 				controller: 'HomeCtrl'
 			}).
+            when('/groups', {
+				templateUrl: 'components/groups/groups-view.html',
+				controller: 'GroupsCtrl'
+			}).
 			when('/group', {
 				templateUrl: 'components/groups/groups-view.html',
 				controller: 'GroupsCtrl'

@@ -1,14 +1,10 @@
-
-	<header-view></header-view>
-	<div id="banner">
+<header-view></header-view>
+<div class="view" id="create">
+	<section class="card" id="form">
 		<h1>So, what cha doin'?</h1>
 		<p>
 			Just tell us some things about your group and you'll be ready to go.
 		</p>
-	</div>
-
-	<section id="form">
-		<h2><span>Info</span></h2>
 		<p>
 			We're called <input id="name" type="text" placeholder="name" size="11" ng-model="group.name"/>
 		</p>
@@ -29,7 +25,7 @@
 		</p>
 	</section>
 
-	<section id="permissions">
+	<section class="card" id="permissions">
 		<h2><span>Permissions</span></h2>
 		<p>
 			<span id="planning" class="radio">
@@ -57,3 +53,4 @@
 			<a id="nevermindBtn" href="help">Join an existing group</a>
 		</p>
 	</section>
+</div>
