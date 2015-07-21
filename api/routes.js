@@ -9,6 +9,7 @@ var User = require(__dirname + '/../server/mongoose/user.js');
 var Period = require(__dirname + '/../server/mongoose/period.js');
 
 var groupRoutes = require(__dirname + '/routes/group.js');
+var periodRoutes = require(__dirname + '/routes/period.js');
 
 // Authenticate user
 router.use('/*', function(req, res, next)
@@ -23,5 +24,6 @@ router.use('/*', function(req, res, next)
 });
 
 router.use(groupRoutes);
+router.use(periodRoutes);
 
 module.exports = router;
