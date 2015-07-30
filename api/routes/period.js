@@ -70,4 +70,24 @@ router.put('/group/:group_id/period/:period_id/:date/available', function(req, r
   });
 });
 
+/**
+*
+**/
+router.delete('/group/:group_id/period/:period_id/:date/available', function(req, res)
+{
+  Period.findOne({'_id': req.params.period_id}).exec(function(err, period)
+  {
+    var index = period.days[req.params.date].available.indexOf(req.user._id);
+    if(index !== -1)
+    {
+      period.days[req.params.date].available.splice(index, 1);
+    }
+    period.save(function(err)
+    {
+      if(err) { console.log('Error saving period setup to the database', group.name); }
+      res.json(period.days);
+    })
+  });
+});
+
 module.exports = router;
